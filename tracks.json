@@ -119,12 +119,19 @@
     "audio": "ninnanannajazz.mp3",
     "cover": "ninnanannajazz.png",
     "isDraft": false,
-    "isSecret": true
+    "isSecret": false
   },
   {
     "title": "Quasi Natale",
     "audio": "quasinatale.mp3",
     "cover": "quasinatale.png",
+    "isDraft": false,
+    "isSecret": true
+  },
+  {
+    "title": "Elfa Ariela",
+    "audio": "elfaariela.mp3",
+    "cover": "elfaariela.png",
     "isDraft": false,
     "isSecret": true
   }
