@@ -113,12 +113,18 @@
     "lrc": "itbelongstous.lrc",
     "isDraft": true,
     "isSecret": false
-  }
-  ,
+  },
   {
     "title": "Ninna Nanna Jazz",
     "audio": "ninnanannajazz.mp3",
     "cover": "ninnanannajazz.png",
+    "isDraft": false,
+    "isSecret": true
+  },
+  {
+    "title": "Quasi Natale",
+    "audio": "quasinatale.mp3",
+    "cover": "quasinatale.png",
     "isDraft": false,
     "isSecret": true
   }
