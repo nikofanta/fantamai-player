@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.4";
+const APP_VERSION = "3.3.5";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -572,6 +572,80 @@ audio.addEventListener("timeupdate", () => {
 showDraftsChk.addEventListener("change", applyFilterAndRender);
 showDraftsChk.addEventListener("click", handleSecretModeClick);
 onlyFavsChk.addEventListener("change", applyFilterAndRender);
+
+/* =========================================================
+   [13.5] PWA INSTALL PROMPT
+   ========================================================= */
+let deferredPrompt;
+const installBanner = document.getElementById('installBanner');
+const installBtn = document.getElementById('installBtn');
+const dismissInstallBtn = document.getElementById('dismissInstallBtn');
+
+// Check if already dismissed or installed
+if (!localStorage.getItem('installDismissed') && !window.matchMedia('(display-mode: standalone)').matches) {
+  
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBanner.classList.remove('hidden');
+  });
+
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        installBanner.classList.add('hidden');
+      }
+      deferredPrompt = null;
+    });
+  }
+
+  if (dismissInstallBtn) {
+    dismissInstallBtn.addEventListener('click', () => {
+      installBanner.classList.add('hidden');
+      localStorage.setItem('installDismissed', 'true');
+    });
+  }
+}
+
+/* =========================================================
+   [13.5] PWA INSTALL PROMPT
+   ========================================================= */
+let deferredPrompt;
+const installBanner = document.getElementById('installBanner');
+const installBtn = document.getElementById('installBtn');
+const dismissInstallBtn = document.getElementById('dismissInstallBtn');
+
+// Check if already dismissed or installed
+if (!localStorage.getItem('installDismissed') && !window.matchMedia('(display-mode: standalone)').matches) {
+  
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBanner.classList.remove('hidden');
+  });
+
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        installBanner.classList.add('hidden');
+      }
+      deferredPrompt = null;
+    });
+  }
+
+  if (dismissInstallBtn) {
+    dismissInstallBtn.addEventListener('click', () => {
+      installBanner.classList.add('hidden');
+      localStorage.setItem('installDismissed', 'true');
+    });
+  }
+}
 
 /* =========================================================
    [14] SERVICE WORKER + UPDATE DETECTION
