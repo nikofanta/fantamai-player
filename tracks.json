@@ -1,0 +1,146 @@
+[
+  {
+    "title": "San Carlo",
+    "audio": "sancarlo.mp3",
+    "cover": "sancarlo.jpg",
+    "lrc": "sancarlo.lrc",
+    "isDraft": true
+  },
+  {
+    "title": "\"Una\" Gatta",
+    "audio": "unagatta.mp3",
+    "cover": "unagatta.png",
+    "lrc": "unagatta.lrc"
+  },
+  {
+    "title": "Sapore di Indonesia",
+    "audio": "saporediindonesia.mp3",
+    "cover": "saporediindonesia.jpg",
+    "lrc": "saporediindonesia.lrc"
+  },
+  {
+    "title": "Da Roma a Dubai",
+    "audio": "daromaadubai.mp3",
+    "cover": "daromaadubai.png",
+    "lrc": "daromaadubai.lrc"
+  },
+  {
+    "title": "Summer Contest",
+    "audio": "summercontest2.mp3",
+    "cover": "summercontest.png",
+    "lrc": "summercontest.lrc"
+  },
+  {
+    "title": "Summer Contest - remaster",
+    "audio": "summercontest.mp3",
+    "cover": "summercontest.png",
+    "isDraft": true
+  },
+  {
+    "title": "A Faraway Dream",
+    "audio": "afarawaydream.mp3",
+    "cover": "afarawaydream.png"
+  },
+  {
+    "title": "Sogno Lontano",
+    "audio": "sognolontano.mp3",
+    "cover": "sognolontano.png"
+  },
+  {
+    "title": "Carol for Matteo",
+    "audio": "carolformatteo.mp3",
+    "cover": "carolformatteo.png"
+  },
+  {
+    "title": "Dream in the Jungle",
+    "audio": "dreaminthejungle.mp3",
+    "cover": "dreaminthejungle.png",
+    "lrc": "dreaminthejungle.lrc",
+    "isDraft": false
+  },
+  {
+    "title": "E la Canzone che ti dice",
+    "audio": "elacanzonechetidice.mp3",
+    "cover": "elacanzonechetidice.png"
+  },
+  {
+    "title": "Er Rugantino De Milan",
+    "audio": "errugantinodemilan.mp3",
+    "cover": "errugantinodemilan.png"
+  },
+  {
+    "title": "Jungle Tango",
+    "audio": "jungletango.mp3",
+    "cover": "jungletango.png"
+  },
+  {
+    "title": "Amici Di Roma",
+    "audio": "amicidiroma.mp3",
+    "cover": "amicidiroma.png",
+    "lrc": "amicidiroma.lrc"
+  },
+  {
+    "title": "Amici Di Roma",
+    "audio": "amicidiromastornello.mp3",
+    "cover": "amicidiroma.png",
+    "isDraft": true
+  },
+  {
+    "title": "Non L'Ascolterai",
+    "audio": "nonlascolterai.mp3",
+    "cover": "nonlascolterai.png",
+    "lrc": "nonlascolterai.lrc",
+    "isDraft": false
+  },
+  {
+    "title": "Non L'Ascolterai (Band)",
+    "audio": "nonlascolteraiband.mp3",
+    "cover": "nonlascolteraiband.png",
+    "lrc": "nonlascolteraiband.lrc",
+    "isDraft": false
+  },
+  {
+    "title": "It Belongs to Us",
+    "audio": "itbelongstous.mp3",
+    "cover": "itbelongstous.png",
+    "lrc": "itbelongstous.lrc",
+    "isDraft": false
+  },
+  {
+    "title": "It Belongs to Us (duo)",
+    "audio": "itbelongstousduo.mp3",
+    "cover": "itbelongstous.png",
+    "lrc": "itbelongstous.lrc",
+    "isDraft": true,
+    "isSecret": false
+  }
+  ,
+  {
+    "title": "Ninna Nanna Jazz",
+    "audio": "ninnanannajazz.mp3",
+    "cover": "ninnanannajazz.png",
+    "isDraft": false,
+    "isSecret": true
+  }
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

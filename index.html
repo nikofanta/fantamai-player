@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <!-- [1] HEAD / META -->
+  <link rel="icon" href="./favicon.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#e38b1f">
+  <title>Project "fantaMai"</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4DTN0VSWTV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-4DTN0VSWTV');
+  </script>
+</head>
+
+<body>
+  <!-- [2] UPDATE NOTIFICATION BANNER -->
+  <div id="updateBanner" class="update-banner hidden">
+    <span>🎉 New version available!</span>
+    <button id="updateBtn" class="update-btn">Update Now</button>
+  </div>
+
+  <!-- [3] SECRET MODE POPUP -->
+  <div id="secretModePopup" class="secret-popup hidden">
+    <div class="secret-popup-content">
+      <div class="secret-icon">🔓</div>
+      <h3>Secret Mode Activated!</h3>
+      <p>Hidden tracks are now visible</p>
+    </div>
+  </div>
+
+  <!-- [4] CONTAINER PRINCIPALE -->
+  <div class="container">
+
+    <!-- [4] BLOCCO CANZONE CORRENTE -->
+    <div id="currentTrackContainer">
+
+      <!-- [4.1] COVER + ONDE -->
+      <div class="cover-wrapper">
+        <img id="currentCover" src="" alt="Cover">
+
+        <!-- Onde radio animate -->
+        <div class="waves-overlay">
+          <svg class="waves" viewBox="0 0 1200 200" preserveAspectRatio="none">
+            <path d="M0 100 Q300 20 600 100 T1200 100" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- [4.2] TITOLO -->
+      <div class="title-wrapper">
+        <h2 id="currentTitle" aria-live="polite"></h2>
+      </div>
+    </div>
+
+    <!-- [4.3] LYRICS WITH NAVIGATION -->
+    <div class="lyrics-nav-container">
+      <div id="lyricsContainer" class="lyrics-container" role="region" aria-label="Synchronized lyrics">
+        <!-- Status overlay -->
+        <div id="statusOverlay" class="status-overlay">
+          <div class="spinner" id="spinner"></div>
+          <span id="statusText">Pronto</span>
+        </div>
+        
+        <div id="prevLyric" class="lyric-line lyric-prev" aria-hidden="true"></div>
+        <div id="currentLyric" class="lyric-line lyric-current" aria-live="assertive">
+          Testo non disponibile
+        </div>
+        <div id="nextLyric" class="lyric-line lyric-next" aria-hidden="true"></div>
+      </div>
+      
+      <div class="nav-buttons">
+        <button id="prevBtn" class="nav-btn" aria-label="Previous track">⏮</button>
+        <button id="nextBtn" class="nav-btn" aria-label="Next track">⏭</button>
+      </div>
+    </div>
+
+    <!-- [5] PLAYER AUDIO -->
+    <audio id="audioPlayer" controls aria-label="Audio player"></audio>
+
+    <!-- [6] PLAYLIST HEADER (BRANI + TOGGLE DRAFTS) -->
+    <div class="playlist-header">
+      <h3>Brani</h3>
+      
+      <div class="favs-toggle">
+        <label>
+          <input type="checkbox" id="onlyFavsChk" aria-label="Show only favorite tracks">
+          ❤️ Favs
+        </label>
+      </div>
+      
+      <div class="draft-toggle">
+        <label>
+          <input type="checkbox" id="showDraftsChk" aria-label="Show draft tracks">
+          Show Drafts
+          <span id="secretModeIndicator" class="secret-indicator hidden">🔓</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- [8] PLAYLIST -->
+    <ul id="trackList" role="list" aria-label="Available tracks"></ul>
+
+    <!-- [9] VERSION FOOTER -->
+    <div class="version-footer">
+      <small>v<span id="appVersion">3.3.2</span></small>
+    </div>
+  </div>
+
+  <!-- [10] SCRIPT -->
+  <script src="script.js"></script>
+</body>
+</html>
+
