@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.3";
+const APP_VERSION = "3.3.4";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -164,14 +164,33 @@ function checkUrlParameters() {
   // Check for ?song=filename parameter (without .mp3 extension)
   const songParam = params.get('song');
   if (songParam) {
-    const index = visibleTracks.findIndex(t => {
+    // Search in allTracks first to handle draft/secret songs
+    const trackIndex = allTracks.findIndex(t => {
       // Extract filename from audio path without extension
       const audioFilename = t.audio.split('/').pop().replace('.mp3', '');
       return audioFilename.toLowerCase() === songParam.toLowerCase();
     });
-    if (index !== -1) {
-      loadTrack(index, true);
-      return true;
+    
+    if (trackIndex !== -1) {
+      const track = allTracks[trackIndex];
+      
+      // Auto-enable filters if needed
+      if (track.isDraft && !showDraftsChk.checked) {
+        showDraftsChk.checked = true;
+      }
+      if (track.isSecret && !secretModeActive) {
+        toggleSecretMode();
+      }
+      
+      // Re-apply filters with new settings
+      applyFilterAndRender(false);
+      
+      // Find index in visible tracks and load it
+      const visibleIndex = visibleTracks.findIndex(t => t.audio === track.audio);
+      if (visibleIndex !== -1) {
+        loadTrack(visibleIndex, true);
+        return true;
+      }
     }
   }
   
@@ -562,11 +581,11 @@ if ('serviceWorker' in navigator) {
     console.log('Service Worker registered');
 
     // Check for updates immediately on load
-    registration.update();
+    registration.update().catch(() => {});
 
     // Check for updates periodically
     setInterval(() => {
-      registration.update();
+      registration.update().catch(() => {});
     }, 10000); // Check every 10 seconds (more aggressive for testing)
 
     // Listen for new service worker
@@ -587,6 +606,13 @@ if ('serviceWorker' in navigator) {
   // Handle controller change (when new SW takes over)
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     window.location.reload();
+  });
+  
+  // Suppress message channel errors
+  window.addEventListener('unhandledrejection', event => {
+    if (event.reason?.message?.includes('message channel closed')) {
+      event.preventDefault();
+    }
   });
 }
 
