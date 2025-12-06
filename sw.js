@@ -2,7 +2,7 @@
    SERVICE WORKER — FantaMai Player (PWA)
    ========================================================= */
 
-const CACHE_NAME = "fantamai-cache-v3.3.2";
+const CACHE_NAME = "fantamai-cache-v3.3.3";
 const APP_VERSION = "3.3.1";
 
 /* 

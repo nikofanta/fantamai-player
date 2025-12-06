@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.2";
+const APP_VERSION = "3.3.3";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -161,10 +161,14 @@ function resolveAssetPath(path, folder) {
 function checkUrlParameters() {
   const params = new URLSearchParams(window.location.search);
   
-  // Check for ?song=Title parameter
-  const songTitle = params.get('song');
-  if (songTitle) {
-    const index = visibleTracks.findIndex(t => t.title.toLowerCase() === songTitle.toLowerCase());
+  // Check for ?song=filename parameter (without .mp3 extension)
+  const songParam = params.get('song');
+  if (songParam) {
+    const index = visibleTracks.findIndex(t => {
+      // Extract filename from audio path without extension
+      const audioFilename = t.audio.split('/').pop().replace('.mp3', '');
+      return audioFilename.toLowerCase() === songParam.toLowerCase();
+    });
     if (index !== -1) {
       loadTrack(index, true);
       return true;
