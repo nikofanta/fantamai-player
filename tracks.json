@@ -2,7 +2,7 @@
   {
     "title": "San Carlo",
     "audio": "sancarlo.mp3",
-    "cover": "sancarlo.jpg",
+    "cover": "sancarlo.png",
     "lrc": "sancarlo.lrc",
     "isDraft": true
   },
@@ -15,7 +15,7 @@
   {
     "title": "Sapore di Indonesia",
     "audio": "saporediindonesia.mp3",
-    "cover": "saporediindonesia.jpg",
+    "cover": "saporediindonesia.png",
     "lrc": "saporediindonesia.lrc"
   },
   {

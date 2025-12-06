@@ -455,7 +455,7 @@ async function loadLrc(url) {
     } else {
       prevLyricEl.textContent = "";
       nextLyricEl.textContent = "";
-      currentLyricEl.textContent = "Waiting for lyrics...";
+      currentLyricEl.textContent = "";
     }
   } catch {
     clearLyrics("Errore nel caricamento del testo");
