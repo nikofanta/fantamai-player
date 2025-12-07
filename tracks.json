@@ -13,6 +13,11 @@
     "lrc": "unagatta.lrc"
   },
   {
+    "title": "\"Una\" Gatta (ESP)",
+    "audio": "unagattaesp.mp3",
+    "cover": "unagatta.png"
+  },
+  {
     "title": "Sapore di Indonesia",
     "audio": "saporediindonesia.mp3",
     "cover": "saporediindonesia.png",
@@ -59,7 +64,7 @@
     "isDraft": false
   },
   {
-    "title": "E la Canzone che ti dice",
+    "title": "È la Canzone che ti dice",
     "audio": "elacanzonechetidice.mp3",
     "cover": "elacanzonechetidice.png"
   },

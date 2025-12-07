@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.12c";
+const APP_VERSION = "3.3.13";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -103,11 +103,11 @@ function setStatus(msg, mode = "ok", spinning = false) {
   // Always show the status first
   statusOverlay.classList.remove("hidden");
   
-  // Auto-hide status after 3 seconds if ok and not spinning
+  // Auto-hide status after 6 seconds if ok and not spinning
   if (mode === "ok" && !spinning) {
     setTimeout(() => {
       statusOverlay.classList.add("hidden");
-    }, 3000);
+    }, 6000);
   }
 }
 
@@ -256,8 +256,8 @@ function handleSecretModeClick() {
     secretModeClickCount = 0;
   }, 2000);
   
-  // Activate secret mode after 6 clicks
-  if (secretModeClickCount >= 6) {
+  // Activate secret mode after 8 clicks
+  if (secretModeClickCount >= 8) {
     secretModeClickCount = 0;
     toggleSecretMode();
   }

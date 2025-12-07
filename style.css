@@ -311,7 +311,7 @@ li.active {
 }
 
 li.active .heart-btn svg {
-  stroke: #e38b1f;
+  stroke: #000000;
 }
 
 li.active .heart-btn.liked svg {
