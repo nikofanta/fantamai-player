@@ -311,7 +311,7 @@ li.active {
 }
 
 li.active .heart-btn svg {
-  stroke: #ff0000;
+  stroke: #e38b1f;
 }
 
 li.active .heart-btn.liked svg {
@@ -333,13 +333,13 @@ li.active .heart-btn.liked svg {
 
 .heart-btn svg {
   fill: none;
-  stroke: #ff0000;
+  stroke: #e38b1f;
   stroke-width: 2;
   transition: all 0.3s ease;
 }
 
 .heart-btn:hover svg {
-  stroke: #ff0000;
+  stroke: #e38b1f;
   transform: scale(1.1);
 }
 

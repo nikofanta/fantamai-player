@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.8";
+const APP_VERSION = "3.3.9";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -333,8 +333,8 @@ function renderList() {
     if (track.isDraft === true) li.classList.add("draft");
     if (track.isSecret === true) li.classList.add("secret");
     
-    // Check if this is the currently playing track
-    if (currentIndex === index && audio.src) {
+    // Check if this is the currently playing track by comparing audio source
+    if (audio.src && audio.src === track.audio) {
       li.classList.add("active");
     }
 
