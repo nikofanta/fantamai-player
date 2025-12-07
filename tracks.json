@@ -15,7 +15,8 @@
   {
     "title": "\"Una\" Gatta (ESP)",
     "audio": "unagattaesp.mp3",
-    "cover": "unagatta.png"
+    "cover": "unagatta.png",
+    "isDraft": true
   },
   {
     "title": "Sapore di Indonesia",
@@ -102,7 +103,7 @@
     "audio": "nonlascolteraiband.mp3",
     "cover": "nonlascolteraiband.png",
     "lrc": "nonlascolteraiband.lrc",
-    "isDraft": false
+    "isDraft": true
   },
   {
     "title": "It Belongs to Us",
@@ -116,8 +117,7 @@
     "audio": "itbelongstousduo.mp3",
     "cover": "itbelongstous.png",
     "lrc": "itbelongstous.lrc",
-    "isDraft": true,
-    "isSecret": false
+    "isDraft": true
   },
   {
     "title": "Ninna Nanna Jazz",
