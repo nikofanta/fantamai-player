@@ -2,7 +2,7 @@
   "name": "FantaMai Player",
   "short_name": "FantaMai",
   "version": "3.3.11d",
-  "start_url": "./index.html?v=3.3.11c",
+  "start_url": "./index.html?v=3.3.11d",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
