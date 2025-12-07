@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.11d";
+const APP_VERSION = "3.3.12";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -100,13 +100,14 @@ function setStatus(msg, mode = "ok", spinning = false) {
   statusOverlay.className = `status-overlay ${mode}`;
   spinner.classList.toggle("show", spinning);
   
+  // Always show the status first
+  statusOverlay.classList.remove("hidden");
+  
   // Auto-hide status after 3 seconds if ok and not spinning
   if (mode === "ok" && !spinning) {
     setTimeout(() => {
       statusOverlay.classList.add("hidden");
     }, 3000);
-  } else {
-    statusOverlay.classList.remove("hidden");
   }
 }
 
@@ -201,8 +202,6 @@ function checkUrlParameters() {
    [5] FILTRO DRAFT + RENDER + SECRET MODE + FAVORITES
    ========================================================= */
 function applyFilterAndRender(autoLoadFirst = false) {
-  alert(`DEBUG: Function called!\nautoLoadFirst=${autoLoadFirst}`);
-  
   const showDrafts = showDraftsChk.checked;
   const onlyFavs = onlyFavsChk.checked;
   
@@ -230,17 +229,13 @@ function applyFilterAndRender(autoLoadFirst = false) {
 
   // Clear selection first when not auto-loading
   if (!autoLoadFirst) {
-    alert(`DEBUG: Clearing selection!\nautoLoadFirst=${autoLoadFirst}\nvisibleTracks.length=${visibleTracks.length}\ncurrentTitle before="${currentTitle.textContent}"`);
-    
     audio.pause();
     audio.removeAttribute('src');
     audio.load();
     currentTitle.textContent = "";
-    currentCover.src = "";
+    currentCover.src = "./icons/icon-512.png";
     currentIndex = -1;
     clearLyrics("");
-    
-    alert(`DEBUG: After clearing\ncurrentTitle="${currentTitle.textContent}"\naudio.hasAttribute('src')=${audio.hasAttribute('src')}\ncurrentIndex=${currentIndex}`);
     
     if (visibleTracks.length === 0) {
       setStatus("Nessun brano disponibile", "ok", false);
@@ -581,17 +576,9 @@ audio.addEventListener("timeupdate", () => {
 /* =========================================================
    [13] TOGGLE DRAFTS + SECRET MODE TRIGGER + FAVORITES
    ========================================================= */
-alert(`DEBUG: Setting up event listeners\nshowDraftsChk exists: ${showDraftsChk !== null}\nonlyFavsChk exists: ${onlyFavsChk !== null}`);
-
-showDraftsChk.addEventListener("change", () => {
-  alert("DEBUG: Drafts checkbox changed!");
-  applyFilterAndRender();
-});
+showDraftsChk.addEventListener("change", applyFilterAndRender);
 showDraftsChk.addEventListener("click", handleSecretModeClick);
-onlyFavsChk.addEventListener("change", () => {
-  alert("DEBUG: Favorites checkbox changed!");
-  applyFilterAndRender();
-});
+onlyFavsChk.addEventListener("change", applyFilterAndRender);
 
 /* =========================================================
    [13.5] PWA INSTALL PROMPT
