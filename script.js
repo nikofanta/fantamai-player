@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.10";
+const APP_VERSION = "3.3.11";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -207,54 +207,48 @@ function applyFilterAndRender(autoLoadFirst = false) {
   // Check if favorites filter is active but no favorites exist
   if (onlyFavs && likedSongs.size === 0) {
     visibleTracks = [];
-    renderList();
     audio.pause();
     audio.removeAttribute('src');
     audio.load();
     currentTitle.textContent = "";
     currentCover.src = "";
+    currentIndex = -1;
     clearLyrics("");
     setStatus("Seleziona almeno una canzone come favorita per abilitare questo filtro", "warning", false);
+    renderList();
     return;
   }
   
   visibleTracks = allTracks.filter(t => {
-    // Filter out secret tracks if secret mode is not active
     if (t.isSecret === true && !secretModeActive) return false;
-    
-    // Filter drafts based on checkbox
     if (t.isDraft === true && !showDrafts) return false;
-    
-    // Filter favorites if only favorites is checked
     if (onlyFavs && !likedSongs.has(t.title)) return false;
-    
     return true;
   });
 
-  // Only auto-load first track on initial load, not when toggling filters
-  if (autoLoadFirst && visibleTracks.length > 0) {
-    renderList();
-    loadTrack(0, false);
-  } else if (visibleTracks.length === 0) {
-    renderList();
+  // Clear selection first when not auto-loading
+  if (!autoLoadFirst) {
     audio.pause();
     audio.removeAttribute('src');
     audio.load();
     currentTitle.textContent = "";
     currentCover.src = "";
-    clearLyrics("Nessun brano disponibile");
-    setStatus("Nessun brano disponibile", "ok", false);
-  } else {
-    // Tracks available but no auto-load - clear current selection
-    audio.pause();
-    audio.removeAttribute('src');
-    audio.load();
-    currentTitle.textContent = "";
-    currentCover.src = "";
-    clearLyrics("");
     currentIndex = -1;
-    setStatus("Seleziona un brano per iniziare", "ok", false);
-    renderList(); // Render after clearing to remove active states
+    clearLyrics("");
+    
+    if (visibleTracks.length === 0) {
+      setStatus("Nessun brano disponibile", "ok", false);
+    } else {
+      setStatus("Seleziona un brano per iniziare", "ok", false);
+    }
+  }
+
+  // Render the list
+  renderList();
+
+  // Auto-load first track only on initial load
+  if (autoLoadFirst && visibleTracks.length > 0) {
+    loadTrack(0, false);
   }
 }
 
