@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.11c";
+const APP_VERSION = "3.3.11d";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -581,9 +581,17 @@ audio.addEventListener("timeupdate", () => {
 /* =========================================================
    [13] TOGGLE DRAFTS + SECRET MODE TRIGGER + FAVORITES
    ========================================================= */
-showDraftsChk.addEventListener("change", applyFilterAndRender);
+alert(`DEBUG: Setting up event listeners\nshowDraftsChk exists: ${showDraftsChk !== null}\nonlyFavsChk exists: ${onlyFavsChk !== null}`);
+
+showDraftsChk.addEventListener("change", () => {
+  alert("DEBUG: Drafts checkbox changed!");
+  applyFilterAndRender();
+});
 showDraftsChk.addEventListener("click", handleSecretModeClick);
-onlyFavsChk.addEventListener("change", applyFilterAndRender);
+onlyFavsChk.addEventListener("change", () => {
+  alert("DEBUG: Favorites checkbox changed!");
+  applyFilterAndRender();
+});
 
 /* =========================================================
    [13.5] PWA INSTALL PROMPT
