@@ -450,6 +450,31 @@ prevBtn.addEventListener("click", playPrev);
 nextBtn.addEventListener("click", playNext);
 
 /* =========================================================
+   [8.1] TEST RESET BUTTON
+   ========================================================= */
+const testResetBtn = document.getElementById("testResetBtn");
+testResetBtn.addEventListener("click", () => {
+  // Stop playback
+  audio.pause();
+  audio.removeAttribute('src');
+  audio.load();
+  
+  // Clear UI
+  currentTitle.textContent = "";
+  currentCover.src = "./icons/icon-512.png";
+  currentIndex = -1;
+  clearLyrics("");
+  
+  // Remove active class from all tracks
+  [...listContainer.children].forEach(li => {
+    li.classList.remove("active");
+  });
+  
+  // Show status
+  setStatus("Seleziona un brano per iniziare", "ok", false);
+});
+
+/* =========================================================
    [9] AUTOPLAY NEXT
    ========================================================= */
 audio.addEventListener("ended", () => {
