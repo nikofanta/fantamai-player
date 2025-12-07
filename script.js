@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.12b";
+const APP_VERSION = "3.3.12c";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -129,18 +129,12 @@ async function loadTracks() {
   }));
 
   // First apply filter to populate visibleTracks
-  applyFilterAndRender(false);
+  applyFilterAndRender();
   
   // Check if URL has song parameter and auto-play it
-  const hasUrlParam = checkUrlParameters();
-  if (!hasUrlParam) {
-    // No URL param, auto-load first track on initial load
-    if (visibleTracks.length > 0) {
-      loadTrack(0, false);
-    }
-  }
+  checkUrlParameters();
 
-  setStatus("Pronto", "ok", false);
+  setStatus("Seleziona un brano per iniziare", "ok", false);
 }
 
 /* =========================================================
@@ -184,14 +178,14 @@ function checkUrlParameters() {
       }
       
       // Re-apply filters with new settings
-      applyFilterAndRender(false);
+      applyFilterAndRender();
       
       // Find index in visible tracks and load it
       const visibleIndex = visibleTracks.findIndex(t => t.audio === track.audio);
       if (visibleIndex !== -1) {
         loadTrack(visibleIndex, true);
-        return true;
       }
+      return true;
     }
   }
   
@@ -201,7 +195,7 @@ function checkUrlParameters() {
 /* =========================================================
    [5] FILTRO DRAFT + RENDER + SECRET MODE + FAVORITES
    ========================================================= */
-function applyFilterAndRender(autoLoadFirst = false) {
+function applyFilterAndRender() {
   const showDrafts = showDraftsChk.checked;
   const onlyFavs = onlyFavsChk.checked;
   
@@ -212,7 +206,7 @@ function applyFilterAndRender(autoLoadFirst = false) {
     audio.removeAttribute('src');
     audio.load();
     currentTitle.textContent = "";
-    currentCover.src = "";
+    currentCover.src = "./icons/icon-512.png";
     currentIndex = -1;
     clearLyrics("");
     setStatus("Seleziona almeno una canzone come favorita per abilitare questo filtro", "warning", false);
@@ -227,36 +221,22 @@ function applyFilterAndRender(autoLoadFirst = false) {
     return true;
   });
 
-  // Clear selection first when not auto-loading
-  if (!autoLoadFirst) {
-    audio.pause();
-    audio.removeAttribute('src');
-    audio.load();
-    currentTitle.textContent = "";
-    currentCover.src = "./icons/icon-512.png";
-    currentIndex = -1;
-    clearLyrics("");
-    
-    // Use setTimeout to ensure DOM updates before rendering
-    setTimeout(() => {
-      renderList();
-      
-      if (visibleTracks.length === 0) {
-        setStatus("Nessun brano disponibile", "ok", false);
-      } else {
-        setStatus("Seleziona un brano per iniziare", "ok", false);
-      }
-    }, 0);
-    
-    return;
-  }
-
+  // Clear selection when filter changes
+  audio.pause();
+  audio.removeAttribute('src');
+  audio.load();
+  currentTitle.textContent = "";
+  currentCover.src = "./icons/icon-512.png";
+  currentIndex = -1;
+  clearLyrics("");
+  
   // Render the list
   renderList();
-
-  // Auto-load first track only on initial load
-  if (autoLoadFirst && visibleTracks.length > 0) {
-    loadTrack(0, false);
+  
+  if (visibleTracks.length === 0) {
+    setStatus("Nessun brano disponibile", "ok", false);
+  } else {
+    setStatus("Seleziona un brano per iniziare", "ok", false);
   }
 }
 
