@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.9";
+const APP_VERSION = "3.3.10";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -208,7 +208,9 @@ function applyFilterAndRender(autoLoadFirst = false) {
   if (onlyFavs && likedSongs.size === 0) {
     visibleTracks = [];
     renderList();
-    audio.src = "";
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
     currentTitle.textContent = "";
     currentCover.src = "";
     clearLyrics("");
@@ -235,7 +237,9 @@ function applyFilterAndRender(autoLoadFirst = false) {
     loadTrack(0, false);
   } else if (visibleTracks.length === 0) {
     renderList();
-    audio.src = "";
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
     currentTitle.textContent = "";
     currentCover.src = "";
     clearLyrics("Nessun brano disponibile");
@@ -243,7 +247,8 @@ function applyFilterAndRender(autoLoadFirst = false) {
   } else {
     // Tracks available but no auto-load - clear current selection
     audio.pause();
-    audio.src = "";
+    audio.removeAttribute('src');
+    audio.load();
     currentTitle.textContent = "";
     currentCover.src = "";
     clearLyrics("");
@@ -334,7 +339,9 @@ function renderList() {
     if (track.isSecret === true) li.classList.add("secret");
     
     // Check if this is the currently playing track by comparing audio source
-    if (audio.src && audio.src === track.audio) {
+    // Only mark as active if audio has a valid src attribute and it matches the track
+    const hasValidSrc = audio.hasAttribute('src') && audio.getAttribute('src') !== '';
+    if (hasValidSrc && audio.src === track.audio) {
       li.classList.add("active");
     }
 
