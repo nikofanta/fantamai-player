@@ -67,17 +67,17 @@
       <div class="title-wrapper">
         <h2 id="currentTitle" aria-live="polite"></h2>
       </div>
+
+      <!-- [4.3] STATUS OVERLAY -->
+      <div id="statusOverlay" class="status-overlay">
+        <div class="spinner" id="spinner"></div>
+        <span id="statusText">Pronto</span>
+      </div>
     </div>
 
-    <!-- [4.3] LYRICS WITH NAVIGATION -->
+    <!-- [4.4] LYRICS WITH NAVIGATION -->
     <div class="lyrics-nav-container">
       <div id="lyricsContainer" class="lyrics-container" role="region" aria-label="Synchronized lyrics">
-        <!-- Status overlay -->
-        <div id="statusOverlay" class="status-overlay">
-          <div class="spinner" id="spinner"></div>
-          <span id="statusText">Pronto</span>
-        </div>
-        
         <div id="prevLyric" class="lyric-line lyric-prev" aria-hidden="true"></div>
         <div id="currentLyric" class="lyric-line lyric-current" aria-live="assertive">
           Testo non disponibile
@@ -119,7 +119,7 @@
 
     <!-- [9] VERSION FOOTER -->
     <div class="version-footer">
-      <small>v<span id="appVersion">3.3.5</span></small>
+      <small>v<span id="appVersion">3.3.6</span></small>
     </div>
   </div>
 

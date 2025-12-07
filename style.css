@@ -25,6 +25,7 @@ body {
   padding: 25px;
   border-radius: 12px;
   gap: 20px;
+  position: relative;
 }
 
 /* =========================================================
@@ -116,14 +117,20 @@ body {
 }
 
 .status-overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 0.85em;
   color: #ddd;
-  margin-bottom: 6px;
-  padding: 4px 0;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
   transition: opacity 0.3s;
+  z-index: 10;
 }
 
 .status-overlay.ok { color: #cfcfcf; }

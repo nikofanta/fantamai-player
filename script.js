@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.5";
+const APP_VERSION = "3.3.6";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -240,6 +240,15 @@ function applyFilterAndRender(autoLoadFirst = false) {
     currentCover.src = "";
     clearLyrics("Nessun brano disponibile");
     setStatus("Nessun brano disponibile", "ok", false);
+  } else {
+    // Tracks available but no auto-load - clear current selection
+    audio.pause();
+    audio.src = "";
+    currentTitle.textContent = "";
+    currentCover.src = "";
+    clearLyrics("");
+    currentIndex = -1;
+    setStatus("Seleziona un brano per iniziare", "ok", false);
   }
 }
 
