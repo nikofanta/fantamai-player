@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.12";
+const APP_VERSION = "3.3.12b";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -237,11 +237,18 @@ function applyFilterAndRender(autoLoadFirst = false) {
     currentIndex = -1;
     clearLyrics("");
     
-    if (visibleTracks.length === 0) {
-      setStatus("Nessun brano disponibile", "ok", false);
-    } else {
-      setStatus("Seleziona un brano per iniziare", "ok", false);
-    }
+    // Use setTimeout to ensure DOM updates before rendering
+    setTimeout(() => {
+      renderList();
+      
+      if (visibleTracks.length === 0) {
+        setStatus("Nessun brano disponibile", "ok", false);
+      } else {
+        setStatus("Seleziona un brano per iniziare", "ok", false);
+      }
+    }, 0);
+    
+    return;
   }
 
   // Render the list
