@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.11b";
+const APP_VERSION = "3.3.11c";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -201,6 +201,8 @@ function checkUrlParameters() {
    [5] FILTRO DRAFT + RENDER + SECRET MODE + FAVORITES
    ========================================================= */
 function applyFilterAndRender(autoLoadFirst = false) {
+  alert(`DEBUG: Function called!\nautoLoadFirst=${autoLoadFirst}`);
+  
   const showDrafts = showDraftsChk.checked;
   const onlyFavs = onlyFavsChk.checked;
   
