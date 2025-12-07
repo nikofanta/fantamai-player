@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.11";
+const APP_VERSION = "3.3.11b";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -228,6 +228,8 @@ function applyFilterAndRender(autoLoadFirst = false) {
 
   // Clear selection first when not auto-loading
   if (!autoLoadFirst) {
+    alert(`DEBUG: Clearing selection!\nautoLoadFirst=${autoLoadFirst}\nvisibleTracks.length=${visibleTracks.length}\ncurrentTitle before="${currentTitle.textContent}"`);
+    
     audio.pause();
     audio.removeAttribute('src');
     audio.load();
@@ -235,6 +237,8 @@ function applyFilterAndRender(autoLoadFirst = false) {
     currentCover.src = "";
     currentIndex = -1;
     clearLyrics("");
+    
+    alert(`DEBUG: After clearing\ncurrentTitle="${currentTitle.textContent}"\naudio.hasAttribute('src')=${audio.hasAttribute('src')}\ncurrentIndex=${currentIndex}`);
     
     if (visibleTracks.length === 0) {
       setStatus("Nessun brano disponibile", "ok", false);
