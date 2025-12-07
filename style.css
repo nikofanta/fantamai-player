@@ -101,7 +101,7 @@ body {
   display: flex;
   align-items: stretch;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 
 .lyrics-container {
@@ -198,7 +198,17 @@ body {
    ========================================================= */
 audio {
   width: 100%;
-  margin: 20px 0 10px;
+  margin: 5px 0 10px;
+  height: 48px;
+}
+
+/* Make play button larger */
+audio::-webkit-media-controls-play-button {
+  transform: scale(1.4);
+}
+
+audio::-webkit-media-controls-panel {
+  height: 48px;
 }
 
 .spinner {

@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.6";
+const APP_VERSION = "3.3.7";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -367,11 +367,6 @@ function renderList() {
 
     listContainer.appendChild(li);
   });
-  
-  // If audio is paused and status shows loading, reset it
-  if (audio.paused && statusText.textContent === "Caricamento brano...") {
-    setStatus("Pronto", "ok", false);
-  }
 }
 
 /* =========================================================
