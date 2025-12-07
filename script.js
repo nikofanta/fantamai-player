@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.7";
+const APP_VERSION = "3.3.8";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -229,12 +229,12 @@ function applyFilterAndRender(autoLoadFirst = false) {
     return true;
   });
 
-  renderList();
-
   // Only auto-load first track on initial load, not when toggling filters
   if (autoLoadFirst && visibleTracks.length > 0) {
+    renderList();
     loadTrack(0, false);
   } else if (visibleTracks.length === 0) {
+    renderList();
     audio.src = "";
     currentTitle.textContent = "";
     currentCover.src = "";
@@ -249,6 +249,7 @@ function applyFilterAndRender(autoLoadFirst = false) {
     clearLyrics("");
     currentIndex = -1;
     setStatus("Seleziona un brano per iniziare", "ok", false);
+    renderList(); // Render after clearing to remove active states
   }
 }
 
