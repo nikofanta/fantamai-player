@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Crea file LRC</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #121212;
+    color: white;
+  }
+
+  h1 {
+    color: #e38b1f;
+  }
+
+  select, textarea, button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 1em;
+  }
+
+  textarea {
+    height: 140px;
+  }
+
+  #nextLineDisplay {
+    margin-top: 30px;
+    font-size: 1.4em;
+    color: #ffac42;
+    min-height: 40px;
+  }
+
+  #resultLrc {
+    height: 200px;
+    margin-top: 20px;
+  }
+
+  button {
+    background: #e38b1f;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+
+  button:hover {
+    background: #ffb956;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     [1] TITOLO
+     ========================================================= -->
+<h1>Generatore file .LRC</h1>
+
+
+<!-- =========================================================
+     [2] SELECT MP3
+     ========================================================= -->
+<label>Seleziona MP3</label>
+<select id="trackSelect"></select>
+
+
+<!-- =========================================================
+     [3] TEXTBOX TESTO CANZONE
+     ========================================================= -->
+<label>Incolla il testo della canzone</label>
+<textarea id="lyricsInput" placeholder="Incolla qui il testo..."></textarea>
+
+
+<!-- =========================================================
+     [4] BOTTONE START
+     ========================================================= -->
+<button id="startBtn">Start Recording</button>
+
+
+<!-- =========================================================
+     [5] PLAYER AUDIO
+     ========================================================= -->
+<div id="audioContainer" class="hidden">
+  <audio id="audioPlayer" controls></audio>
+</div>
+
+
+<!-- =========================================================
+     [6] DISPLAY NEXT LINE
+     ========================================================= -->
+<button id="nextLineBtn" class="hidden">Display next line</button>
+
+<div id="nextLineDisplay"></div>
+
+
+<!-- =========================================================
+     [7] RISULTATO LRC
+     ========================================================= -->
+<h3>Risultato LRC</h3>
+<textarea id="resultLrc" readonly placeholder="Il file LRC apparirà qui..."></textarea>
+
+
+<!-- =========================================================
+     [8] SAVE BUTTON
+     ========================================================= -->
+<button id="saveLrcBtn">Save as .LRC</button>
+
+
+<script>
+// =========================================================
+// [A] CARICAMENTO TRACKS.JSON
+// =========================================================
+let tracks = [];
+let lines = [];
+let currentLine = 0;
+let timestamps = [];
+
+// Helper function to resolve asset paths (same as main script.js)
+function resolveAssetPath(path, folder) {
+  // If already a full URL, return as is
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path;
+  }
+  
+  // Otherwise, prepend the folder path
+  return `./${folder}/${path}`;
+}
+
+fetch("tracks.json")
+  .then(r => r.json())
+  .then(data => {
+    // Resolve relative paths to full URLs (same as main script.js)
+    tracks = data.map(track => ({
+      ...track,
+      audio: resolveAssetPath(track.audio, 'mp3'),
+      cover: resolveAssetPath(track.cover, 'covers'),
+      lrc: track.lrc ? resolveAssetPath(track.lrc, 'lrc') : undefined
+    }));
+    populateTracks();
+  });
+
+function populateTracks() {
+  const sel = document.getElementById("trackSelect");
+  tracks.forEach((t, idx) => {
+    const opt = document.createElement("option");
+    opt.value = idx;
+    opt.textContent = t.title;
+    sel.appendChild(opt);
+  });
+}
+
+
+// =========================================================
+// [B] AVVIO DEL RECORDING
+// =========================================================
+document.getElementById("startBtn").addEventListener("click", () => {
+  const idx = document.getElementById("trackSelect").value;
+  const selected = tracks[idx];
+
+  const rawLyrics = document.getElementById("lyricsInput").value.trim();
+
+  if (!rawLyrics) {
+    alert("Inserisci prima il testo della canzone.");
+    return;
+  }
+
+  // split in righe
+  lines = rawLyrics.split("\n").map(l => l.trim()).filter(l => l.length > 0);
+  currentLine = 0;
+  timestamps = [];
+
+  // set mp3
+  const audio = document.getElementById("audioPlayer");
+  audio.src = selected.audio;
+
+  document.getElementById("audioContainer").classList.remove("hidden");
+  document.getElementById("nextLineBtn").classList.remove("hidden");
+
+  document.getElementById("nextLineDisplay").textContent = "Premi 'Display next line' per iniziare";
+});
+
+
+// =========================================================
+// [C] CLIC SU "DISPLAY NEXT LINE"
+// =========================================================
+document.getElementById("nextLineBtn").addEventListener("click", () => {
+  const audio = document.getElementById("audioPlayer");
+
+  if (currentLine >= lines.length) {
+    finishLrc();
+    return;
+  }
+
+  // cattura timestamp corrente
+  const t = audio.currentTime;
+  timestamps.push(t);
+
+  // mostra verso
+  document.getElementById("nextLineDisplay").textContent = lines[currentLine];
+
+  currentLine++;
+
+  // se abbiamo finito tutte le linee → genera LRC
+  if (currentLine === lines.length) {
+    finishLrc();
+  }
+});
+
+
+// =========================================================
+// [D] GENERAZIONE FINALE LRC
+// =========================================================
+function finishLrc() {
+  const idx = document.getElementById("trackSelect").value;
+  const selected = tracks[idx];
+  const songTitle = selected ? selected.title : "Unknown";
+
+  const lrc = [];
+  
+  // First 4 mandatory lines
+  lrc.push(`[ti: ${songTitle}]`);
+  lrc.push(`[ar: niko.fanta]`);
+  lrc.push(`[by: niko.fanta]`);
+  lrc.push(`[00:00.00] -- ${songTitle} --`);
+
+  for (let i = 0; i < timestamps.length; i++) {
+    const sec = timestamps[i];
+    const min = Math.floor(sec / 60);
+    const s = sec % 60;
+    const formatted = `[${String(min).padStart(2, "0")}:${s.toFixed(2).padStart(5, "0")}] ${lines[i]}`;
+    lrc.push(formatted);
+  }
+
+  document.getElementById("resultLrc").value = lrc.join("\n");
+  document.getElementById("nextLineDisplay").textContent = "Completo.";
+}
+
+
+// =========================================================
+// [E] SAVE LRC FILE
+// =========================================================
+document.getElementById("saveLrcBtn").addEventListener("click", () => {
+  const lrcContent = document.getElementById("resultLrc").value;
+  
+  if (!lrcContent || lrcContent.trim() === "") {
+    alert("Nessun contenuto LRC da salvare. Genera prima il file LRC.");
+    return;
+  }
+
+  const idx = document.getElementById("trackSelect").value;
+  const selected = tracks[idx];
+  
+  // Extract filename from audio path (e.g., "./mp3/sancarlo.mp3" -> "sancarlo")
+  let filename = "lyrics";
+  if (selected && selected.audio) {
+    const audioPath = selected.audio;
+    const filenameWithExt = audioPath.split('/').pop(); // Get last part of path
+    filename = filenameWithExt.replace(/\.[^/.]+$/, ""); // Remove extension
+  }
+  
+  // Create blob and download
+  const blob = new Blob([lrcContent], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${filename}.lrc`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+</script>
+
+</body>
+</html>
