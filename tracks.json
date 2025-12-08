@@ -16,6 +16,7 @@
     "title": "\"Una\" Gatta (ESP)",
     "audio": "unagattaesp.mp3",
     "cover": "unagatta.png",
+    "lrc": "unagattaesp.lrc",
     "isDraft": true
   },
   {
@@ -45,12 +46,14 @@
   {
     "title": "A Faraway Dream",
     "audio": "afarawaydream.mp3",
-    "cover": "afarawaydream.png"
+    "cover": "afarawaydream.png",
+    "lrc": "afarawaydream.lrc"
   },
   {
     "title": "Sogno Lontano",
     "audio": "sognolontano.mp3",
-    "cover": "sognolontano.png"
+    "cover": "sognolontano.png",
+    "lrc": "sognolontano.lrc"
   },
   {
     "title": "Carol for Matteo",
@@ -123,6 +126,7 @@
     "title": "Ninna Nanna Jazz",
     "audio": "ninnanannajazz.mp3",
     "cover": "ninnanannajazz.png",
+    "lrc": "ninnanannajazz.lrc",
     "isDraft": false,
     "isSecret": false
   },
