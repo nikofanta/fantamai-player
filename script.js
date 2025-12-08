@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.13";
+const APP_VERSION = "3.3.14";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -215,9 +215,16 @@ function applyFilterAndRender() {
   }
   
   visibleTracks = allTracks.filter(t => {
+    // Secret songs always require secret mode
     if (t.isSecret === true && !secretModeActive) return false;
+    
+    // If favorites filter is active, show all favorites (including drafts)
+    if (onlyFavs) {
+      return likedSongs.has(t.title);
+    }
+    
+    // Otherwise, apply draft filter normally
     if (t.isDraft === true && !showDrafts) return false;
-    if (onlyFavs && !likedSongs.has(t.title)) return false;
     return true;
   });
 
@@ -428,31 +435,6 @@ function playNext() {
 
 prevBtn.addEventListener("click", playPrev);
 nextBtn.addEventListener("click", playNext);
-
-/* =========================================================
-   [8.1] TEST RESET BUTTON
-   ========================================================= */
-const testResetBtn = document.getElementById("testResetBtn");
-testResetBtn.addEventListener("click", () => {
-  // Stop playback
-  audio.pause();
-  audio.removeAttribute('src');
-  audio.load();
-  
-  // Clear UI
-  currentTitle.textContent = "";
-  currentCover.src = "./icons/icon-512.png";
-  currentIndex = -1;
-  clearLyrics("");
-  
-  // Remove active class from all tracks
-  [...listContainer.children].forEach(li => {
-    li.classList.remove("active");
-  });
-  
-  // Show status
-  setStatus("Seleziona un brano per iniziare", "ok", false);
-});
 
 /* =========================================================
    [9] AUTOPLAY NEXT
