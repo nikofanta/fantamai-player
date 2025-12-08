@@ -208,8 +208,11 @@ document.getElementById("nextLineBtn").addEventListener("click", () => {
 
   // scroll lyricsInput down by one line
   const lyricsTextarea = document.getElementById("lyricsInput");
-  const lineHeight = parseInt(window.getComputedStyle(lyricsTextarea).lineHeight);
-  lyricsTextarea.scrollTop += lineHeight;
+  const totalLines = lyricsTextarea.value.split('\n').length;
+  const scrollHeight = lyricsTextarea.scrollHeight;
+  const visibleHeight = lyricsTextarea.clientHeight;
+  const lineHeight = scrollHeight / totalLines;
+  lyricsTextarea.scrollTop = currentLine * lineHeight;
 
   // se abbiamo finito tutte le linee → genera LRC
   if (currentLine === lines.length) {
