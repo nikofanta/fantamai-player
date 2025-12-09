@@ -352,6 +352,39 @@ li.active .heart-btn.liked svg {
   transform: scale(0.9);
 }
 
+/* Share button */
+.share-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.share-btn svg {
+  fill: none;
+  stroke: #e38b1f;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+li.active .share-btn svg {
+  stroke: #000000;
+}
+
+.share-btn:hover svg {
+  stroke: #e38b1f;
+  transform: scale(1.1);
+}
+
+.share-btn:active {
+  transform: scale(0.9);
+}
+
 /* =========================================================
    [6.1] THUMB COVER IN LISTA
    ========================================================= */
