@@ -2,8 +2,8 @@
    SERVICE WORKER — FantaMai Player (PWA)
    ========================================================= */
 
-const CACHE_NAME = "fantamai-cache-v3.3.15";
-const APP_VERSION = "3.3.15";
+const CACHE_NAME = "fantamai-cache-v3.3.16";
+const APP_VERSION = "3.3.16";
 
 /* 
    File che vogliamo tenere in cache
@@ -30,8 +30,7 @@ self.addEventListener("install", event => {
       return cache.addAll(FILES_TO_CACHE);
     })
   );
-  // Force new service worker to activate immediately
-  self.skipWaiting();
+  // Don't skip waiting - let user control update via banner
 });
 
 

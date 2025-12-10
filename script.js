@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.15";
+const APP_VERSION = "3.3.16";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -701,10 +701,10 @@ if ('serviceWorker' in navigator) {
     // Check for updates immediately on load
     registration.update().catch(() => {});
 
-    // Check for updates periodically
+    // Check for updates periodically (reduced frequency)
     setInterval(() => {
       registration.update().catch(() => {});
-    }, 10000); // Check every 10 seconds (more aggressive for testing)
+    }, 60000); // Check every 60 seconds
 
     // Listen for new service worker
     registration.addEventListener('updatefound', () => {
@@ -712,18 +712,13 @@ if ('serviceWorker' in navigator) {
       
       newWorker.addEventListener('statechange', () => {
         if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-          // New service worker available
+          // New service worker available - show banner
           showUpdateBanner();
         }
       });
     });
   }).catch(err => {
     console.warn('Service Worker registration failed:', err);
-  });
-
-  // Handle controller change (when new SW takes over)
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    window.location.reload();
   });
   
   // Suppress message channel errors
@@ -742,10 +737,32 @@ function showUpdateBanner() {
     banner.classList.remove('hidden');
     
     updateBtn.onclick = () => {
-      // Skip waiting and activate new service worker
+      banner.classList.add('hidden');
+      
+      // Listen for controllerchange ONLY after user clicks
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          window.location.reload();
+        }
+      }, { once: true });
+      
+      // Tell waiting SW to activate
       navigator.serviceWorker.getRegistration().then(reg => {
         if (reg && reg.waiting) {
           reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+        } else {
+          // No waiting worker, clear cache and reload
+          if ('caches' in window) {
+            caches.keys().then(names => {
+              names.forEach(name => caches.delete(name));
+            }).then(() => {
+              window.location.reload(true);
+            });
+          } else {
+            window.location.reload(true);
+          }
         }
       });
     };
@@ -753,7 +770,35 @@ function showUpdateBanner() {
 }
 
 /* =========================================================
-   [15] AVVIO
+   [15] BLANK PAGE DETECTION AND RECOVERY
+   ========================================================= */
+window.addEventListener('load', () => {
+  // Detect blank page after 5 seconds and force recovery
+  setTimeout(() => {
+    const container = document.querySelector('.container');
+    const trackList = document.getElementById('trackList');
+    
+    // Check if page is stuck or blank
+    if (!container || (!trackList && !document.body.textContent.includes('Caricamento'))) {
+      console.warn('Blank page detected, clearing cache and reloading...');
+      
+      if ('caches' in window) {
+        caches.keys().then(names => {
+          return Promise.all(names.map(name => caches.delete(name)));
+        }).then(() => {
+          window.location.reload(true);
+        }).catch(() => {
+          window.location.reload(true);
+        });
+      } else {
+        window.location.reload(true);
+      }
+    }
+  }, 5000);
+});
+
+/* =========================================================
+   [16] AVVIO
    ========================================================= */
 loadLikedSongs();
 loadSecretMode();
