@@ -3,7 +3,7 @@
    ========================================================= */
 body {
   margin: 0;
-  padding: 10px;
+  padding: 2px;
   font-family: "Helvetica Neue", Arial, sans-serif;
   background: #121212;
   color: #fff;
@@ -25,9 +25,9 @@ body {
 #currentTrackContainer {
   display: flex;
   align-items: center;
-  margin: 30px 0 15px;
+  margin: 5px 0 5px;
   background: #181818;
-  padding: 25px;
+  padding: 5px;
   border-radius: 12px;
   gap: 20px;
   position: relative;
@@ -107,7 +107,7 @@ body {
   display: flex;
   align-items: stretch;
   gap: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 0px;
   flex-shrink: 0;
 }
 
@@ -205,7 +205,7 @@ body {
    ========================================================= */
 audio {
   width: 100%;
-  margin: 5px 0 10px;
+  margin: 5px 0 5px;
   height: 48px;
   flex-shrink: 0;
 }
@@ -246,7 +246,7 @@ audio::-webkit-media-controls-panel {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
   flex-wrap: wrap;
   flex-shrink: 0;
 }
@@ -299,11 +299,11 @@ ul {
 
 li {
   background: #181818;
-  padding: 4px 8px;
+  padding: 1px 3px;
   border-radius: 8px;
   display: flex;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 2px;
   cursor: pointer;
   transition: background .2s;
   gap: 8px;
@@ -657,8 +657,8 @@ li.secret .thumb img {
    ========================================================= */
 .version-footer {
   text-align: center;
-  margin-top: 30px;
-  padding: 15px 0;
+  margin-top: 3px;
+  padding: 3px 0;
   color: #666;
   font-size: 0.85em;
   border-top: 1px solid #2a2a2a;

@@ -483,7 +483,7 @@ function setupMediaSession(track) {
 
   navigator.mediaSession.metadata = new MediaMetadata({
     title: track.title,
-    artist: "Dome",
+    artist: "fanta.m.AI",
     album: "Playlist",
     artwork: [
       { src: track.cover, sizes: "512x512", type: "image/png" },

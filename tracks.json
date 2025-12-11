@@ -71,6 +71,14 @@
     "title": "Vale La Pena",
     "audio": "valelapena.mp3",
     "cover": "sognolontano.png",
+    "lrc": "valelapena.lrc",
+    "isDraft": false
+  },
+    {
+    "title": "Vale La Pena (instr)",
+    "audio": "valelapenainstr.mp3",
+    "cover": "sognolontano.png",
+    "lrc": "valelapenainstr.lrc",
     "isDraft": true
   },
   {
