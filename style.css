@@ -657,9 +657,9 @@ li.secret .thumb img {
    ========================================================= */
 .version-footer {
   text-align: center;
-  margin-top: 3px;
-  padding: 3px 0;
+  margin-top: 5px;
+  padding: 10px 0;
   color: #666;
   font-size: 0.85em;
-  border-top: 1px solid #2a2a2a;
+  border-top: 3px solid #2a2a2a;
 }
