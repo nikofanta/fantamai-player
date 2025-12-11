@@ -20,7 +20,7 @@
     "isDraft": true
   },
   {
-    "title": "Storm Out Of Nowhere",
+    "title": "Storm Out Of Nowhere (male)",
     "audio": "stormoutofnowhere.mp3",
     "cover": "stormoutofnowhere.png",
     "lrc": "stormoutofnowhere.lrc"
@@ -29,7 +29,7 @@
     "title": "Storm Out Of Nowhere (female)",
     "audio": "stormoutofnowhere2.mp3",
     "cover": "stormoutofnowhere.png",
-    "isDraft": true
+    "isDraft": false
   },
   {
     "title": "Sapore di Indonesia",
