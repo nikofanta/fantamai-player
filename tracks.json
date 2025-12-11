@@ -20,6 +20,12 @@
     "isDraft": true
   },
   {
+    "title": "Storm Out Of Nowhere",
+    "audio": "stormoutofnowhere.mp3",
+    "cover": "stormoutofnowhere.png",
+    "lrc": "stormoutofnowhere.lrc"
+  },
+  {
     "title": "Sapore di Indonesia",
     "audio": "saporediindonesia.mp3",
     "cover": "saporediindonesia.png",

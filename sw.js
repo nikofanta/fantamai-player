@@ -2,8 +2,8 @@
    SERVICE WORKER — FantaMai Player (PWA)
    ========================================================= */
 
-const CACHE_NAME = "fantamai-cache-v3.3.16";
-const APP_VERSION = "3.3.16";
+const CACHE_NAME = "fantamai-cache-v3.3.17";
+const APP_VERSION = "3.3.17";
 
 /* 
    File che vogliamo tenere in cache
@@ -58,24 +58,49 @@ self.addEventListener("activate", event => {
 
 
 /* =========================================================
-   FETCH — Ritorna dalla cache o dalla rete
+   FETCH — Network-first for HTML, cache-first for assets
    ========================================================= */
 self.addEventListener("fetch", event => {
-
-  // non cacheiamo stream audio
+  const url = new URL(event.request.url);
+  
+  // Skip caching for audio files
   if (event.request.url.endsWith(".mp3")) {
-    return; 
+    return;
   }
-
+  
+  // Network-first for HTML pages (always get fresh to avoid blank page)
+  if (event.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname.endsWith('/')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          // Cache the fresh version
+          return caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, response.clone());
+            return response;
+          });
+        })
+        .catch(() => {
+          // Fallback to cache if offline
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+  
+  // Cache-first for everything else (CSS, JS, images, JSON)
   event.respondWith(
     caches.match(event.request).then(response => {
-      // Se il file esiste in cache → usalo
       if (response) {
         return response;
       }
-
-      // Altrimenti scaricalo dalla rete
-      return fetch(event.request);
+      
+      // If not in cache, fetch and cache it
+      return fetch(event.request).then(fetchResponse => {
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, fetchResponse.clone());
+          return fetchResponse;
+        });
+      });
     })
   );
 });
