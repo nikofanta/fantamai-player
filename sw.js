@@ -2,8 +2,8 @@
    SERVICE WORKER — FantaMai Player (PWA)
    ========================================================= */
 
-const CACHE_NAME = "fantamai-cache-v3.3.17";
-const APP_VERSION = "3.3.17";
+const CACHE_NAME = "fantamai-cache-v3.3.18";
+const APP_VERSION = "3.3.18";
 
 /* 
    File che vogliamo tenere in cache

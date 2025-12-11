@@ -25,6 +25,12 @@
     "cover": "stormoutofnowhere.png",
     "lrc": "stormoutofnowhere.lrc"
   },
+   {
+    "title": "Storm Out Of Nowhere (female)",
+    "audio": "stormoutofnowhere2.mp3",
+    "cover": "stormoutofnowhere.png",
+    "isDraft": true
+  },
   {
     "title": "Sapore di Indonesia",
     "audio": "saporediindonesia.mp3",
@@ -60,6 +66,12 @@
     "audio": "sognolontano.mp3",
     "cover": "sognolontano.png",
     "lrc": "sognolontano.lrc"
+  },
+  {
+    "title": "Vale La Pena",
+    "audio": "valelapena.mp3",
+    "cover": "sognolontano.png",
+    "isDraft": true
   },
   {
     "title": "Carol for Matteo",
