@@ -124,7 +124,7 @@ body {
    ========================================================= */
 .title-wrapper {
   position: absolute;
-  top: 10px;
+  top: 1px;
   left: 10px;
   right: 10px;
   display: flex;
@@ -132,8 +132,6 @@ body {
   justify-content: center;
   text-align: center;
   padding: 20px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
-  border-radius: 12px 12px 0 0;
   z-index: 2;
 }
 
@@ -145,27 +143,65 @@ body {
   font-weight: 600;
 }
 
+.lyrics-toggle-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  border: none;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 3;
+}
+
+.lyrics-toggle-btn:hover {
+  background: rgba(227, 139, 31, 0.8);
+  transform: scale(1.1);
+}
+
+.lyrics-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.lyrics-toggle-btn.active {
+  background: rgba(227, 139, 31, 0.9);
+}
+
 /* =========================================================
-   [3.4] LYRICS WITH NAVIGATION BUTTONS
+   [3.4] LYRICS OVERLAY (CENTERED ON COVER)
    ========================================================= */
 .lyrics-nav-container {
+  position: absolute;
+  bottom: 60px;
+  left: 10px;
+  right: 10px;
   display: flex;
-  align-items: stretch;
-  gap: 10px;
-  margin-bottom: 0px;
-  flex-shrink: 0;
+  justify-content: center;
+  z-index: 2;
 }
 
 .lyrics-container {
-  background: #151515;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
   border-radius: 8px;
-  padding: 10px 12px;
-  min-height: 56px;
-  max-height: 120px;
-  overflow-y: auto;
-  border: 1px solid #262626;
-  flex: 1;
-  position: relative;
+  padding: 12px 20px;
+  text-align: center;
+  max-width: 100%;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.lyrics-nav-container.hidden .lyrics-container {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
 }
 
 .status-overlay {
@@ -375,7 +411,7 @@ audio::-webkit-media-controls-panel {
    ========================================================= */
 ul {
   list-style: none;
-  padding: 0;
+  padding: 0 0 60px 0;
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;

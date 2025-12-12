@@ -7,30 +7,32 @@
     "isDraft": true
   },
   {
-    "title": "\"Una\" Gatta",
-    "audio": "unagatta.mp3",
-    "cover": "unagatta.png",
-    "lrc": "unagatta.lrc"
-  },
-  {
     "title": "\"Una\" Gatta (ESP)",
     "audio": "unagattaesp.mp3",
     "cover": "unagatta.png",
     "lrc": "unagattaesp.lrc",
+    "isDraft": false
+  },
+  {
+    "title": "\"Una\" Gatta",
+    "audio": "unagatta.mp3",
+    "cover": "unagatta.png",
+    "lrc": "unagatta.lrc",
     "isDraft": true
+  },
+  {
+    "title": "Storm Out Of Nowhere",
+    "audio": "stormoutofnowhere2.mp3",
+    "cover": "stormoutofnowhere.png",
+    "lrc": "stormoutofnowhere2.lrc",
+    "isDraft": false
   },
   {
     "title": "Storm Out Of Nowhere (male)",
     "audio": "stormoutofnowhere.mp3",
     "cover": "stormoutofnowhere.png",
-    "lrc": "stormoutofnowhere.lrc"
-  },
-   {
-    "title": "Storm Out Of Nowhere (female)",
-    "audio": "stormoutofnowhere2.mp3",
-    "cover": "stormoutofnowhere.png",
-    "lrc": "stormoutofnowhere2.lrc",
-    "isDraft": false
+    "lrc": "stormoutofnowhere.lrc",
+    "isDraft": true
   },
   {
     "title": "Sapore di Indonesia",
@@ -66,20 +68,21 @@
     "title": "Sogno Lontano",
     "audio": "sognolontano.mp3",
     "cover": "sognolontano.png",
-    "lrc": "sognolontano.lrc"
+    "lrc": "sognolontano.lrc",
+    "isDraft": true
+  },
+  {
+    "title": "Vale La Pena (instr)",
+    "audio": "valelapenainstr.mp3",
+    "cover": "sognolontano.png",
+    "lrc": "valelapenainstr.lrc",
+    "isDraft": true
   },
   {
     "title": "Vale La Pena",
     "audio": "valelapena.mp3",
     "cover": "sognolontano.png",
     "lrc": "valelapena.lrc",
-    "isDraft": false
-  },
-    {
-    "title": "Vale La Pena (instr)",
-    "audio": "valelapenainstr.mp3",
-    "cover": "sognolontano.png",
-    "lrc": "valelapenainstr.lrc",
     "isDraft": true
   },
   {
@@ -126,14 +129,14 @@
     "audio": "nonlascolterai.mp3",
     "cover": "nonlascolterai.png",
     "lrc": "nonlascolterai.lrc",
-    "isDraft": false
+    "isDraft": true
   },
   {
     "title": "Non L'Ascolterai (Band)",
     "audio": "nonlascolteraiband.mp3",
     "cover": "nonlascolteraiband.png",
     "lrc": "nonlascolteraiband.lrc",
-    "isDraft": true
+    "isDraft": false
   },
   {
     "title": "It Belongs to Us",

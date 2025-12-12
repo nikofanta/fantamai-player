@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.23";
+const APP_VERSION = "3.3.24";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -10,6 +10,7 @@ const currentCover = document.getElementById("currentCover");
 
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
+const lyricsToggleBtn = document.getElementById("lyricsToggleBtn");
 
 const statusText = document.getElementById("statusText");
 const spinner = document.getElementById("spinner");
@@ -682,6 +683,31 @@ onlyFavsChk.addEventListener("click", () => {
   onlyFavsChk.classList.toggle('active');
   applyFilterAndRender();
 });
+
+// Lyrics toggle button
+if (lyricsToggleBtn) {
+  // Check saved preference
+  const lyricsVisible = localStorage.getItem('lyricsVisible') !== 'false';
+  const lyricsContainer = document.querySelector('.lyrics-nav-container');
+  
+  if (!lyricsVisible) {
+    lyricsContainer.classList.add('hidden');
+  } else {
+    lyricsToggleBtn.classList.add('active');
+  }
+  
+  lyricsToggleBtn.addEventListener('click', () => {
+    lyricsContainer.classList.toggle('hidden');
+    lyricsToggleBtn.classList.toggle('active');
+    
+    const isVisible = !lyricsContainer.classList.contains('hidden');
+    localStorage.setItem('lyricsVisible', isVisible);
+    
+    gtag('event', 'lyrics_toggle', {
+      visibility: isVisible ? 'shown' : 'hidden'
+    });
+  });
+}
 
 /* =========================================================
    [13.5] PWA INSTALL PROMPT
