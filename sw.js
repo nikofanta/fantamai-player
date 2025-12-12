@@ -2,8 +2,8 @@
    SERVICE WORKER — FantaMai Player (PWA)
    ========================================================= */
 
-const CACHE_NAME = "fantamai-cache-v3.3.18";
-const APP_VERSION = "3.3.18";
+const CACHE_NAME = "fantamai-cache-v3.3.20";
+const APP_VERSION = "3.3.20";
 
 /* 
    File che vogliamo tenere in cache
@@ -28,9 +28,11 @@ self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(FILES_TO_CACHE);
+    }).then(() => {
+      // Force immediate activation to prevent blank pages
+      return self.skipWaiting();
     })
   );
-  // Don't skip waiting - let user control update via banner
 });
 
 
@@ -58,7 +60,7 @@ self.addEventListener("activate", event => {
 
 
 /* =========================================================
-   FETCH — Network-first for HTML, cache-first for assets
+   FETCH — Network-first for HTML/CSS/JS, cache-first for assets
    ========================================================= */
 self.addEventListener("fetch", event => {
   const url = new URL(event.request.url);
@@ -68,38 +70,50 @@ self.addEventListener("fetch", event => {
     return;
   }
   
-  // Network-first for HTML pages (always get fresh to avoid blank page)
-  if (event.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname.endsWith('/')) {
+  // Network-first for critical files (HTML, CSS, JS)
+  const isCritical = event.request.mode === 'navigate' || 
+                     url.pathname.endsWith('.html') || 
+                     url.pathname.endsWith('.css') || 
+                     url.pathname.endsWith('.js') || 
+                     url.pathname === '/' || 
+                     url.pathname.endsWith('/');
+  
+  if (isCritical) {
     event.respondWith(
       fetch(event.request)
         .then(response => {
-          // Cache the fresh version
-          return caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, response.clone());
-            return response;
-          });
+          // Cache fresh version
+          if (response.ok) {
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, response.clone());
+            });
+          }
+          return response;
         })
         .catch(() => {
           // Fallback to cache if offline
-          return caches.match(event.request);
+          return caches.match(event.request).then(cached => {
+            if (cached) return cached;
+            // Last resort for navigation
+            if (event.request.mode === 'navigate') {
+              return caches.match('./index.html');
+            }
+          });
         })
     );
     return;
   }
   
-  // Cache-first for everything else (CSS, JS, images, JSON)
+  // Cache-first for everything else (images, JSON, etc.)
   event.respondWith(
     caches.match(event.request).then(response => {
-      if (response) {
-        return response;
-      }
-      
-      // If not in cache, fetch and cache it
-      return fetch(event.request).then(fetchResponse => {
-        return caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, fetchResponse.clone());
-          return fetchResponse;
-        });
+      return response || fetch(event.request).then(fetchResponse => {
+        if (fetchResponse.ok) {
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, fetchResponse.clone());
+          });
+        }
+        return fetchResponse;
       });
     })
   );

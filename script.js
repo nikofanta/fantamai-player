@@ -105,7 +105,7 @@ async function shareTrack(track) {
   
   const shareData = {
     title: track.title,
-    text: `Listen to "${track.title}" by niko.fanta`,
+    text: `Listen to "${track.title}" by fantam.AI`,
     url: shareUrl
   };
   
@@ -483,7 +483,7 @@ function setupMediaSession(track) {
 
   navigator.mediaSession.metadata = new MediaMetadata({
     title: track.title,
-    artist: "fanta.m.AI",
+    artist: "fantam.AI",
     album: "Playlist",
     artwork: [
       { src: track.cover, sizes: "512x512", type: "image/png" },
