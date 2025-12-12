@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.22";
+const APP_VERSION = "3.3.23";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -275,6 +275,11 @@ function applyFilterAndRender() {
     audio.load();
     currentTitle.textContent = "";
     currentCover.src = "./icons/icon-512.png";
+    
+    // Clear blurred background
+    const trackContainer = document.getElementById('currentTrackContainer');
+    trackContainer.style.setProperty('--cover-image', 'none');
+    
     currentIndex = -1;
     clearLyrics("");
     setStatus("Seleziona almeno una canzone come favorita per abilitare questo filtro", "warning", false);
@@ -302,6 +307,11 @@ function applyFilterAndRender() {
   audio.load();
   currentTitle.textContent = "";
   currentCover.src = "./icons/icon-512.png";
+  
+  // Clear blurred background
+  const trackContainer = document.getElementById('currentTrackContainer');
+  trackContainer.style.setProperty('--cover-image', 'none');
+  
   currentIndex = -1;
   clearLyrics("");
   
@@ -389,6 +399,12 @@ function loadSecretMode() {
    ========================================================= */
 function renderList() {
   listContainer.innerHTML = "";
+  
+  // Update track counter
+  const trackCounter = document.getElementById('trackCounter');
+  if (trackCounter) {
+    trackCounter.textContent = `(${visibleTracks.length})`;
+  }
 
   visibleTracks.forEach((track, index) => {
     const li = document.createElement("li");
@@ -460,6 +476,10 @@ function loadTrack(index, autoplay = true) {
   audio.src = track.audio;
   currentTitle.textContent = track.title;
   currentCover.src = track.cover;
+  
+  // Set blurred background image on container
+  const trackContainer = document.getElementById('currentTrackContainer');
+  trackContainer.style.setProperty('--cover-image', `url('${track.cover}')`);
 
   [...listContainer.children].forEach((li, i) => {
     li.classList.toggle("active", i === index);

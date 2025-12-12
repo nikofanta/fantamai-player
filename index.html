@@ -53,13 +53,15 @@
 
       <!-- [4.1] COVER + ONDE -->
       <div class="cover-wrapper">
-        <img id="currentCover" src="" alt="Cover">
-
-        <!-- Onde radio animate -->
-        <div class="waves-overlay">
-          <svg class="waves" viewBox="0 0 1200 200" preserveAspectRatio="none">
-            <path d="M0 100 Q300 20 600 100 T1200 100" />
-          </svg>
+        <div class="cover-inner">
+          <img id="currentCover" src="" alt="Cover">
+          
+          <!-- Onde radio animate -->
+          <div class="waves-overlay">
+            <svg class="waves" viewBox="0 0 1200 200" preserveAspectRatio="none">
+              <path d="M0 100 Q300 20 600 100 T1200 100" />
+            </svg>
+          </div>
         </div>
       </div>
 
@@ -88,7 +90,7 @@
 
     <!-- [6] PLAYLIST HEADER -->
     <div class="playlist-header">
-      <h3>Brani</h3>
+      <h3>Brani <span id="trackCounter">(0)</span></h3>
     </div>
 
     <!-- [8] PLAYLIST -->
@@ -114,7 +116,7 @@
       </div>
       <div class="footer-center">
         <div class="version-info">
-          <small>v<span id="appVersion">3.3.22</span></small>
+          <small>v<span id="appVersion">3.3.23</span></small>
         </div>
       </div>
       <div class="footer-right">
