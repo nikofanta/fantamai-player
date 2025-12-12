@@ -84,43 +84,57 @@
         </div>
         <div id="nextLyric" class="lyric-line lyric-next" aria-hidden="true"></div>
       </div>
-      
-      <div class="nav-buttons">
-        <button id="prevBtn" class="nav-btn" aria-label="Previous track">⏮</button>
-        <button id="nextBtn" class="nav-btn" aria-label="Next track">⏭</button>
-      </div>
     </div>
 
-    <!-- [5] PLAYER AUDIO -->
-    <audio id="audioPlayer" controls controlslist="nodownload noplaybackrate" aria-label="Audio player"></audio>
-
-    <!-- [6] PLAYLIST HEADER (BRANI + TOGGLE DRAFTS) -->
+    <!-- [6] PLAYLIST HEADER -->
     <div class="playlist-header">
       <h3>Brani</h3>
-      
-      <div class="favs-toggle">
-        <label>
-          <input type="checkbox" id="onlyFavsChk" aria-label="Show only favorite tracks">
-          ❤️ Favs
-        </label>
-      </div>
-      
-      <div class="draft-toggle">
-        <label>
-          <input type="checkbox" id="showDraftsChk" aria-label="Show draft tracks">
-          Drafts
-          <span id="secretModeIndicator" class="secret-indicator hidden">🔓</span>
-        </label>
-      </div>
     </div>
 
     <!-- [8] PLAYLIST -->
     <ul id="trackList" role="list" aria-label="Available tracks"></ul>
+  </div>
 
-    <!-- [9] VERSION FOOTER -->
-    <div class="version-footer">
-      <small>v<span id="appVersion">3.3.21</span></small>
+  <!-- [9] NAVIGATION FOOTER -->
+  <div class="navigation-footer">
+    <div class="footer-controls">
+      <div class="footer-left">
+        <button id="prevBtn" class="footer-nav-btn" aria-label="Previous track">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11 6L6 12l5 6V6z"/>
+            <path d="M18 6l-5 6 5 6V6z"/>
+          </svg>
+        </button>
+        <button id="nextBtn" class="footer-nav-btn" aria-label="Next track">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13 6l5 6-5 6V6z"/>
+            <path d="M6 6l5 6-5 6V6z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="footer-center">
+        <div class="version-info">
+          <small>v<span id="appVersion">3.3.22</span></small>
+        </div>
+      </div>
+      <div class="footer-right">
+        <button id="onlyFavsChk" class="favs-heart-btn" aria-label="Show only favorite tracks" title="Usa questo cuore per selezionare solo i tuoi preferiti!">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </button>
+        <button id="showDraftsChk" class="draft-cruet-btn" aria-label="Show draft tracks" title="Usa questa ampolla per mostrare/nascondere gli esperimenti!">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <!-- Flask neck -->
+            <path d="M10 2h4v6l4 8c0.5 1 0.5 2 0 3s-1.5 2-3 2H9c-1.5 0-2.5-1-3-2s-0.5-2 0-3l4-8V2z" stroke-linejoin="round"/>
+            <!-- Flask base when filled -->
+            <path class="flask-fill" d="M10 8l4 8c0.5 1 0.5 2 0 3s-1.5 2-3 2H9c-1.5 0-2.5-1-3-2s-0.5-2 0-3l4-8z"/>
+          </svg>
+        </button>
+        <span id="secretModeIndicator" class="secret-indicator hidden">🔓</span>
+      </div>
     </div>
+    <audio id="audioPlayer" controls controlslist="nodownload noplaybackrate" aria-label="Audio player"></audio>
   </div>
 
   <!-- [10] SCRIPT -->

@@ -207,7 +207,6 @@ audio {
   width: 100%;
   margin: 5px 0 5px;
   height: 48px;
-  flex-shrink: 0;
 }
 
 /* Make play button larger */
@@ -239,50 +238,91 @@ audio::-webkit-media-controls-panel {
 }
 
 /* =========================================================
-   [5] PLAYLIST HEADER (BRANI + TOGGLE DRAFTS IN ONE LINE)
+   [5] PLAYLIST HEADER
    ========================================================= */
 .playlist-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 2px;
-  flex-wrap: wrap;
+  margin-bottom: 8px;
   flex-shrink: 0;
 }
 
 .playlist-header h3 {
   margin: 0;
-  flex: 0 0 auto;
   font-size: 1.1em;
   line-height: 1;
 }
 
-.favs-toggle,
-.draft-toggle {
+
+
+/* Draft cruet button */
+.draft-cruet-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
   display: flex;
   align-items: center;
-  font-size: 0.85em;
-  color: #ddd;
-  white-space: nowrap;
-  flex: 0 0 auto;
-  line-height: 1;
+  justify-content: center;
+  transition: transform 0.2s;
 }
 
-.favs-toggle label,
-.draft-toggle label {
+.draft-cruet-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #e38b1f;
+  stroke-width: 1.5;
+  transition: all 0.3s ease;
+}
+
+.draft-cruet-btn svg .flask-fill {
+  fill: none;
+  transition: fill 0.3s ease;
+}
+
+.draft-cruet-btn:hover svg {
+  transform: scale(1.1);
+}
+
+.draft-cruet-btn.active svg .flask-fill {
+  fill: #e38b1f;
+}
+
+.draft-cruet-btn:active {
+  transform: scale(0.9);
+}
+
+/* Favs heart button */
+.favs-heart-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
   display: flex;
   align-items: center;
-  margin: 0;
-  cursor: pointer;
+  justify-content: center;
+  transition: transform 0.2s;
 }
 
-.favs-toggle input,
-.draft-toggle input {
-  transform: scale(1);
-  margin-right: 5px;
-  accent-color: #e38b1f;
-  cursor: pointer;
+.favs-heart-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #e38b1f;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+.favs-heart-btn:hover svg {
+  transform: scale(1.1);
+}
+
+.favs-heart-btn.active svg {
+  fill: #e38b1f;
+  stroke: #e38b1f;
+}
+
+.favs-heart-btn:active {
+  transform: scale(0.9);
 }
 
 /* =========================================================
@@ -653,19 +693,81 @@ li.secret .thumb img {
 }
 
 /* =========================================================
-   [9] VERSION FOOTER
+   [9] NAVIGATION FOOTER
    ========================================================= */
-.version-footer {
+.navigation-footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  text-align: center;
-  padding: 12px;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.85em;
-  background: rgba(26, 26, 26, 0.95);
+  background: rgba(26, 26, 26, 0.5);
   backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 10;
+  padding: 8px 12px;
+}
+
+.footer-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 0 4px;
+}
+
+.footer-left,
+.footer-center,
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-center {
+  flex: 1;
+  justify-content: center;
+}
+
+.footer-nav-btn {
+  background: linear-gradient(135deg, #e38b1f, #ff6b35);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.footer-nav-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.footer-nav-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(227, 139, 31, 0.4);
+}
+
+.footer-nav-btn:active {
+  transform: scale(0.95);
+}
+
+.navigation-footer audio {
+  width: 100%;
+  margin: 0;
+  height: 48px;
+}
+
+.version-info {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75em;
+  padding: 0;
+  margin: 0;
 }

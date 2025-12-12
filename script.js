@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.21";
+const APP_VERSION = "3.3.22";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -86,7 +86,7 @@ function toggleLike(trackTitle) {
   } catch (e) {}
   
   // Refresh list if favorites filter is active
-  if (onlyFavsChk.checked) {
+  if (onlyFavsChk.classList.contains('active')) {
     applyFilterAndRender();
   }
 }
@@ -238,8 +238,8 @@ function checkUrlParameters() {
       const track = allTracks[trackIndex];
       
       // Auto-enable filters if needed
-      if (track.isDraft && !showDraftsChk.checked) {
-        showDraftsChk.checked = true;
+      if (track.isDraft && !showDraftsChk.classList.contains('active')) {
+        showDraftsChk.classList.add('active');
       }
       if (track.isSecret && !secretModeActive) {
         toggleSecretMode();
@@ -264,8 +264,8 @@ function checkUrlParameters() {
    [5] FILTRO DRAFT + RENDER + SECRET MODE + FAVORITES
    ========================================================= */
 function applyFilterAndRender() {
-  const showDrafts = showDraftsChk.checked;
-  const onlyFavs = onlyFavsChk.checked;
+  const showDrafts = showDraftsChk.classList.contains('active');
+  const onlyFavs = onlyFavsChk.classList.contains('active');
   
   // Check if favorites filter is active but no favorites exist
   if (onlyFavs && likedSongs.size === 0) {
@@ -650,9 +650,18 @@ audio.addEventListener("timeupdate", () => {
 /* =========================================================
    [13] TOGGLE DRAFTS + SECRET MODE TRIGGER + FAVORITES
    ========================================================= */
-showDraftsChk.addEventListener("change", applyFilterAndRender);
-showDraftsChk.addEventListener("click", handleSecretModeClick);
-onlyFavsChk.addEventListener("change", applyFilterAndRender);
+// Draft cruet button toggle
+showDraftsChk.addEventListener("click", (e) => {
+  showDraftsChk.classList.toggle('active');
+  applyFilterAndRender();
+  handleSecretModeClick(e);
+});
+
+// Favorites heart button toggle
+onlyFavsChk.addEventListener("click", () => {
+  onlyFavsChk.classList.toggle('active');
+  applyFilterAndRender();
+});
 
 /* =========================================================
    [13.5] PWA INSTALL PROMPT
