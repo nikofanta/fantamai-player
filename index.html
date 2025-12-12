@@ -68,17 +68,19 @@
       <!-- [4.2] TITOLO -->
       <div class="title-wrapper">
         <h2 id="currentTitle" aria-live="polite"></h2>
-        <button id="lyricsToggleBtn" class="lyrics-toggle-btn" aria-label="Toggle lyrics display" title="Mostra/Nascondi testo">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-            <!-- Speech bubble outline -->
-            <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2z" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <!-- Text lines inside bubble -->
-            <line x1="7" y1="7" x2="17" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="7" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="7" y1="15" x2="13" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </button>
       </div>
+      
+      <!-- [4.3] LYRICS TOGGLE BUTTON -->
+      <button id="lyricsToggleBtn" class="lyrics-toggle-btn" aria-label="Toggle lyrics display" title="Mostra/Nascondi testo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <!-- Speech bubble -->
+          <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
+          <!-- Text lines -->
+          <line x1="7" y1="7" x2="17" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="7" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="7" y1="15" x2="13" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
 
       <!-- [4.3] LYRICS OVERLAY -->
       <div class="lyrics-nav-container">
@@ -126,7 +128,7 @@
       </div>
       <div class="footer-center">
         <div class="version-info">
-          <small>v<span id="appVersion">3.3.24</span></small>
+          <small>v<span id="appVersion">3.3.25</span></small>
         </div>
       </div>
       <div class="footer-right">
