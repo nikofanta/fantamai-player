@@ -108,6 +108,12 @@
     "cover": "errugantinodemilan.png"
   },
   {
+    "title": "Er Rugantino De Milan",
+    "audio": "errugantinodemilanorig.mp3",
+    "cover": "errugantinodemilan.png",
+    "isDraft": true
+  },
+  {
     "title": "Jungle Tango",
     "audio": "jungletango.mp3",
     "cover": "jungletango.png"
