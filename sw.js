@@ -4,6 +4,7 @@
 
 const CACHE_NAME = "fantamai-cache-v3.3.25";
 const APP_VERSION = "3.3.25";
+const NETWORK_TIMEOUT = 3000; // 3 seconds timeout for network requests
 
 /* 
    File che vogliamo tenere in cache
@@ -80,8 +81,9 @@ self.addEventListener("fetch", event => {
   
   if (isCritical) {
     event.respondWith(
-      fetch(event.request)
-        .then(response => {
+      Promise.race([
+        // Try network first
+        fetch(event.request).then(response => {
           // Cache fresh version
           if (response.ok) {
             caches.open(CACHE_NAME).then(cache => {
@@ -89,17 +91,23 @@ self.addEventListener("fetch", event => {
             });
           }
           return response;
-        })
-        .catch(() => {
-          // Fallback to cache if offline
-          return caches.match(event.request).then(cached => {
-            if (cached) return cached;
-            // Last resort for navigation
-            if (event.request.mode === 'navigate') {
-              return caches.match('./index.html');
-            }
-          });
-        })
+        }),
+        // Timeout after NETWORK_TIMEOUT ms
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Network timeout')), NETWORK_TIMEOUT)
+        )
+      ])
+      .catch(() => {
+        // Fallback to cache if network fails or times out
+        console.log('Network failed or timed out, using cache');
+        return caches.match(event.request).then(cached => {
+          if (cached) return cached;
+          // Last resort for navigation
+          if (event.request.mode === 'navigate') {
+            return caches.match('./index.html');
+          }
+        });
+      })
     );
     return;
   }
