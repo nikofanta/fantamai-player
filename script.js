@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.26";
+const APP_VERSION = "3.3.27";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -288,6 +288,10 @@ function applyFilterAndRender() {
     return;
   }
   
+  // Remember currently playing track (if any)
+  const currentlyPlayingTrack = currentIndex >= 0 ? visibleTracks[currentIndex] : null;
+  const wasPlaying = !audio.paused;
+  
   visibleTracks = allTracks.filter(t => {
     // Secret songs always require secret mode
     if (t.isSecret === true && !secretModeActive) return false;
@@ -302,26 +306,41 @@ function applyFilterAndRender() {
     return true;
   });
 
-  // Clear selection when filter changes
-  audio.pause();
-  audio.removeAttribute('src');
-  audio.load();
-  currentTitle.textContent = "";
-  currentCover.src = "./icons/icon-512.png";
+  // Check if currently playing track is still in filtered list
+  let newIndex = -1;
+  if (currentlyPlayingTrack) {
+    newIndex = visibleTracks.findIndex(t => t.audio === currentlyPlayingTrack.audio);
+  }
   
-  // Clear blurred background
-  const trackContainer = document.getElementById('currentTrackContainer');
-  trackContainer.style.setProperty('--cover-image', 'none');
-  
-  currentIndex = -1;
-  clearLyrics("");
+  if (newIndex >= 0) {
+    // Current track is still visible, keep playing and update index
+    currentIndex = newIndex;
+  } else if (currentlyPlayingTrack && wasPlaying) {
+    // Current track was filtered out, but let it finish playing
+    currentIndex = -1; // Will start from beginning when this song ends
+    // Don't stop the audio - let it play to completion
+  } else {
+    // No song was playing, clear everything
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
+    currentTitle.textContent = "";
+    currentCover.src = "./icons/icon-512.png";
+    
+    // Clear blurred background
+    const trackContainer = document.getElementById('currentTrackContainer');
+    trackContainer.style.setProperty('--cover-image', 'none');
+    
+    currentIndex = -1;
+    clearLyrics("");
+  }
   
   // Render the list
   renderList();
   
   if (visibleTracks.length === 0) {
     setStatus("Nessun brano disponibile", "ok", false);
-  } else {
+  } else if (currentIndex === -1 && !wasPlaying) {
     setStatus("Seleziona un brano per iniziare", "ok", false);
   }
 }
@@ -523,15 +542,21 @@ function setupMediaSession(track) {
    [8] NAVIGAZIONE PREV/NEXT
    ========================================================= */
 function playPrev() {
-  let prev = currentIndex - 1;
-  if (prev < 0) prev = visibleTracks.length - 1;
-  loadTrack(prev, true);
+  // If currentIndex is -1 (song was filtered out), start from end
+  if (currentIndex === -1 || currentIndex <= 0) {
+    loadTrack(visibleTracks.length - 1, true);
+  } else {
+    loadTrack(currentIndex - 1, true);
+  }
 }
 
 function playNext() {
-  let next = currentIndex + 1;
-  if (next >= visibleTracks.length) next = 0;
-  loadTrack(next, true);
+  // If currentIndex is -1 (song was filtered out), start from beginning
+  if (currentIndex === -1 || currentIndex >= visibleTracks.length - 1) {
+    loadTrack(0, true);
+  } else {
+    loadTrack(currentIndex + 1, true);
+  }
 }
 
 prevBtn.addEventListener("click", playPrev);
