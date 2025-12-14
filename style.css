@@ -143,6 +143,60 @@ body {
   font-weight: 600;
 }
 
+.medal-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 3;
+  padding: 0;
+}
+
+.medal-btn svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.medal-btn:hover {
+  background: rgba(227, 139, 31, 0.9);
+  border-color: rgba(227, 139, 31, 0.5);
+  transform: scale(1.1);
+}
+
+.medal-btn:active {
+  transform: scale(0.95);
+}
+
+.medal-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #e38b1f;
+  color: #1a1a1a;
+  font-size: 10px;
+  font-weight: bold;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid #1a1a1a;
+}
+
 .lyrics-toggle-btn {
   position: absolute;
   bottom: 10px;
@@ -213,10 +267,85 @@ body {
   pointer-events: none;
 }
 
+/* =========================================================
+   [3.5] STATS POPUP
+   ========================================================= */
+.stats-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.stats-popup.hidden {
+  display: none;
+}
+
+.stats-content {
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(40, 40, 40, 0.95) 100%);
+  padding: 30px 40px;
+  border-radius: 16px;
+  border: 2px solid rgba(227, 139, 31, 0.5);
+  text-align: center;
+  position: relative;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.stats-content h3 {
+  margin: 0 0 20px 0;
+  color: #e38b1f;
+  font-size: 24px;
+}
+
+.stats-content p {
+  margin: 0;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.stats-content strong {
+  color: #e38b1f;
+  font-size: 32px;
+}
+
+.close-stats-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.close-stats-btn:hover {
+  color: #e38b1f;
+  transform: scale(1.2);
+}
+
 .status-overlay {
   position: absolute;
   bottom: 10px;
-  left: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 8px;

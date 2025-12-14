@@ -70,7 +70,16 @@
         <h2 id="currentTitle" aria-live="polite"></h2>
       </div>
       
-      <!-- [4.3] LYRICS TOGGLE BUTTON -->
+      <!-- [4.3] MEDAL BUTTON (STATS) -->
+      <button id="medalBtn" class="medal-btn" aria-label="Mostra statistiche ascolto" title="Statistiche ascolto">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <!-- Medal star -->
+          <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
+        </svg>
+        <span id="medalBadge" class="medal-badge">0</span>
+      </button>
+      
+      <!-- [4.4] LYRICS TOGGLE BUTTON -->
       <button id="lyricsToggleBtn" class="lyrics-toggle-btn" aria-label="Toggle lyrics display" title="Mostra/Nascondi testo">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <!-- Speech bubble -->
@@ -97,6 +106,15 @@
       <div id="statusOverlay" class="status-overlay">
         <div class="spinner" id="spinner"></div>
         <span id="statusText">Pronto</span>
+      </div>
+      
+      <!-- [4.5] STATS POPUP -->
+      <div id="statsPopup" class="stats-popup hidden">
+        <div class="stats-content">
+          <button id="closeStatsBtn" class="close-stats-btn">&times;</button>
+          <h3>🏆 Statistiche Ascolto</h3>
+          <p id="statsMessage">Hai ascoltato <strong id="statsCount">0</strong> canzoni: continua così!</p>
+        </div>
       </div>
     </div>
 
@@ -128,7 +146,7 @@
       </div>
       <div class="footer-center">
         <div class="version-info">
-          <small>v<span id="appVersion">3.3.27</span></small>
+          <small>v<span id="appVersion">3.3.28</span></small>
         </div>
       </div>
       <div class="footer-right">

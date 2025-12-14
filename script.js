@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.27";
+const APP_VERSION = "3.3.28";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -684,6 +684,10 @@ audio.addEventListener("timeupdate", () => {
     if (pct >= 75 && !progressMilestones.p75) {
       progressMilestones.p75 = true;
       gtag('event', 'song_progress_75', { song_title: track.title });
+      
+      // Increment total play count
+      incrementPlayCount();
+      updateMedalBadge();
     }
 
     if (pct >= 99 && !progressMilestones.p100) {
@@ -717,7 +721,9 @@ if (lyricsToggleBtn) {
   
   if (!lyricsVisible) {
     lyricsContainer.classList.add('hidden');
+    lyricsToggleBtn.classList.remove('active');
   } else {
+    lyricsContainer.classList.remove('hidden');
     lyricsToggleBtn.classList.add('active');
   }
   
@@ -731,6 +737,61 @@ if (lyricsToggleBtn) {
     gtag('event', 'lyrics_toggle', {
       visibility: isVisible ? 'shown' : 'hidden'
     });
+  });
+}
+
+/* =========================================================
+   [13.6] PLAY COUNT TRACKING & STATS
+   ========================================================= */
+function getTotalPlayCount() {
+  const count = localStorage.getItem('totalPlayCount');
+  return count ? parseInt(count, 10) : 0;
+}
+
+function incrementPlayCount() {
+  const current = getTotalPlayCount();
+  const newCount = current + 1;
+  localStorage.setItem('totalPlayCount', newCount.toString());
+  console.log(`Total play count: ${newCount}`);
+  return newCount;
+}
+
+function updateMedalBadge() {
+  const badge = document.getElementById('medalBadge');
+  if (badge) {
+    badge.textContent = getTotalPlayCount();
+  }
+}
+
+// Initialize medal badge on page load
+const medalBtn = document.getElementById('medalBtn');
+const statsPopup = document.getElementById('statsPopup');
+const closeStatsBtn = document.getElementById('closeStatsBtn');
+const statsCount = document.getElementById('statsCount');
+
+if (medalBtn && statsPopup) {
+  // Update badge on load
+  updateMedalBadge();
+  
+  medalBtn.addEventListener('click', () => {
+    const total = getTotalPlayCount();
+    statsCount.textContent = total;
+    statsPopup.classList.remove('hidden');
+    
+    gtag('event', 'view_stats', {
+      total_plays: total
+    });
+  });
+  
+  closeStatsBtn.addEventListener('click', () => {
+    statsPopup.classList.add('hidden');
+  });
+  
+  // Close on background click
+  statsPopup.addEventListener('click', (e) => {
+    if (e.target === statsPopup) {
+      statsPopup.classList.add('hidden');
+    }
   });
 }
 
