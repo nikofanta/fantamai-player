@@ -179,12 +179,21 @@
     "title": "Quasi Natale",
     "audio": "quasinatale.mp3",
     "cover": "quasinatale.png",
+    "lrc": "quasinatale.lrc",
     "isDraft": false,
     "isSecret": true
   },
   {
     "title": "Elfa Ariela",
     "audio": "elfaariela.mp3",
+    "cover": "elfaariela.png",
+    "lrc": "elfaariela.lrc",
+    "isDraft": false,
+    "isSecret": true
+  },
+  {
+    "title": "Elfa Ariela (swing)",
+    "audio": "elfaarielaswing.mp3",
     "cover": "elfaariela.png",
     "isDraft": false,
     "isSecret": true
