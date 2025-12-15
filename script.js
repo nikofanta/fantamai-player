@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.30";
+const APP_VERSION = "3.3.31";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -549,7 +549,9 @@ audio.addEventListener("playing", () => {
     gtag('event', 'play_song', {
       song_title: track.title,
       is_draft: track.isDraft || false,
-      device_type: /mobile/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+      device_type: /mobile/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+      listen_count: getTotalPlayCount(),
+      secret_mode_enabled: secretModeActive
     });
   } catch (e) { console.warn("GA error", e); }
 

@@ -91,11 +91,18 @@
     "cover": "carolformatteo.png"
   },
   {
+    "title": "Light In The Rain",
+    "audio": "lightintherain.mp3",
+    "cover": "lightintherain.png",
+    "lrc": "lightintherain.lrc",
+    "isDraft": false
+  },
+  {
     "title": "Dream in the Jungle",
     "audio": "dreaminthejungle.mp3",
     "cover": "dreaminthejungle.png",
     "lrc": "dreaminthejungle.lrc",
-    "isDraft": false
+    "isDraft": true
   },
   {
     "title": "È la Canzone che ti dice",
@@ -117,7 +124,8 @@
   {
     "title": "Jungle Tango",
     "audio": "jungletango.mp3",
-    "cover": "jungletango.png"
+    "cover": "jungletango.png",
+    "isDraft": true
   },
   {
     "title": "Amici Di Roma",
