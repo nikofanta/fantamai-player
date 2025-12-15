@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.28";
+const APP_VERSION = "3.3.30";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -93,9 +93,14 @@ function toggleLike(trackTitle) {
 }
 
 /* =========================================================
-   [2.2] SHARE FUNCTIONALITY
+   [2.2] SHARE FUNCTIONALITY (SIMPLIFIED)
    ========================================================= */
 async function shareTrack(track) {
+  // Don't share if app is hidden (prevents Chrome notification issue)
+  if (document.hidden) {
+    return;
+  }
+  
   // Extract filename from audio path (e.g., "./mp3/sancarlo.mp3" -> "sancarlo")
   const audioPath = track.audio;
   const filename = audioPath.split('/').pop().replace(/\.[^/.]+$/, "");
@@ -104,39 +109,9 @@ async function shareTrack(track) {
   const baseUrl = window.location.origin + window.location.pathname;
   const shareUrl = `${baseUrl}?song=${encodeURIComponent(filename)}`;
   
-  const shareData = {
-    title: track.title,
-    text: `Listen to "${track.title}" by fantam.AI`,
-    url: shareUrl
-  };
-  
-  // Try native share API first (mobile)
-  try {
-    if (navigator.share) {
-      await navigator.share(shareData);
-      
-      // Track in GA
-      try {
-        gtag('event', 'song_shared', {
-          song_title: track.title,
-          share_method: 'native'
-        });
-      } catch (e) {}
-      
-      return;
-    }
-  } catch (err) {
-    // If user cancels, do nothing
-    if (err.name === 'AbortError') {
-      return;
-    }
-    // Fall through to clipboard for other errors
-  }
-  
-  // Fallback: copy to clipboard (desktop or if share fails)
+  // Always use clipboard (simpler, more reliable)
   try {
     await navigator.clipboard.writeText(shareUrl);
-    
     setStatus("Link copiato negli appunti!", "ok", false);
     
     // Track in GA
@@ -146,17 +121,10 @@ async function shareTrack(track) {
         share_method: 'clipboard'
       });
     } catch (e) {}
-  } catch (clipErr) {
-    // Last resort: show alert with URL (happens on HTTP or insecure contexts)
+  } catch (err) {
+    console.error('Clipboard failed:', err);
+    // Last resort: show alert with URL
     alert(`Copia questo link:\n\n${shareUrl}`);
-    
-    // Track in GA
-    try {
-      gtag('event', 'song_shared', {
-        song_title: track.title,
-        share_method: 'manual'
-      });
-    } catch (e) {}
   }
 }
 
@@ -763,11 +731,65 @@ function updateMedalBadge() {
   }
 }
 
+// Badge levels system
+const BADGE_LEVELS = [
+  { name: 'LISTENER', icon: '🎵', threshold: 0 },
+  { name: 'SUPPORTER', icon: '🌟', threshold: 50 },
+  { name: 'CONTRIBUTOR', icon: '💪', threshold: 200 },
+  { name: 'AMBASSADOR', icon: '🏆', threshold: 300 }
+];
+
+function getCurrentBadge(playCount) {
+  // Find the highest badge the user has earned
+  for (let i = BADGE_LEVELS.length - 1; i >= 0; i--) {
+    if (playCount >= BADGE_LEVELS[i].threshold) {
+      return BADGE_LEVELS[i];
+    }
+  }
+  return BADGE_LEVELS[0]; // Default to LISTENER
+}
+
+function getNextBadge(playCount) {
+  // Find the next badge to unlock
+  for (let i = 0; i < BADGE_LEVELS.length; i++) {
+    if (playCount < BADGE_LEVELS[i].threshold) {
+      return BADGE_LEVELS[i];
+    }
+  }
+  return null; // Max level reached
+}
+
+function updateStatsPopup(playCount) {
+  const statsCount = document.getElementById('statsCount');
+  const badgeIcon = document.getElementById('badgeIcon');
+  const badgeName = document.getElementById('badgeName');
+  const statsProgress = document.getElementById('statsProgress');
+  
+  // Update play count
+  statsCount.textContent = playCount;
+  
+  // Update current badge
+  const currentBadge = getCurrentBadge(playCount);
+  badgeIcon.textContent = currentBadge.icon;
+  badgeName.textContent = currentBadge.name;
+  
+  // Update progress message
+  const nextBadge = getNextBadge(playCount);
+  if (nextBadge) {
+    const songsNeeded = nextBadge.threshold - playCount;
+    statsProgress.textContent = `Ti mancano ${songsNeeded} canzoni per diventare ${nextBadge.name}!`;
+    statsProgress.style.display = 'block';
+  } else {
+    // Max level reached
+    statsProgress.textContent = 'Hai raggiunto il livello massimo! Sei un vero AMBASSADOR!';
+    statsProgress.style.display = 'block';
+  }
+}
+
 // Initialize medal badge on page load
 const medalBtn = document.getElementById('medalBtn');
 const statsPopup = document.getElementById('statsPopup');
 const closeStatsBtn = document.getElementById('closeStatsBtn');
-const statsCount = document.getElementById('statsCount');
 
 if (medalBtn && statsPopup) {
   // Update badge on load
@@ -775,11 +797,12 @@ if (medalBtn && statsPopup) {
   
   medalBtn.addEventListener('click', () => {
     const total = getTotalPlayCount();
-    statsCount.textContent = total;
+    updateStatsPopup(total);
     statsPopup.classList.remove('hidden');
     
     gtag('event', 'view_stats', {
-      total_plays: total
+      total_plays: total,
+      current_badge: getCurrentBadge(total).name
     });
   });
   
@@ -911,7 +934,40 @@ function showUpdateBanner() {
 }
 
 /* =========================================================
-   [15] BLANK PAGE DETECTION AND RECOVERY
+   [15] APP WAKE-UP RECOVERY
+   ========================================================= */
+function checkAndRecoverUI() {
+  const container = document.querySelector('.container');
+  const trackList = document.getElementById('trackList');
+  
+  // Check if UI is broken (black screen)
+  if (!container || !trackList || trackList.children.length === 0) {
+    console.warn('UI broken detected, reloading...');
+    window.location.reload();
+    return;
+  }
+  
+  // Update Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistration().then(reg => {
+      if (reg) reg.update();
+    });
+  }
+}
+
+// Listen for app coming back from background
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    setTimeout(checkAndRecoverUI, 500); // Small delay to let UI render
+  }
+});
+
+window.addEventListener('focus', () => {
+  setTimeout(checkAndRecoverUI, 500);
+});
+
+/* =========================================================
+   [16] BLANK PAGE DETECTION AND RECOVERY
    ========================================================= */
 window.addEventListener('load', () => {
   // Detect blank page after 5 seconds and force recovery

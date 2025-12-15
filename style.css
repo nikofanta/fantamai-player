@@ -306,16 +306,44 @@ body {
   font-size: 24px;
 }
 
-.stats-content p {
-  margin: 0;
+.badge-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.badge-icon {
+  font-size: 64px;
+  line-height: 1;
+}
+
+.badge-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #e38b1f;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.stats-plays {
+  margin: 20px 0 10px 0;
   color: #fff;
   font-size: 18px;
   line-height: 1.6;
 }
 
-.stats-content strong {
+.stats-plays strong {
   color: #e38b1f;
   font-size: 32px;
+}
+
+.stats-progress {
+  margin: 10px 0 0 0;
+  color: #cfcfcf;
+  font-size: 16px;
+  font-style: italic;
 }
 
 .close-stats-btn {
