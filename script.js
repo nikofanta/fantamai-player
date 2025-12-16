@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.32";
+const APP_VERSION = "3.3.33";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -699,9 +699,16 @@ if (lyricsToggleBtn) {
   
   lyricsToggleBtn.addEventListener('click', () => {
     lyricsContainer.classList.toggle('hidden');
-    lyricsToggleBtn.classList.toggle('active');
     
     const isVisible = !lyricsContainer.classList.contains('hidden');
+    
+    // Sync button state with actual visibility
+    if (isVisible) {
+      lyricsToggleBtn.classList.add('active');
+    } else {
+      lyricsToggleBtn.classList.remove('active');
+    }
+    
     localStorage.setItem('lyricsVisible', isVisible);
     
     gtag('event', 'lyrics_toggle', {

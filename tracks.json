@@ -107,7 +107,8 @@
   {
     "title": "È la Canzone che ti dice",
     "audio": "elacanzonechetidice.mp3",
-    "cover": "elacanzonechetidice.png"
+    "cover": "elacanzonechetidice.png",
+    "lrc": "elacanzonechetidice.lrc"
   },
   {
     "title": "Er Rugantino De Milan",
