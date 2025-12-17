@@ -53,6 +53,26 @@
     "lrc": "summercontest.lrc"
   },
   {
+    "title": "Cheesecake And Coffee",
+    "audio": "cheesecakeandcoffee3.mp3",
+    "cover": "cheesecakeandcoffee.png",
+    "lrc": "cheesecakeandcoffee.lrc"
+  },
+  {
+    "title": "Cheesecake And Coffee (2)",
+    "audio": "cheesecakeandcoffee2.mp3",
+    "cover": "cheesecakeandcoffee2.png",
+    "lrc": "cheesecakeandcoffee.lrc",
+    "isDraft": true
+  },
+    {
+    "title": "Cheesecake And Coffee (1)",
+    "audio": "cheesecakeandcoffee.mp3",
+    "cover": "cheesecakeandcoffee.png",
+    "lrc": "cheesecakeandcoffee.lrc",
+    "isDraft": true
+  },
+  {
     "title": "Summer Contest - remaster",
     "audio": "summercontest.mp3",
     "cover": "summercontest.png",
@@ -62,7 +82,8 @@
     "title": "A Faraway Dream",
     "audio": "afarawaydream.mp3",
     "cover": "afarawaydream.png",
-    "lrc": "afarawaydream.lrc"
+    "lrc": "afarawaydream.lrc",
+    "isDraft": true
   },
   {
     "title": "Sogno Lontano",

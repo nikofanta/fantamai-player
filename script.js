@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.36";
+const APP_VERSION = "3.3.37";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -249,6 +249,10 @@ function applyFilterAndRender() {
     const trackContainer = document.getElementById('currentTrackContainer');
     trackContainer.style.setProperty('--cover-image', 'none');
     
+    // Hide lyrics container
+    const lyricsContainer = document.querySelector('.lyrics-nav-container');
+    if (lyricsContainer) lyricsContainer.classList.add('hidden');
+    
     currentIndex = -1;
     clearLyrics("");
     setStatus("Seleziona almeno una canzone come favorita per abilitare questo filtro", "warning", false);
@@ -298,6 +302,10 @@ function applyFilterAndRender() {
     // Clear blurred background
     const trackContainer = document.getElementById('currentTrackContainer');
     trackContainer.style.setProperty('--cover-image', 'none');
+    
+    // Hide lyrics container
+    const lyricsContainer = document.querySelector('.lyrics-nav-container');
+    if (lyricsContainer) lyricsContainer.classList.add('hidden');
     
     currentIndex = -1;
     clearLyrics("");
@@ -691,12 +699,23 @@ if (lyricsToggleBtn) {
   const lyricsVisible = localStorage.getItem('lyricsVisible');
   if (lyricsVisible === 'false') {
     lyricsContainer.classList.add('hidden');
+    lyricsToggleBtn.classList.remove('active');
+  } else {
+    lyricsToggleBtn.classList.add('active');
   }
   
-  // Handle button click - simple toggle
+  // Handle button click
   lyricsToggleBtn.addEventListener('click', () => {
     lyricsContainer.classList.toggle('hidden');
     const isVisible = !lyricsContainer.classList.contains('hidden');
+    
+    // Update button state
+    if (isVisible) {
+      lyricsToggleBtn.classList.add('active');
+    } else {
+      lyricsToggleBtn.classList.remove('active');
+    }
+    
     localStorage.setItem('lyricsVisible', isVisible);
     
     gtag('event', 'lyrics_toggle', {
