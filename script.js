@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.34";
+const APP_VERSION = "3.3.35";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -687,33 +687,17 @@ onlyFavsChk.addEventListener("click", () => {
 if (lyricsToggleBtn) {
   const lyricsContainer = document.querySelector('.lyrics-nav-container');
   
-  // Function to sync button state with container visibility
-  function syncLyricsButtonState() {
-    const isVisible = !lyricsContainer.classList.contains('hidden');
-    if (isVisible) {
-      lyricsToggleBtn.classList.add('active');
-    } else {
-      lyricsToggleBtn.classList.remove('active');
-    }
-  }
-  
   // Initialize from localStorage
   const lyricsVisible = localStorage.getItem('lyricsVisible');
   if (lyricsVisible === 'false') {
     lyricsContainer.classList.add('hidden');
-  } else {
-    lyricsContainer.classList.remove('hidden');
   }
-  syncLyricsButtonState(); // Sync button after setting initial state
   
-  // Handle button click
+  // Handle button click - simple toggle
   lyricsToggleBtn.addEventListener('click', () => {
     lyricsContainer.classList.toggle('hidden');
-    
     const isVisible = !lyricsContainer.classList.contains('hidden');
     localStorage.setItem('lyricsVisible', isVisible);
-    
-    syncLyricsButtonState(); // Sync button after toggle
     
     gtag('event', 'lyrics_toggle', {
       visibility: isVisible ? 'shown' : 'hidden'

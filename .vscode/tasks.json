@@ -25,6 +25,11 @@
 			"label": "Update version to 3.3.34",
 			"type": "shell",
 			"command": ".\\update-version.ps1 3.3.34"
+		},
+		{
+			"label": "Update version to 3.3.35",
+			"type": "shell",
+			"command": ".\\update-version.ps1 3.3.35"
 		}
 	]
 }
