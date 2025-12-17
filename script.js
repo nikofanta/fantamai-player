@@ -243,7 +243,7 @@ function applyFilterAndRender() {
     audio.removeAttribute('src');
     audio.load();
     currentTitle.textContent = "";
-    currentCover.src = "./icons/icon-512.png";
+    currentCover.src = "./covers/nosong.png";
     
     // Clear blurred background
     const trackContainer = document.getElementById('currentTrackContainer');
@@ -293,7 +293,7 @@ function applyFilterAndRender() {
     audio.removeAttribute('src');
     audio.load();
     currentTitle.textContent = "";
-    currentCover.src = "./icons/icon-512.png";
+    currentCover.src = "./covers/nosong.png";
     
     // Clear blurred background
     const trackContainer = document.getElementById('currentTrackContainer');
