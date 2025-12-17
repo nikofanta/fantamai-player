@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.33";
+const APP_VERSION = "3.3.34";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -685,31 +685,35 @@ onlyFavsChk.addEventListener("click", () => {
 
 // Lyrics toggle button
 if (lyricsToggleBtn) {
-  // Check saved preference
-  const lyricsVisible = localStorage.getItem('lyricsVisible') !== 'false';
   const lyricsContainer = document.querySelector('.lyrics-nav-container');
   
-  if (!lyricsVisible) {
-    lyricsContainer.classList.add('hidden');
-    lyricsToggleBtn.classList.remove('active');
-  } else {
-    lyricsContainer.classList.remove('hidden');
-    lyricsToggleBtn.classList.add('active');
-  }
-  
-  lyricsToggleBtn.addEventListener('click', () => {
-    lyricsContainer.classList.toggle('hidden');
-    
+  // Function to sync button state with container visibility
+  function syncLyricsButtonState() {
     const isVisible = !lyricsContainer.classList.contains('hidden');
-    
-    // Sync button state with actual visibility
     if (isVisible) {
       lyricsToggleBtn.classList.add('active');
     } else {
       lyricsToggleBtn.classList.remove('active');
     }
+  }
+  
+  // Initialize from localStorage
+  const lyricsVisible = localStorage.getItem('lyricsVisible');
+  if (lyricsVisible === 'false') {
+    lyricsContainer.classList.add('hidden');
+  } else {
+    lyricsContainer.classList.remove('hidden');
+  }
+  syncLyricsButtonState(); // Sync button after setting initial state
+  
+  // Handle button click
+  lyricsToggleBtn.addEventListener('click', () => {
+    lyricsContainer.classList.toggle('hidden');
     
+    const isVisible = !lyricsContainer.classList.contains('hidden');
     localStorage.setItem('lyricsVisible', isVisible);
+    
+    syncLyricsButtonState(); // Sync button after toggle
     
     gtag('event', 'lyrics_toggle', {
       visibility: isVisible ? 'shown' : 'hidden'
