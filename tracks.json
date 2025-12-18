@@ -21,18 +21,10 @@
     "isDraft": true
   },
   {
-    "title": "Storm Out Of Nowhere",
-    "audio": "stormoutofnowhere2.mp3",
-    "cover": "stormoutofnowhere.png",
-    "lrc": "stormoutofnowhere2.lrc",
-    "isDraft": false
-  },
-  {
-    "title": "Storm Out Of Nowhere (male)",
-    "audio": "stormoutofnowhere.mp3",
-    "cover": "stormoutofnowhere.png",
-    "lrc": "stormoutofnowhere.lrc",
-    "isDraft": true
+    "title": "È la Canzone che ti dice",
+    "audio": "elacanzonechetidice.mp3",
+    "cover": "elacanzonechetidice.png",
+    "lrc": "elacanzonechetidice.lrc"
   },
   {
     "title": "Sapore di Indonesia",
@@ -45,12 +37,6 @@
     "audio": "daromaadubai.mp3",
     "cover": "daromaadubai.png",
     "lrc": "daromaadubai.lrc"
-  },
-  {
-    "title": "Summer Contest",
-    "audio": "summercontest2.mp3",
-    "cover": "summercontest.png",
-    "lrc": "summercontest.lrc"
   },
   {
     "title": "Cheesecake And Coffee",
@@ -73,6 +59,12 @@
     "isDraft": true
   },
   {
+    "title": "Summer Contest",
+    "audio": "summercontest2.mp3",
+    "cover": "summercontest.png",
+    "lrc": "summercontest.lrc"
+  },
+  {
     "title": "Summer Contest - remaster",
     "audio": "summercontest.mp3",
     "cover": "summercontest.png",
@@ -83,7 +75,7 @@
     "audio": "afarawaydream.mp3",
     "cover": "afarawaydream.png",
     "lrc": "afarawaydream.lrc",
-    "isDraft": true
+    "isDraft": false
   },
   {
     "title": "Sogno Lontano",
@@ -126,10 +118,18 @@
     "isDraft": true
   },
   {
-    "title": "È la Canzone che ti dice",
-    "audio": "elacanzonechetidice.mp3",
-    "cover": "elacanzonechetidice.png",
-    "lrc": "elacanzonechetidice.lrc"
+    "title": "Storm Out Of Nowhere",
+    "audio": "stormoutofnowhere2.mp3",
+    "cover": "stormoutofnowhere.png",
+    "lrc": "stormoutofnowhere2.lrc",
+    "isDraft": false
+  },
+  {
+    "title": "Storm Out Of Nowhere (male)",
+    "audio": "stormoutofnowhere.mp3",
+    "cover": "stormoutofnowhere.png",
+    "lrc": "stormoutofnowhere.lrc",
+    "isDraft": true
   },
   {
     "title": "Er Rugantino De Milan",
@@ -142,6 +142,13 @@
     "audio": "errugantinodemilanorig.mp3",
     "cover": "errugantinodemilan.png",
     "isDraft": true
+  },
+  {
+    "title": "Jungle Tango (ESP)",
+    "audio": "jungletangoesp.mp3",
+    "cover": "jungletango.png",
+    "lrc": "jungletangoesp.lrc",
+    "isDraft": false
   },
   {
     "title": "Jungle Tango",
@@ -176,15 +183,15 @@
     "isDraft": false
   },
   {
-    "title": "It Belongs to Us",
-    "audio": "itbelongstous.mp3",
+    "title": "It Belongs to Us (duo)",
+    "audio": "itbelongstousduo.mp3",
     "cover": "itbelongstous.png",
     "lrc": "itbelongstous.lrc",
     "isDraft": false
   },
   {
-    "title": "It Belongs to Us (duo)",
-    "audio": "itbelongstousduo.mp3",
+    "title": "It Belongs to Us",
+    "audio": "itbelongstous.mp3",
     "cover": "itbelongstous.png",
     "lrc": "itbelongstous.lrc",
     "isDraft": true
@@ -216,7 +223,8 @@
   {
     "title": "Elfa Ariela (swing)",
     "audio": "elfaarielaswing.mp3",
-    "cover": "elfaariela.png",
+    "cover": "elfaarielaswing.png",
+    "lrc": "elfaarielaswing.lrc",
     "isDraft": false,
     "isSecret": true
   }
