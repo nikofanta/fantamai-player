@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.39";
+const APP_VERSION = "3.3.40";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -251,7 +251,11 @@ function applyFilterAndRender() {
     
     // Hide lyrics container
     const lyricsContainer = document.querySelector('.lyrics-nav-container');
-    if (lyricsContainer) lyricsContainer.classList.add('hidden');
+    if (lyricsContainer) {
+      lyricsContainer.classList.add('hidden');
+      // Update button state to match container visibility
+      if (lyricsToggleBtn) lyricsToggleBtn.classList.remove('active');
+    }
     
     currentIndex = -1;
     clearLyrics("");
@@ -305,7 +309,11 @@ function applyFilterAndRender() {
     
     // Hide lyrics container
     const lyricsContainer = document.querySelector('.lyrics-nav-container');
-    if (lyricsContainer) lyricsContainer.classList.add('hidden');
+    if (lyricsContainer) {
+      lyricsContainer.classList.add('hidden');
+      // Update button state to match container visibility
+      if (lyricsToggleBtn) lyricsToggleBtn.classList.remove('active');
+    }
     
     currentIndex = -1;
     clearLyrics("");
@@ -476,6 +484,18 @@ function loadTrack(index, autoplay = true) {
   // Set blurred background image on container
   const trackContainer = document.getElementById('currentTrackContainer');
   trackContainer.style.setProperty('--cover-image', `url('${track.cover}')`);
+
+  // Sync lyrics container visibility with button state
+  const lyricsContainer = document.querySelector('.lyrics-nav-container');
+  if (lyricsContainer && lyricsToggleBtn) {
+    // Button state is the source of truth
+    const buttonIsActive = lyricsToggleBtn.classList.contains('active');
+    if (buttonIsActive) {
+      lyricsContainer.classList.remove('hidden');
+    } else {
+      lyricsContainer.classList.add('hidden');
+    }
+  }
 
   [...listContainer.children].forEach((li, i) => {
     li.classList.toggle("active", i === index);
