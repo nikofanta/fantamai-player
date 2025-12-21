@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.40";
+const APP_VERSION = "3.3.41";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -508,7 +508,12 @@ function loadTrack(index, autoplay = true) {
   if (track.lrc) loadLrc(track.lrc);
   else clearLyrics("Testo non disponibile");
 
-  if (autoplay) audio.play().catch(() => {});
+  if (autoplay) {
+    audio.play().catch(() => {
+      // Autoplay blocked by browser - add pulse effect to draw attention
+      audio.classList.add('pulse-border');
+    });
+  }
 }
 
 /* =========================================================
@@ -584,6 +589,9 @@ audio.addEventListener("playing", () => {
   } catch (e) { console.warn("GA error", e); }
 
   if ("mediaSession" in navigator) navigator.mediaSession.playbackState = "playing";
+  
+  // Remove pulse effect when playback starts successfully
+  audio.classList.remove('pulse-border');
 });
 
 /* =========================================================
@@ -715,8 +723,11 @@ onlyFavsChk.addEventListener("click", () => {
 if (lyricsToggleBtn) {
   const lyricsContainer = document.querySelector('.lyrics-nav-container');
   
-  // Initialize from localStorage
+  // Initialize from localStorage (default to visible)
   const lyricsVisible = localStorage.getItem('lyricsVisible');
+  if (lyricsVisible === null) {
+    localStorage.setItem('lyricsVisible', 'true');
+  }
   if (lyricsVisible === 'false') {
     lyricsContainer.classList.add('hidden');
     lyricsToggleBtn.classList.remove('active');
