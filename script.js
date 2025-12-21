@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.4.1";
+const APP_VERSION = "3.4.2";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -521,6 +521,7 @@ function loadTrack(index, autoplay = true) {
       // Autoplay blocked by browser - show play button overlay
       const playOverlay = document.getElementById('playButtonOverlay');
       if (playOverlay) playOverlay.classList.remove('hidden');
+      setStatus("Premi il bottone Play per ascoltare il brano", "ok", false);
     });
   }
 }
