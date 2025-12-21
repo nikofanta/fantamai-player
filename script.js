@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.3.41";
+const APP_VERSION = "3.4.0";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -216,6 +216,14 @@ function checkUrlParameters() {
       
       // Re-apply filters with new settings
       applyFilterAndRender();
+      
+      // Force enable lyrics for URL-selected songs
+      localStorage.setItem('lyricsVisible', 'true');
+      if (lyricsToggleBtn) {
+        lyricsToggleBtn.classList.add('active');
+        const lyricsContainer = document.querySelector('.lyrics-nav-container');
+        if (lyricsContainer) lyricsContainer.classList.remove('hidden');
+      }
       
       // Find index in visible tracks and load it
       const visibleIndex = visibleTracks.findIndex(t => t.audio === track.audio);
@@ -510,8 +518,9 @@ function loadTrack(index, autoplay = true) {
 
   if (autoplay) {
     audio.play().catch(() => {
-      // Autoplay blocked by browser - add pulse effect to draw attention
-      audio.classList.add('pulse-border');
+      // Autoplay blocked by browser - show play button overlay
+      const playOverlay = document.getElementById('playButtonOverlay');
+      if (playOverlay) playOverlay.classList.remove('hidden');
     });
   }
 }
@@ -590,8 +599,9 @@ audio.addEventListener("playing", () => {
 
   if ("mediaSession" in navigator) navigator.mediaSession.playbackState = "playing";
   
-  // Remove pulse effect when playback starts successfully
-  audio.classList.remove('pulse-border');
+  // Hide play button overlay when playback starts
+  const playOverlay = document.getElementById('playButtonOverlay');
+  if (playOverlay) playOverlay.classList.add('hidden');
 });
 
 /* =========================================================
@@ -1040,6 +1050,16 @@ window.addEventListener('load', () => {
     }
   }, 5000);
 });
+// Play button overlay handler
+const playOverlayBtn = document.getElementById('playOverlayBtn');
+if (playOverlayBtn) {
+  playOverlayBtn.addEventListener('click', () => {
+    audio.play();
+    const playOverlay = document.getElementById('playButtonOverlay');
+    if (playOverlay) playOverlay.classList.add('hidden');
+  });
+}
+
 
 /* =========================================================
    [16] AVVIO
