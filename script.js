@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.4.2";
+const APP_VERSION = "3.4.3";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
