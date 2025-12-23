@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.4.3";
+const APP_VERSION = "3.4.4";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -872,6 +872,32 @@ if (medalBtn && statsPopup) {
   statsPopup.addEventListener('click', (e) => {
     if (e.target === statsPopup) {
       statsPopup.classList.add('hidden');
+    }
+  });
+}
+
+// Initialize info button
+const infoBtn = document.getElementById('infoBtn');
+const infoPopup = document.getElementById('infoPopup');
+const closeInfoBtn = document.getElementById('closeInfoBtn');
+
+if (infoBtn && infoPopup) {
+  infoBtn.addEventListener('click', () => {
+    infoPopup.classList.remove('hidden');
+    
+    gtag('event', 'view_info', {
+      section: 'project_info'
+    });
+  });
+  
+  closeInfoBtn.addEventListener('click', () => {
+    infoPopup.classList.add('hidden');
+  });
+  
+  // Close on background click
+  infoPopup.addEventListener('click', (e) => {
+    if (e.target === infoPopup) {
+      infoPopup.classList.add('hidden');
     }
   });
 }

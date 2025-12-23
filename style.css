@@ -426,6 +426,28 @@ body {
   transform: scale(1.2);
 }
 
+/* Info popup specific styles */
+.info-content {
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.info-text {
+  text-align: left;
+  line-height: 1.6;
+}
+
+.info-text p {
+  margin: 15px 0;
+  color: #cfcfcf;
+  font-size: 15px;
+}
+
+.info-text p strong {
+  color: #e38b1f;
+}
+
 .status-overlay {
   position: absolute;
   bottom: 10px;
@@ -592,6 +614,35 @@ audio::-webkit-media-controls-panel {
 }
 
 .draft-cruet-btn:active {
+  transform: scale(0.9);
+}
+
+/* Info button */
+.info-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.info-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #e38b1f;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+.info-btn:hover svg {
+  transform: scale(1.1);
+}
+
+.info-btn:active {
   transform: scale(0.9);
 }
 

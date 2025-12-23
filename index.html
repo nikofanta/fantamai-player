@@ -131,6 +131,25 @@
           <p class="stats-progress" id="statsProgress">Ti mancano 50 canzoni per diventare SUPPORTER!</p>
         </div>
       </div>
+      
+      <!-- [4.6] INFO POPUP -->
+      <div id="infoPopup" class="stats-popup hidden">
+        <div class="stats-content info-content">
+          <button id="closeInfoBtn" class="close-stats-btn">&times;</button>
+          <h3>ℹ️ Benvenuto nel progetto Fantam.AI!</h3>
+          <div class="info-text">
+            <p>Se sei arrivato fin qui, è perché qualcuno stima i tuoi gusti musicali e ha creduto nelle tue capacità da talent scout. 🎧</p>
+            <p>Ora è il momento di metterti alla prova: ascolta le canzoni di questa playlist e aiutaci a selezionare le sei migliori, quelle che avranno la possibilità di entrare a far parte di un album pubblicato su Spotify.</p>
+            <p>Ricorda: non stiamo cercando la canzone del secolo. Vogliamo solo capire se uno di questi brani potrebbe riuscire a intrufolarsi tra le tue playlist personali.</p>
+            <p>Se un brano ti piace, metti semplicemente un like [❤️] e ascoltalo liberamente.<br>
+Se invece non fa per te, puoi evitare il like e filtrarlo, così non ti verrà riproposto mentre ascolti i tuoi preferiti.</p>
+            <p>Condividi le canzoni che trovi interessanti con amici talentuosi e music-addicted come te!</p>
+            <p>Puoi abilitare o disabilitare i testi delle canzoni e attivare la modalità "Labs" [🧪], che ti permette di ascoltare anche brani scartati o versioni arrangiate in modo diverso rispetto a quelle in gara.</p>
+            <p>Ascolta il maggior numero possibile di canzoni per guadagnare punti fedeltà e passare da semplice Listener [🎵] a Ambassador [🏆]!</p>
+            <p><strong>Buon ascolto e grazie per il tuo prezioso contributo! 💛</strong></p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- [6] PLAYLIST HEADER -->
@@ -161,10 +180,17 @@
       </div>
       <div class="footer-center">
         <div class="version-info">
-          <small>v<span id="appVersion">3.4.3</span></small>
+          <small>v<span id="appVersion">3.4.4</span></small>
         </div>
       </div>
       <div class="footer-right">
+        <button id="infoBtn" class="info-btn" aria-label="Project information" title="Informazioni sul progetto">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke-width="2" fill="none"/>
+            <path d="M12 16v-4" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="8" r="1" fill="currentColor"/>
+          </svg>
+        </button>
         <button id="onlyFavsChk" class="favs-heart-btn" aria-label="Show only favorite tracks" title="Usa questo cuore per selezionare solo i tuoi preferiti!">
           <svg width="24" height="24" viewBox="0 0 24 24">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
