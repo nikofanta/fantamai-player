@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.4.5";
+const APP_VERSION = "3.4.6";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -880,6 +880,7 @@ if (medalBtn && statsPopup) {
 const infoBtn = document.getElementById('infoBtn');
 const infoPopup = document.getElementById('infoPopup');
 const closeInfoBtn = document.getElementById('closeInfoBtn');
+const closeInfoBtnBottom = document.getElementById('closeInfoBtnBottom');
 
 if (infoBtn && infoPopup) {
   infoBtn.addEventListener('click', () => {
@@ -893,6 +894,12 @@ if (infoBtn && infoPopup) {
   closeInfoBtn.addEventListener('click', () => {
     infoPopup.classList.add('hidden');
   });
+  
+  if (closeInfoBtnBottom) {
+    closeInfoBtnBottom.addEventListener('click', () => {
+      infoPopup.classList.add('hidden');
+    });
+  }
   
   // Close on background click
   infoPopup.addEventListener('click', (e) => {

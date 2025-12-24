@@ -433,6 +433,19 @@ body {
   overflow-y: auto;
 }
 
+.info-image {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.info-image img {
+  max-width: 200px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
 .info-text {
   text-align: left;
   line-height: 1.6;
@@ -442,6 +455,34 @@ body {
   margin: 15px 0;
   color: #cfcfcf;
   font-size: 15px;
+}
+
+.info-text p strong {
+  color: #e38b1f;
+}
+
+.close-info-btn-bottom {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #e38b1f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.close-info-btn-bottom:hover {
+  background: #ff9d2e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(227, 139, 31, 0.4);
+}
+
+.close-info-btn-bottom:active {
+  transform: translateY(0);
 }
 
 .info-text p strong {
