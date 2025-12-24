@@ -218,7 +218,7 @@
     "cover": "elfaariela.png",
     "lrc": "elfaariela.lrc",
     "isDraft": false,
-    "isSecret": true
+    "isSecret": false
   },
   {
     "title": "Elfa Ariela (swing)",
@@ -226,7 +226,7 @@
     "cover": "elfaarielaswing.png",
     "lrc": "elfaarielaswing.lrc",
     "isDraft": false,
-    "isSecret": true
+    "isSecret": false
   }
 ]
 
