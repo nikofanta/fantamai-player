@@ -227,6 +227,24 @@
     "lrc": "elfaarielaswing.lrc",
     "isDraft": false,
     "isSecret": false
+  },
+  {
+    "title": "Simone",
+    "audio": "simone.mp3",
+    "cover": "nosong.png",
+    "isSecret": true
+  },
+  {
+    "title": "Strade Nuove 1",
+    "audio": "stradenuove1.mp3",
+    "cover": "nosong.png",
+    "isSecret": true
+  },
+  {
+    "title": "Strade Nuove 2",
+    "audio": "stradenuove2.mp3",
+    "cover": "nosong.png",
+    "isSecret": true
   }
 ]
 
