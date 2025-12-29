@@ -227,6 +227,12 @@
     "isDraft": false,
     "isSecret": false
   },
+  {
+    "title": "Tango Y Spada [best]",
+    "audio": "tangoyspada2.mp3",
+    "cover": "nosong.png",
+    "isSecret": true
+  },
     {
     "title": "Tango Y Spada",
     "audio": "tangoyspada.mp3",
