@@ -51,7 +51,7 @@
     "isDraft": true
   },
     {
-    "title": "Cheesecake And Coffee (1)",
+    "title": "Cheesecake And Coffee (orig)",
     "audio": "cheesecakeandcoffee.mp3",
     "cover": "cheesecakeandcoffee.png",
     "lrc": "cheesecakeandcoffee.lrc",
@@ -100,7 +100,8 @@
   {
     "title": "Carol for Matteo",
     "audio": "carolformatteo.mp3",
-    "cover": "carolformatteo.png"
+    "cover": "carolformatteo.png",
+    "isDraft": true
   },
   {
     "title": "Light In The Rain",
@@ -159,7 +160,8 @@
     "title": "Amici Di Roma",
     "audio": "amicidiroma.mp3",
     "cover": "amicidiroma.png",
-    "lrc": "amicidiroma.lrc"
+    "lrc": "amicidiroma.lrc",
+    "isDraft": true
   },
   {
     "title": "Amici Di Roma",
@@ -228,15 +230,17 @@
     "isSecret": false
   },
   {
-    "title": "Tango Y Spada [best]",
-    "audio": "tangoyspada2.mp3",
-    "cover": "nosong.png",
-    "isSecret": true
+    "title": "Tango Y Espada",
+    "audio": "tangoyespada.mp3",
+    "cover": "tangoyespada.png",
+    "lrc": "tangoyespada.lrc",
+    "isDraft": false,
+    "isSecret": false
   },
     {
-    "title": "Tango Y Spada",
+    "title": "Tango Y Espada [corta]",
     "audio": "tangoyspada.mp3",
-    "cover": "nosong.png",
+    "cover": "tangoyespada.png",
     "isSecret": true
   },
   {
