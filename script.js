@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "3.4.12";
+const APP_VERSION = "3.5.0";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -534,8 +534,8 @@ function setupMediaSession(track) {
 
   navigator.mediaSession.metadata = new MediaMetadata({
     title: track.title,
-    artist: "fantam.AI",
-    album: "Playlist",
+    artist: "fantaMai",
+    album: "PRJ fantaMai",
     artwork: [
       { src: track.cover, sizes: "512x512", type: "image/png" },
       { src: track.cover, sizes: "256x256", type: "image/png" },

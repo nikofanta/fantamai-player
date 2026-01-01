@@ -1,47 +1,9 @@
 [
   {
-    "title": "San Carlo",
-    "audio": "sancarlo.mp3",
-    "cover": "sancarlo.png",
-    "lrc": "sancarlo.lrc",
-    "isDraft": true
-  },
-  {
-    "title": "\"Una\" Gatta (ESP)",
-    "audio": "unagattaesp.mp3",
-    "cover": "unagatta.png",
-    "lrc": "unagattaesp.lrc",
-    "isDraft": false
-  },
-  {
-    "title": "\"Una\" Gatta",
-    "audio": "unagatta.mp3",
-    "cover": "unagatta.png",
-    "lrc": "unagatta.lrc",
-    "isDraft": true
-  },
-  {
-    "title": "È la Canzone che ti dice",
-    "audio": "elacanzonechetidice.mp3",
-    "cover": "elacanzonechetidice.png",
-    "lrc": "elacanzonechetidice.lrc"
-  },
-  {
-    "title": "Sapore di Indonesia",
-    "audio": "saporediindonesia.mp3",
-    "cover": "saporediindonesia.png",
-    "lrc": "saporediindonesia.lrc"
-  },
-  {
-    "title": "Da Roma a Dubai",
-    "audio": "daromaadubai.mp3",
-    "cover": "daromaadubai.png",
-    "lrc": "daromaadubai.lrc"
-  },
-  {
     "title": "Cheesecake And Coffee",
     "audio": "cheesecakeandcoffee4.mp3",
-    "cover": "cheesecakeandcoffee.png"
+    "cover": "cheesecakeandcoffee.png",
+    "lrc": "cheesecakeandcoffee.lrc"
   },
   {
     "title": "Cheesecake And Coffee (2)",
@@ -50,57 +12,11 @@
     "lrc": "cheesecakeandcoffee.lrc",
     "isDraft": true
   },
-    {
+  {
     "title": "Cheesecake And Coffee (orig)",
     "audio": "cheesecakeandcoffee.mp3",
     "cover": "cheesecakeandcoffee.png",
     "lrc": "cheesecakeandcoffee.lrc",
-    "isDraft": true
-  },
-  {
-    "title": "Summer Contest",
-    "audio": "summercontest2.mp3",
-    "cover": "summercontest.png",
-    "lrc": "summercontest.lrc"
-  },
-  {
-    "title": "Summer Contest - remaster",
-    "audio": "summercontest.mp3",
-    "cover": "summercontest.png",
-    "isDraft": true
-  },
-  {
-    "title": "A Faraway Dream",
-    "audio": "afarawaydream.mp3",
-    "cover": "afarawaydream.png",
-    "lrc": "afarawaydream.lrc",
-    "isDraft": true
-  },
-  {
-    "title": "Sogno Lontano",
-    "audio": "sognolontano.mp3",
-    "cover": "sognolontano.png",
-    "lrc": "sognolontano.lrc",
-    "isDraft": true
-  },
-  {
-    "title": "Vale La Pena (instr)",
-    "audio": "valelapenainstr.mp3",
-    "cover": "sognolontano.png",
-    "lrc": "valelapenainstr.lrc",
-    "isDraft": false
-  },
-  {
-    "title": "Vale La Pena",
-    "audio": "valelapena.mp3",
-    "cover": "sognolontano.png",
-    "lrc": "valelapena.lrc",
-    "isDraft": true
-  },
-  {
-    "title": "Carol for Matteo",
-    "audio": "carolformatteo.mp3",
-    "cover": "carolformatteo.png",
     "isDraft": true
   },
   {
@@ -111,16 +27,15 @@
     "isDraft": false
   },
   {
-    "title": "Dream in the Jungle",
-    "audio": "dreaminthejungle.mp3",
-    "cover": "dreaminthejungle.png",
-    "lrc": "dreaminthejungle.lrc",
-    "isDraft": true
+    "title": "È la Canzone che ti dice",
+    "audio": "elacanzonechetidice.mp3",
+    "cover": "elacanzonechetidice.png",
+    "lrc": "elacanzonechetidice.lrc"
   },
   {
     "title": "Storm Out Of Nowhere",
     "audio": "stormoutofnowhere2.mp3",
-    "cover": "stormoutofnowhere.png",
+    "cover": "stormoutofnowhere2.png",
     "lrc": "stormoutofnowhere2.lrc",
     "isDraft": false
   },
@@ -130,6 +45,100 @@
     "cover": "stormoutofnowhere.png",
     "lrc": "stormoutofnowhere.lrc",
     "isDraft": true
+  },
+  {
+    "title": "Vale La Penas",
+    "audio": "valelapenainstr.mp3",
+    "cover": "sognolontano.png",
+    "lrc": "valelapenainstr.lrc",
+    "isDraft": false
+  },
+  {
+    "title": "Vale La Pena (shorter)",
+    "audio": "valelapena.mp3",
+    "cover": "valelapena.png",
+    "lrc": "valelapena.lrc",
+    "isDraft": true
+  },
+  {
+    "title": "Da Roma a Dubai",
+    "audio": "daromaadubai.mp3",
+    "cover": "daromaadubai.png",
+    "lrc": "daromaadubai.lrc"
+  },
+  {
+    "title": "Non L'Ascolterai",
+    "audio": "nonlascolterai.mp3",
+    "cover": "nonlascolterai.png",
+    "lrc": "nonlascolterai.lrc",
+    "isDraft": true
+  },
+  {
+    "title": "Non L'Ascolterai (Band)",
+    "audio": "nonlascolteraiband.mp3",
+    "cover": "nonlascolteraiband.png",
+    "lrc": "nonlascolteraiband.lrc",
+    "isDraft": false
+  },
+  {
+    "title": "It Belongs to Us (duo)",
+    "audio": "itbelongstousduo.mp3",
+    "cover": "itbelongstous.png",
+    "lrc": "itbelongstous.lrc",
+    "isDraft": false
+  },
+  {
+    "title": "It Belongs to Us",
+    "audio": "itbelongstous.mp3",
+    "cover": "itbelongstous.png",
+    "lrc": "itbelongstous.lrc",
+    "isDraft": true
+  },
+    {
+    "title": "Tango Y Espada",
+    "audio": "tangoyespada.mp3",
+    "cover": "tangoyespada.png",
+    "lrc": "tangoyespada.lrc",
+    "isDraft": false,
+    "isSecret": false
+  },
+  {
+    "title": "Tango Y Espada [corta]",
+    "audio": "tangoyspada.mp3",
+    "cover": "tangoyespada.png",
+    "isSecret": true
+  },
+  {
+    "title": "Elfa Ariela",
+    "audio": "elfaariela.mp3",
+    "cover": "elfaariela.png",
+    "lrc": "elfaariela.lrc",
+    "isDraft": false,
+    "isSecret": false
+  },
+  {
+    "title": "Elfa Ariela (swing)",
+    "audio": "elfaarielaswing.mp3",
+    "cover": "elfaarielaswing.png",
+    "lrc": "elfaarielaswing.lrc",
+    "isDraft": false,
+    "isSecret": false
+  },
+  {
+    "title": "Ninna Nanna Jazz",
+    "audio": "ninnanannajazz.mp3",
+    "cover": "ninnanannajazz.png",
+    "lrc": "ninnanannajazz.lrc",
+    "isDraft": false,
+    "isSecret": false
+  },
+  {
+    "title": "Il Numero 50",
+    "audio": "ilnumero50.mp3",
+    "cover": "ilnumero50.png",
+    "lrc": "ilnumero50.lrc",
+    "isDraft": false,
+    "isSecret": false
   },
   {
     "title": "Er Rugantino De Milan",
@@ -170,40 +179,50 @@
     "isDraft": true
   },
   {
-    "title": "Non L'Ascolterai",
-    "audio": "nonlascolterai.mp3",
-    "cover": "nonlascolterai.png",
-    "lrc": "nonlascolterai.lrc",
-    "isDraft": true
-  },
-  {
-    "title": "Non L'Ascolterai (Band)",
-    "audio": "nonlascolteraiband.mp3",
-    "cover": "nonlascolteraiband.png",
-    "lrc": "nonlascolteraiband.lrc",
+    "title": "\"Una\" Gatta (ESP)",
+    "audio": "unagattaesp.mp3",
+    "cover": "unagatta.png",
+    "lrc": "unagattaesp.lrc",
     "isDraft": false
   },
   {
-    "title": "It Belongs to Us (duo)",
-    "audio": "itbelongstousduo.mp3",
-    "cover": "itbelongstous.png",
-    "lrc": "itbelongstous.lrc",
-    "isDraft": false
-  },
-  {
-    "title": "It Belongs to Us",
-    "audio": "itbelongstous.mp3",
-    "cover": "itbelongstous.png",
-    "lrc": "itbelongstous.lrc",
+    "title": "\"Una\" Gatta",
+    "audio": "unagatta.mp3",
+    "cover": "unagatta.png",
+    "lrc": "unagatta.lrc",
     "isDraft": true
   },
   {
-    "title": "Ninna Nanna Jazz",
-    "audio": "ninnanannajazz.mp3",
-    "cover": "ninnanannajazz.png",
-    "lrc": "ninnanannajazz.lrc",
-    "isDraft": false,
-    "isSecret": false
+    "title": "Summer Contest",
+    "audio": "summercontest2.mp3",
+    "cover": "summercontest.png",
+    "lrc": "summercontest.lrc"
+  },
+  {
+    "title": "Summer Contest - remaster",
+    "audio": "summercontest.mp3",
+    "cover": "summercontest.png",
+    "isDraft": true
+  },
+  {
+    "title": "A Faraway Dream",
+    "audio": "afarawaydream.mp3",
+    "cover": "afarawaydream.png",
+    "lrc": "afarawaydream.lrc",
+    "isDraft": true
+  },
+  {
+    "title": "Sogno Lontano",
+    "audio": "sognolontano.mp3",
+    "cover": "sognolontano.png",
+    "lrc": "sognolontano.lrc",
+    "isDraft": true
+  },
+  {
+    "title": "Sapore di Indonesia",
+    "audio": "saporediindonesia.mp3",
+    "cover": "saporediindonesia.png",
+    "lrc": "saporediindonesia.lrc"
   },
   {
     "title": "Quasi Natale",
@@ -212,36 +231,6 @@
     "lrc": "quasinatale.lrc",
     "isDraft": false,
     "isSecret": false
-  },
-  {
-    "title": "Elfa Ariela",
-    "audio": "elfaariela.mp3",
-    "cover": "elfaariela.png",
-    "lrc": "elfaariela.lrc",
-    "isDraft": false,
-    "isSecret": false
-  },
-  {
-    "title": "Elfa Ariela (swing)",
-    "audio": "elfaarielaswing.mp3",
-    "cover": "elfaarielaswing.png",
-    "lrc": "elfaarielaswing.lrc",
-    "isDraft": false,
-    "isSecret": false
-  },
-  {
-    "title": "Tango Y Espada",
-    "audio": "tangoyespada.mp3",
-    "cover": "tangoyespada.png",
-    "lrc": "tangoyespada.lrc",
-    "isDraft": false,
-    "isSecret": false
-  },
-    {
-    "title": "Tango Y Espada [corta]",
-    "audio": "tangoyspada.mp3",
-    "cover": "tangoyespada.png",
-    "isSecret": true
   },
   {
     "title": "Simone",
@@ -260,6 +249,26 @@
     "audio": "stradenuove2.mp3",
     "cover": "nosong.png",
     "isSecret": true
+  },
+  {
+    "title": "San Carlo",
+    "audio": "sancarlo.mp3",
+    "cover": "sancarlo.png",
+    "lrc": "sancarlo.lrc",
+    "isDraft": true
+  },
+  {
+    "title": "Dream in the Jungle",
+    "audio": "dreaminthejungle.mp3",
+    "cover": "dreaminthejungle.png",
+    "lrc": "dreaminthejungle.lrc",
+    "isDraft": true
+  },
+  {
+    "title": "Carol for Matteo",
+    "audio": "carolformatteo.mp3",
+    "cover": "carolformatteo.png",
+    "isDraft": true
   }
 ]
 
