@@ -265,6 +265,18 @@
     "isDraft": true
   },
   {
+    "title": "5 Friends in Edinburgh",
+    "audio": "5friendinedinburgh.mp3",
+    "cover": "5friendinedinburgh.png",
+    "isSecret": true
+  },
+  {
+    "title": "5 Friends in Edinburgh (piano)",
+    "audio": "5friendinedinburghpiano.mp3",
+    "cover": "5friendinedinburgh.png",
+    "isSecret": true
+  },
+  {
     "title": "Carol for Matteo",
     "audio": "carolformatteo.mp3",
     "cover": "carolformatteo.png",
