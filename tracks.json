@@ -20,6 +20,19 @@
     "isDraft": true
   },
     {
+    "title": "5 Friends in Edinburgh",
+    "audio": "5friendinedinburgh.mp3",
+    "cover": "5friendinedinburgh.png",
+    "lrc": "5friendinedinburgh.lrc",
+    "isSecret": false
+  },
+  {
+    "title": "5 Friends in Edinburgh (piano)",
+    "audio": "5friendinedinburghpiano.mp3",
+    "cover": "5friendinedinburgh.png",
+    "isDraft": true
+  },
+  {
     "title": "È la Canzone che ti dice",
     "audio": "elacanzonechetidice.mp3",
     "cover": "elacanzonechetidice.png",
@@ -110,17 +123,17 @@
   },
   {
     "title": "Elfa Ariela",
-    "audio": "elfaariela.mp3",
-    "cover": "elfaariela.png",
-    "lrc": "elfaariela.lrc",
+    "audio": "elfaarielaswing.mp3",
+    "cover": "elfaarielaswing.png",
+    "lrc": "elfaarielaswing.lrc",
     "isDraft": false,
     "isSecret": false
   },
   {
-    "title": "Elfa Ariela (swing)",
-    "audio": "elfaarielaswing.mp3",
-    "cover": "elfaarielaswing.png",
-    "lrc": "elfaarielaswing.lrc",
+    "title": "Elfa Ariela (orig)",
+    "audio": "elfaariela.mp3",
+    "cover": "elfaariela.png",
+    "lrc": "elfaariela.lrc",
     "isDraft": false,
     "isSecret": false
   },
@@ -263,18 +276,6 @@
     "cover": "dreaminthejungle.png",
     "lrc": "dreaminthejungle.lrc",
     "isDraft": true
-  },
-  {
-    "title": "5 Friends in Edinburgh",
-    "audio": "5friendinedinburgh.mp3",
-    "cover": "5friendinedinburgh.png",
-    "isSecret": true
-  },
-  {
-    "title": "5 Friends in Edinburgh (piano)",
-    "audio": "5friendinedinburghpiano.mp3",
-    "cover": "5friendinedinburgh.png",
-    "isSecret": true
   },
   {
     "title": "Carol for Matteo",
