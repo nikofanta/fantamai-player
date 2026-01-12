@@ -2,8 +2,8 @@
    SERVICE WORKER — FantaMai Player (PWA)
    ========================================================= */
 
-const CACHE_NAME = "fantamai-cache-v5.3.6";
-const APP_VERSION = "5.3.6";
+const CACHE_NAME = "fantamai-cache-v5.3.7";
+const APP_VERSION = "5.3.7";
 const NETWORK_TIMEOUT = 3000; // 3 seconds timeout for network requests
 
 /* 
@@ -62,24 +62,26 @@ self.addEventListener("activate", event => {
 
 
 /* =========================================================
-   FETCH — Network-first for HTML/CSS/JS, cache-first for assets
+   FETCH — Network-first for HTML/CSS/JS/JSON, cache-first for assets
    ========================================================= */
 self.addEventListener("fetch", event => {
   const url = new URL(event.request.url);
+  const pathname = url.pathname;
   
-  // Skip caching for audio files
-  if (event.request.url.endsWith(".mp3")) {
+  // Skip caching completely for audio files - let browser handle it
+  if (pathname.endsWith(".mp3")) {
+    event.respondWith(fetch(event.request));
     return;
   }
   
   // Network-first for critical files (HTML, CSS, JS, JSON)
   const isCritical = event.request.mode === 'navigate' || 
-                     url.pathname.endsWith('.html') || 
-                     url.pathname.endsWith('.css') || 
-                     url.pathname.endsWith('.js') || 
-                     url.pathname.endsWith('.json') || 
-                     url.pathname === '/' || 
-                     url.pathname.endsWith('/');
+                     pathname.endsWith('.html') || 
+                     pathname.endsWith('.css') || 
+                     pathname.endsWith('.js') || 
+                     pathname.endsWith('.json') || 
+                     pathname === '/' || 
+                     pathname.endsWith('/');
   
   if (isCritical) {
     event.respondWith(
@@ -101,7 +103,7 @@ self.addEventListener("fetch", event => {
       ])
       .catch(() => {
         // Fallback to cache if network fails or times out
-        console.log('Network failed or timed out, using cache');
+        console.log('Network failed or timed out, using cache for:', pathname);
         return caches.match(event.request).then(cached => {
           if (cached) return cached;
           // Last resort for navigation
@@ -114,7 +116,7 @@ self.addEventListener("fetch", event => {
     return;
   }
   
-  // Cache-first for everything else (images, JSON, etc.)
+  // Cache-first for other assets (images, icons, etc.)
   event.respondWith(
     caches.match(event.request).then(response => {
       return response || fetch(event.request).then(fetchResponse => {
