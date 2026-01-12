@@ -2,8 +2,8 @@
    SERVICE WORKER — FantaMai Player (PWA)
    ========================================================= */
 
-const CACHE_NAME = "fantamai-cache-v5.3.5";
-const APP_VERSION = "5.3.5";
+const CACHE_NAME = "fantamai-cache-v5.3.6";
+const APP_VERSION = "5.3.6";
 const NETWORK_TIMEOUT = 3000; // 3 seconds timeout for network requests
 
 /* 
@@ -72,11 +72,12 @@ self.addEventListener("fetch", event => {
     return;
   }
   
-  // Network-first for critical files (HTML, CSS, JS)
+  // Network-first for critical files (HTML, CSS, JS, JSON)
   const isCritical = event.request.mode === 'navigate' || 
                      url.pathname.endsWith('.html') || 
                      url.pathname.endsWith('.css') || 
                      url.pathname.endsWith('.js') || 
+                     url.pathname.endsWith('.json') || 
                      url.pathname === '/' || 
                      url.pathname.endsWith('/');
   

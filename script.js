@@ -1,7 +1,7 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "5.3.5";
+const APP_VERSION = "5.3.6";
 
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
@@ -154,7 +154,7 @@ function setStatus(msg, mode = "ok", spinning = false) {
 async function loadTracks() {
   setStatus("Caricamento playlist...", "loading", true);
 
-  const response = await fetch("tracks.json");
+  const response = await fetch("tracks.json?v=" + APP_VERSION);
   allTracks = await response.json();
   
   // Resolve relative paths to full URLs
