@@ -2,8 +2,8 @@
    SERVICE WORKER — FantaMai Player (PWA)
    ========================================================= */
 
-const CACHE_NAME = "fantamai-cache-v5.3.7";
-const APP_VERSION = "5.3.7";
+const CACHE_NAME = "fantamai-cache-v5.3.8";
+const APP_VERSION = "5.3.8";
 const NETWORK_TIMEOUT = 3000; // 3 seconds timeout for network requests
 
 /* 
