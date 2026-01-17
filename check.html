@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LRC Files Diagnostic Check</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-left: 4px solid #ccc;
+            background: #f9f9f9;
+        }
+        .test-item.success {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+        }
+        .test-item.error {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+        .test-item.warning {
+            border-color: #ff9800;
+            background: #fff3e0;
+        }
+        .status { font-weight: bold; }
+        .success .status { color: #4CAF50; }
+        .error .status { color: #f44336; }
+        .warning .status { color: #ff9800; }
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover { background: #1976D2; }
+        pre {
+            background: #263238;
+            color: #aed581;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .info { color: #666; font-size: 14px; }
+        .domain-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border-left: 4px solid #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 LRC Files Diagnostic Check</h1>
+    <p class="info">This page tests if your LRC files are accessible and identifies potential issues.</p>
+
+    <div class="test-section">
+        <h2>Current Domain Info</h2>
+        <div class="domain-info" id="domainInfo"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Controls</h2>
+        <button onclick="runAllTests()">▶ Run All Tests</button>
+        <button onclick="testFolderAccess()">📁 Test Folder Access</button>
+        <button onclick="testDomainVariants()">🌐 Test WWW vs Non-WWW</button>
+        <button onclick="testServiceWorker()">🔧 Test Service Worker</button>
+        <button onclick="clearCaches()">🗑️ Clear All Caches</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Results</h2>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+        let tracks = [];
+
+        // Show domain info on load
+        function showDomainInfo() {
+            const domainInfoDiv = document.getElementById('domainInfo');
+            const currentUrl = window.location.href;
+            const currentOrigin = window.location.origin;
+            const currentHost = window.location.host;
+            
+            domainInfoDiv.innerHTML = `
+                <strong>Current URL:</strong> ${currentUrl}<br>
+                <strong>Origin:</strong> ${currentOrigin}<br>
+                <strong>Host:</strong> ${currentHost}<br>
+                <strong>Protocol:</strong> ${window.location.protocol}<br>
+                <strong>Has WWW:</strong> ${currentHost.startsWith('www.') ? 'Yes' : 'No'}
+            `;
+        }
+
+        async function testDomainVariants() {
+            log('warning', '=== Testing WWW vs Non-WWW Domain Access ===');
+            
+            const currentHost = window.location.host;
+            const protocol = window.location.protocol;
+            
+            // Determine both variants
+            let wwwHost, nonWwwHost;
+            if (currentHost.startsWith('www.')) {
+                wwwHost = currentHost;
+                nonWwwHost = currentHost.replace('www.', '');
+            } else {
+                wwwHost = 'www.' + currentHost;
+                nonWwwHost = currentHost;
+            }
+            
+            log('warning', `Current host: ${currentHost}`);
+            log('warning', `Testing WWW: ${wwwHost}`);
+            log('warning', `Testing Non-WWW: ${nonWwwHost}`);
+            
+            const testFile = 'cheesecakeandcoffee.lrc';
+            
+            // Test current domain (relative path)
+            await testLrcPath(`./lrc/${testFile}`, 'Current Domain (Relative)');
+            
+            // Test WWW variant (absolute)
+            await testLrcPath(`${protocol}//${wwwHost}/lrc/${testFile}`, 'WWW Variant');
+            
+            // Test non-WWW variant (absolute)
+            await testLrcPath(`${protocol}//${nonWwwHost}/lrc/${testFile}`, 'Non-WWW Variant');
+            
+            // Test with different path formats
+            await testLrcPath(`/lrc/${testFile}`, 'Absolute Path (/)');
+            await testLrcPath(`lrc/${testFile}`, 'Relative Path (no ./)');
+            
+            log('warning', '=== Domain Test Complete ===');
+        }
+
+        async function testLrcPath(path, description) {
+            try {
+                const startTime = performance.now();
+                const response = await fetch(path, { 
+                    method: 'GET',
+                    cache: 'no-store',
+                    redirect: 'follow'
+                });
+                const endTime = performance.now();
+                const duration = (endTime - startTime).toFixed(2);
+                
+                // Check if redirected
+                const redirected = response.redirected;
+                const finalUrl = response.url;
+                
+                if (response.ok) {
+                    const text = await response.text();
+                    log('success', `✓ ${description}: ${path}`);
+                    log('success', `  Status: ${response.status}, Size: ${text.length} bytes, Time: ${duration}ms`);
+                    if (redirected) {
+                        log('warning', `  ⚠ REDIRECTED to: ${finalUrl}`);
+                    }
+                    log('success', `  Final URL: ${finalUrl}`);
+                } else {
+                    log('error', `✗ ${description}: ${path}`);
+                    log('error', `  Status: ${response.status} ${response.statusText}`);
+                    if (redirected) {
+                        log('warning', `  Was redirected to: ${finalUrl}`);
+                    }
+                }
+            } catch (error) {
+                log('error', `✗ ${description}: ${path}`);
+                log('error', `  Error: ${error.message}`);
+            }
+        }
+
+        async function loadTracks() {
+            try {
+                const response = await fetch('./tracks.json');
+                tracks = await response.json();
+                log('success', `Loaded ${tracks.length} tracks from tracks.json`);
+                return true;
+            } catch (error) {
+                log('error', `Failed to load tracks.json: ${error.message}`);
+                return false;
+            }
+        }
+
+        async function testLrcFiles() {
+            log('warning', 'Testing LRC file accessibility...');
+            
+            const lrcTracks = tracks.filter(t => t.lrc);
+            log('warning', `Found ${lrcTracks.length} tracks with LRC files`);
+
+            const uniqueLrcs = [...new Set(lrcTracks.map(t => t.lrc))];
+            log('warning', `Testing ${uniqueLrcs.length} unique LRC files`);
+
+            for (const lrcFile of uniqueLrcs.slice(0, 5)) { // Test first 5
+                await testSingleLrc(lrcFile);
+            }
+            
+            if (uniqueLrcs.length > 5) {
+                log('warning', `Tested first 5 files. ${uniqueLrcs.length - 5} more files not tested.`);
+            }
+        }
+
+        async function testSingleLrc(lrcFile) {
+            const paths = [
+                `./lrc/${lrcFile}`,
+                `/lrc/${lrcFile}`,
+                `lrc/${lrcFile}`
+            ];
+
+            for (const path of paths) {
+                try {
+                    const response = await fetch(path, { 
+                        method: 'HEAD',
+                        cache: 'no-store'
+                    });
+                    
+                    if (response.ok) {
+                        log('success', `✓ ${lrcFile} accessible at: ${path} (Status: ${response.status})`);
+                        return;
+                    } else {
+                        log('warning', `⚠ ${path} returned status: ${response.status}`);
+                    }
+                } catch (error) {
+                    log('warning', `⚠ ${path} failed: ${error.message}`);
+                }
+            }
+            
+            log('error', `✗ ${lrcFile} NOT ACCESSIBLE from any path`);
+        }
+
+        async function testServiceWorker() {
+            log('warning', 'Testing Service Worker...');
+            
+            if ('serviceWorker' in navigator) {
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                if (registrations.length > 0) {
+                    log('success', `Service Worker registered: ${registrations.length} registration(s)`);
+                    registrations.forEach((reg, i) => {
+                        log('success', `  [${i}] Scope: ${reg.scope}, State: ${reg.active?.state || 'N/A'}`);
+                    });
+                } else {
+                    log('warning', 'No Service Worker registered');
+                }
+            } else {
+                log('error', 'Service Worker not supported in this browser');
+            }
+
+            // Test cache
+            try {
+                const cacheNames = await caches.keys();
+                log('success', `Found ${cacheNames.length} cache(s): ${cacheNames.join(', ')}`);
+                
+                for (const cacheName of cacheNames) {
+                    const cache = await caches.open(cacheName);
+                    const keys = await cache.keys();
+                    const lrcKeys = keys.filter(req => req.url.includes('.lrc'));
+                    log('success', `  Cache "${cacheName}": ${keys.length} items, ${lrcKeys.length} LRC files`);
+                }
+            } catch (error) {
+                log('error', `Cache check failed: ${error.message}`);
+            }
+        }
+
+        async function clearCaches() {
+            log('warning', 'Clearing all caches...');
+            try {
+                const cacheNames = await caches.keys();
+                await Promise.all(cacheNames.map(name => caches.delete(name)));
+                log('success', `Cleared ${cacheNames.length} cache(s)`);
+                
+                // Unregister service worker
+                if ('serviceWorker' in navigator) {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    await Promise.all(registrations.map(reg => reg.unregister()));
+                    log('success', 'Service Worker unregistered');
+                }
+                
+                log('warning', 'Please refresh the page to see changes');
+            } catch (error) {
+                log('error', `Failed to clear caches: ${error.message}`);
+            }
+        }
+
+        async function testDirectFetch() {
+            log('warning', 'Testing direct fetch without Service Worker...');
+            
+            const testFile = 'cheesecakeandcoffee.lrc';
+            const path = `./lrc/${testFile}`;
+            
+            try {
+                const response = await fetch(path, { cache: 'no-store' });
+                const text = await response.text();
+                
+                if (response.ok) {
+                    log('success', `✓ Direct fetch successful: ${path}`);
+                    log('success', `  Content preview: ${text.substring(0, 100)}...`);
+                    log('success', `  Content-Type: ${response.headers.get('content-type')}`);
+                    log('success', `  Content-Length: ${text.length} bytes`);
+                } else {
+                    log('error', `✗ Direct fetch failed: ${response.status} ${response.statusText}`);
+                }
+            } catch (error) {
+                log('error', `✗ Direct fetch error: ${error.message}`);
+            }
+        }
+
+        async function testCORS() {
+            log('warning', 'Testing CORS headers...');
+            
+            const testFile = './lrc/cheesecakeandcoffee.lrc';
+            
+            try {
+                const response = await fetch(testFile, { 
+                    method: 'HEAD',
+                    cache: 'no-store'
+                });
+                
+                const corsHeader = response.headers.get('Access-Control-Allow-Origin');
+                const contentType = response.headers.get('Content-Type');
+                
+                log('success', `CORS Header: ${corsHeader || 'Not set'}`);
+                log('success', `Content-Type: ${contentType || 'Not set'}`);
+                
+                if (!contentType) {
+                    log('warning', 'Warning: Content-Type header not set - may cause issues');
+                }
+            } catch (error) {
+                log('error', `CORS test failed: ${error.message}`);
+            }
+        }
+
+        async function testFolderAccess() {
+            log('warning', '=== Testing Folder Accessibility ===');
+            
+            // Test if we can access different folders
+            const folders = [
+                { path: './mp3/', file: 'cheesecakeandcoffee4.mp3', name: 'MP3 folder' },
+                { path: './covers/', file: 'cheesecakeandcoffee.png', name: 'Covers folder' },
+                { path: './lrc/', file: 'cheesecakeandcoffee.lrc', name: 'LRC folder' },
+                { path: './icons/', file: 'icon-192.png', name: 'Icons folder' }
+            ];
+            
+            for (const folder of folders) {
+                try {
+                    const response = await fetch(folder.path + folder.file, {
+                        method: 'HEAD',
+                        cache: 'no-store'
+                    });
+                    
+                    if (response.ok) {
+                        log('success', `✓ ${folder.name} accessible: ${folder.path}${folder.file}`);
+                        log('success', `  Content-Type: ${response.headers.get('content-type')}`);
+                    } else {
+                        log('error', `✗ ${folder.name} NOT accessible: ${response.status}`);
+                        log('error', `  Content-Type: ${response.headers.get('content-type')}`);
+                    }
+                } catch (error) {
+                    log('error', `✗ ${folder.name} error: ${error.message}`);
+                }
+            }
+            
+            // Test direct folder access (directory listing might be enabled/disabled)
+            log('warning', 'Testing direct folder access...');
+            const folderPaths = ['./lrc/', './mp3/', './covers/'];
+            for (const path of folderPaths) {
+                try {
+                    const response = await fetch(path, { cache: 'no-store' });
+                    if (response.ok) {
+                        log('warning', `Folder ${path} returned ${response.status} (may have directory listing)`);
+                    } else {
+                        log('warning', `Folder ${path} returned ${response.status} (directory listing disabled)`);
+                    }
+                } catch (error) {
+                    log('warning', `Folder ${path} error: ${error.message}`);
+                }
+            }
+            
+            log('warning', '=== Folder Access Test Complete ===');
+        }
+
+        async function runAllTests() {
+            resultsDiv.innerHTML = '';
+            log('warning', '=== Starting Diagnostic Tests ===');
+            
+            const loaded = await loadTracks();
+            if (!loaded) return;
+            
+            await testFolderAccess();
+            await testDomainVariants();
+            await testServiceWorker();
+            await testDirectFetch();
+            await testCORS();
+            await testLrcFiles();
+            
+            log('warning', '=== Tests Complete ===');
+        }
+
+        function log(type, message) {
+            const div = document.createElement('div');
+            div.className = `test-item ${type}`;
+            div.innerHTML = `<span class="status">${type.toUpperCase()}:</span> ${message}`;
+            resultsDiv.appendChild(div);
+            console.log(`[${type}] ${message}`);
+        }
+
+        // Auto-run on load
+        window.addEventListener('load', () => {
+            showDomainInfo();
+            log('success', 'Diagnostic page loaded. Click "Run All Tests" or "Test WWW vs Non-WWW" to begin.');
+        });
+    </script>
+</body>
+</html>
