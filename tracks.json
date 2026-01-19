@@ -278,6 +278,14 @@
     "isDraft": true
   },
   {
+    "title": "Maga Maria",
+    "audio": "magamaria.mp3",
+    "cover": "magamaria.png",
+    "lrc": "magamaria.lrc",
+    "isDraft": false,
+    "isSecret": true
+  },
+  {
     "title": "Carol for Matteo",
     "audio": "carolformatteo.mp3",
     "cover": "carolformatteo.png",
