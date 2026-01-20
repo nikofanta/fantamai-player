@@ -2,8 +2,8 @@
    SERVICE WORKER — FantaMai Player (PWA)
    ========================================================= */
 
-const CACHE_NAME = "fantamai-cache-v5.3.14";
-const APP_VERSION = "5.3.14";
+const CACHE_NAME = "fantamai-cache-v5.3.15";
+const APP_VERSION = "5.3.15";
 const NETWORK_TIMEOUT = 3000; // 3 seconds timeout for network requests
 const MAX_CACHED_SONGS = 15; // Maximum number of MP3 files to cache
 

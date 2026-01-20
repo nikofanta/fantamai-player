@@ -5,20 +5,6 @@
     "cover": "cheesecakeandcoffee.png",
     "lrc": "cheesecakeandcoffee.lrc"
   },
-  {
-    "title": "Cheesecake And Coffee (2)",
-    "audio": "cheesecakeandcoffee2.mp3",
-    "cover": "cheesecakeandcoffee2.png",
-    "lrc": "cheesecakeandcoffee.lrc",
-    "isDraft": true
-  },
-  {
-    "title": "Cheesecake And Coffee (orig)",
-    "audio": "cheesecakeandcoffee.mp3",
-    "cover": "cheesecakeandcoffee.png",
-    "lrc": "cheesecakeandcoffee.lrc",
-    "isDraft": true
-  },
     {
     "title": "5 Friends in Edinburgh",
     "audio": "5friendinedinburgh.mp3",
@@ -114,12 +100,6 @@
     "lrc": "tangoyespada.lrc",
     "isDraft": false,
     "isSecret": false
-  },
-  {
-    "title": "Tango Y Espada [corta]",
-    "audio": "tangoyspada.mp3",
-    "cover": "tangoyespada.png",
-    "isSecret": true
   },
   {
     "title": "Elfa Ariela",
