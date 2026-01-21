@@ -77,6 +77,32 @@ function saveLikedSongs() {
   document.cookie = `likedSongs=${encodeURIComponent(data)}; expires=${expires.toUTCString()}; path=/`;
 }
 
+/* =========================================================
+   [2.2] SESSION ID MANAGEMENT
+   ========================================================= */
+function getSessionId() {
+  let sessionId = localStorage.getItem('sessionId');
+  if (!sessionId) {
+    // Generate random number between 1000 and 9999
+    sessionId = Math.floor(Math.random() * 9000) + 1000;
+    localStorage.setItem('sessionId', sessionId.toString());
+  }
+  return sessionId;
+}
+
+/* =========================================================
+   [2.3] API PARAMETERS COMPUTATION
+   ========================================================= */
+function getAPIParameters() {
+  return {
+    SessionId: getSessionId(),
+    FAV: likedSongs.size,
+    LIS: getTotalPlayCount(),
+    ActiveCodes: "",
+    APP: window.matchMedia('(display-mode: standalone)').matches ? 1 : 0
+  };
+}
+
 function toggleLike(trackTitle) {
   if (likedSongs.has(trackTitle)) {
     likedSongs.delete(trackTitle);
@@ -99,7 +125,7 @@ function toggleLike(trackTitle) {
 }
 
 /* =========================================================
-   [2.2] SHARE FUNCTIONALITY (SIMPLIFIED)
+   [2.4] SHARE FUNCTIONALITY (SIMPLIFIED)
    ========================================================= */
 async function shareTrack(track) {
   // Don't share if app is hidden (prevents Chrome notification issue)
@@ -162,9 +188,20 @@ async function loadTracks() {
 
   try {
     // Determine URL based on configuration
-    const tracksUrl = CONFIG.tracksSource === "remote" 
+    let tracksUrl = CONFIG.tracksSource === "remote" 
       ? CONFIG.remoteAPI 
       : "tracks.json?v=" + APP_VERSION;
+    
+    // Append API parameters if using remote source
+    if (CONFIG.tracksSource === "remote") {
+      const params = getAPIParameters();
+      const queryString = Object.entries(params)
+        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+        .join('&');
+      tracksUrl += (tracksUrl.includes('?') ? '&' : '?') + queryString;
+      console.log('API Request URL:', tracksUrl);
+      console.log('API Parameters:', params);
+    }
     
     const response = await fetch(tracksUrl);
     
