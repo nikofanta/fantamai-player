@@ -3,6 +3,12 @@
    ========================================================= */
 const APP_VERSION = "5.3.15";
 
+// Configuration for tracks.json source
+const CONFIG = {
+  tracksSource: "remote", // "local" or "remote"
+  remoteAPI: "https://www.fantamai.com/API/api/tracks" // Used only when tracksSource is "remote"
+};
+
 const audio = document.getElementById("audioPlayer");
 const listContainer = document.getElementById("trackList");
 const currentTitle = document.getElementById("currentTitle");
@@ -154,24 +160,40 @@ function setStatus(msg, mode = "ok", spinning = false) {
 async function loadTracks() {
   setStatus("Caricamento playlist...", "loading", true);
 
-  const response = await fetch("tracks.json?v=" + APP_VERSION);
-  allTracks = await response.json();
-  
-  // Resolve relative paths to full URLs
-  allTracks = allTracks.map(track => ({
-    ...track,
-    audio: resolveAssetPath(track.audio, 'mp3'),
-    cover: resolveAssetPath(track.cover, 'covers'),
-    lrc: track.lrc ? resolveAssetPath(track.lrc, 'lrc') : undefined
-  }));
+  try {
+    // Determine URL based on configuration
+    const tracksUrl = CONFIG.tracksSource === "remote" 
+      ? CONFIG.remoteAPI 
+      : "tracks.json?v=" + APP_VERSION;
+    
+    const response = await fetch(tracksUrl);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    allTracks = await response.json();
+    
+    // Resolve relative paths to full URLs
+    allTracks = allTracks.map(track => ({
+      ...track,
+      audio: resolveAssetPath(track.audio, 'mp3'),
+      cover: resolveAssetPath(track.cover, 'covers'),
+      lrc: track.lrc ? resolveAssetPath(track.lrc, 'lrc') : undefined
+    }));
 
-  // First apply filter to populate visibleTracks
-  applyFilterAndRender();
-  
-  // Check if URL has song parameter and auto-play it
-  checkUrlParameters();
+    // First apply filter to populate visibleTracks
+    applyFilterAndRender();
+    
+    // Check if URL has song parameter and auto-play it
+    checkUrlParameters();
 
-  setStatus("Seleziona un brano per iniziare", "ok", false);
+    setStatus("Seleziona un brano per iniziare", "ok", false);
+  } catch (error) {
+    const source = CONFIG.tracksSource === "remote" ? "remote API" : "local tracks.json";
+    setStatus(`Errore caricamento playlist da ${source}: ${error.message}`, "error", false);
+    console.error(`Failed to load tracks from ${source}:`, error);
+  }
 }
 
 /* =========================================================

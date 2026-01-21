@@ -94,6 +94,12 @@
     </div>
 
     <script>
+        // Configuration for tracks.json source
+        const CONFIG = {
+            tracksSource: "local", // "local" or "remote"
+            remoteAPI: "https://www.fantamai.com/API/api/tracks" // Used only when tracksSource is "remote"
+        };
+        
         const resultsDiv = document.getElementById('results');
         let tracks = [];
 
@@ -189,12 +195,26 @@
 
         async function loadTracks() {
             try {
-                const response = await fetch('./tracks.json');
+                // Determine URL based on configuration
+                const tracksUrl = CONFIG.tracksSource === "remote" 
+                    ? CONFIG.remoteAPI 
+                    : './tracks.json';
+                
+                const source = CONFIG.tracksSource === "remote" ? "remote API" : "local tracks.json";
+                log('warning', `Loading tracks from ${source}: ${tracksUrl}`);
+                
+                const response = await fetch(tracksUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
                 tracks = await response.json();
-                log('success', `Loaded ${tracks.length} tracks from tracks.json`);
+                log('success', `Loaded ${tracks.length} tracks from ${source}`);
                 return true;
             } catch (error) {
-                log('error', `Failed to load tracks.json: ${error.message}`);
+                const source = CONFIG.tracksSource === "remote" ? "remote API" : "local tracks.json";
+                log('error', `Failed to load tracks from ${source}: ${error.message}`);
                 return false;
             }
         }

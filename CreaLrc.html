@@ -132,8 +132,25 @@ function resolveAssetPath(path, folder) {
   return `./${folder}/${path}`;
 }
 
-fetch("tracks.json")
-  .then(r => r.json())
+// Configuration for tracks.json source
+const CONFIG = {
+  tracksSource: "local", // "local" or "remote"
+  remoteAPI: "https://www.fantamai.com/API/api/tracks" // Used only when tracksSource is "remote"
+};
+
+// Determine URL based on configuration
+const tracksUrl = CONFIG.tracksSource === "remote" 
+  ? CONFIG.remoteAPI 
+  : "tracks.json";
+
+fetch(tracksUrl)
+  .then(r => {
+    if (!r.ok) {
+      const source = CONFIG.tracksSource === "remote" ? "remote API" : "local tracks.json";
+      throw new Error(`Failed to load tracks from ${source}: HTTP ${r.status}`);
+    }
+    return r.json();
+  })
   .then(data => {
     // Resolve relative paths to full URLs (same as main script.js)
     tracks = data.map(track => ({
@@ -143,6 +160,11 @@ fetch("tracks.json")
       lrc: track.lrc ? resolveAssetPath(track.lrc, 'lrc') : undefined
     }));
     populateTracks();
+  })
+  .catch(error => {
+    const source = CONFIG.tracksSource === "remote" ? "remote API" : "local tracks.json";
+    console.error(`Error loading tracks from ${source}:`, error);
+    alert(`Error loading tracks from ${source}: ${error.message}`);
   });
 
 function populateTracks() {
