@@ -187,13 +187,6 @@ function toggleLike(trackTitle) {
     sendEventToAPI(wasLiked ? 'FavOff' : 'FavOn', audioFilename);
   }
   
-  // Track in GA
-  try {
-    gtag('event', likedSongs.has(trackTitle) ? 'song_liked' : 'song_unliked', {
-      song_title: trackTitle
-    });
-  } catch (e) {}
-  
   // Refresh list if favorites filter is active
   if (onlyFavsChk.classList.contains('active')) {
     applyFilterAndRender();
@@ -219,16 +212,14 @@ async function shareTrack(track) {
   
   // Always use clipboard (simpler, more reliable)
   try {
+    if (!navigator.clipboard) {
+      throw new Error('Clipboard API not available');
+    }
     await navigator.clipboard.writeText(shareUrl);
     setStatus("Link copiato negli appunti!", "ok", false);
     
-    // Track in GA
-    try {
-      gtag('event', 'song_shared', {
-        song_title: track.title,
-        share_method: 'clipboard'
-      });
-    } catch (e) {}
+    // Send share event to API
+    sendEventToAPI('SharedSong', filename);
   } catch (err) {
     console.error('Clipboard failed:', err);
     // Last resort: show alert with URL
@@ -531,13 +522,6 @@ function submitCode() {
   if (added) {
     success.textContent = `✓ Codice "${code.toUpperCase()}" aggiunto con successo!`;
     success.classList.remove('hidden');
-    
-    // Track in GA
-    try {
-      gtag('event', 'code_added', {
-        code_length: code.length
-      });
-    } catch (e) {}
     
     // Clear input and auto-close after 2 seconds
     input.value = '';
@@ -927,11 +911,6 @@ if (secretCodeBtn && codePanel) {
       setTimeout(() => {
         codePanel.classList.add('hidden');
       }, 2000);
-      
-      // Track in GA
-      try {
-        gtag('event', 'codes_cleared');
-      } catch (e) {}
     }
   });
 }
