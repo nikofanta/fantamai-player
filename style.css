@@ -1089,6 +1089,132 @@ li.secret .thumb img {
 }
 
 /* =========================================================
+   [10] SECRET CODE BUTTON & PANEL
+   ========================================================= */
+.secret-code-btn {
+  background: transparent;
+  border: 2px solid var(--text-dark);
+  color: var(--text-dark);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.secret-code-btn:hover {
+  background: var(--text-dark);
+  color: var(--bg-light);
+  transform: scale(1.1);
+}
+
+.secret-code-btn svg {
+  stroke: currentColor;
+}
+
+/* Code Panel */
+.code-panel-content {
+  max-width: 400px;
+  width: 90%;
+}
+
+.code-instruction {
+  font-size: 0.9rem;
+  color: var(--text-medium);
+  margin: 10px 0 20px;
+}
+
+.code-input-wrapper {
+  margin-bottom: 20px;
+}
+
+.code-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.5rem;
+  text-align: center;
+  border: 2px solid var(--text-dark);
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-family: monospace;
+  font-weight: bold;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.code-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(227, 139, 31, 0.1);
+}
+
+.code-error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.code-success {
+  color: #27ae60;
+  font-size: 0.9rem;
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(39, 174, 96, 0.1);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.code-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.confirm-code-btn {
+  background: var(--accent);
+  color: var(--bg-light);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confirm-code-btn:hover {
+  background: #c77419;
+  transform: translateY(-2px);
+}
+
+.confirm-code-btn:active {
+  transform: translateY(0);
+}
+
+.clear-codes-btn {
+  background: transparent;
+  color: var(--text-medium);
+  border: 2px solid var(--text-medium);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clear-codes-btn:hover {
+  background: #e74c3c;
+  border-color: #e74c3c;
+  color: white;
+}
+
+/* =========================================================
    [9] NAVIGATION FOOTER
    ========================================================= */
 .navigation-footer {

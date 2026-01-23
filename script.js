@@ -5,7 +5,7 @@ const APP_VERSION = "5.3.16";
 
 // Configuration for tracks.json source
 const CONFIG = {
-  tracksSource: "local", // "local" or "remote"
+  tracksSource: "remote", // "local" or "remote"
   remoteAPI: "https://www.fantamai.com/API/api/tracks" // Used only when tracksSource is "remote"
 };
 
@@ -78,6 +78,58 @@ function saveLikedSongs() {
 }
 
 /* =========================================================
+   [2.1.5] ACTIVE CODES MANAGEMENT
+   ========================================================= */
+let activeCodes = [];
+
+function loadActiveCodes() {
+  const stored = localStorage.getItem('activeCodes');
+  if (stored) {
+    try {
+      activeCodes = JSON.parse(stored);
+    } catch (e) {
+      activeCodes = [];
+    }
+  }
+}
+
+function saveActiveCodes() {
+  localStorage.setItem('activeCodes', JSON.stringify(activeCodes));
+}
+
+function addActiveCode(code) {
+  const upperCode = code.toUpperCase();
+  if (!activeCodes.includes(upperCode)) {
+    activeCodes.push(upperCode);
+    saveActiveCodes();
+    
+    // Reload tracks from API with new code
+    loadTracks();
+    
+    // Enable secret mode when codes are active
+    if (!secretModeActive) {
+      secretModeActive = true;
+    }
+    
+    return true;
+  }
+  return false;
+}
+
+function clearActiveCodes() {
+  activeCodes = [];
+  saveActiveCodes();
+  
+  // Reload tracks from API without codes
+  loadTracks();
+  
+  // Optionally disable secret mode when codes are cleared
+  if (secretModeActive) {
+    secretModeActive = false;
+  }
+}
+
+/* =========================================================
    [2.2] SESSION ID MANAGEMENT
    ========================================================= */
 function getSessionId() {
@@ -98,7 +150,7 @@ function getAPIParameters() {
     SessionId: getSessionId(),
     FAV: likedSongs.size,
     LIS: getTotalPlayCount(),
-    ActiveCodes: "",
+    ActiveCodes: activeCodes.join(','),
     APP: window.matchMedia('(display-mode: standalone)').matches ? 1 : 0
   };
 }
@@ -336,8 +388,8 @@ function applyFilterAndRender() {
   const wasPlaying = !audio.paused;
   
   visibleTracks = allTracks.filter(t => {
-    // Secret songs always require secret mode
-    if (t.isSecret === true && !secretModeActive) return false;
+    // Secret songs are visible if secret mode is active OR if there are active codes
+    if (t.isSecret === true && !secretModeActive && activeCodes.length === 0) return false;
     
     // If favorites filter is active, show all favorites (including drafts)
     if (onlyFavs) {
@@ -397,71 +449,95 @@ function applyFilterAndRender() {
 }
 
 /* =========================================================
-   [5.1] SECRET MODE ACTIVATION
+   [5.1] CODE PANEL FUNCTIONALITY
    ========================================================= */
-function handleSecretModeClick() {
-  secretModeClickCount++;
+function showCodePanel() {
+  const panel = document.getElementById('codePanel');
+  const input = document.getElementById('codeInput');
+  const error = document.getElementById('codeError');
+  const success = document.getElementById('codeSuccess');
   
-  // Clear previous timer
-  if (secretModeClickTimer) {
-    clearTimeout(secretModeClickTimer);
+  // Reset panel state
+  input.value = '';
+  error.textContent = '';
+  error.classList.add('hidden');
+  success.textContent = '';
+  success.classList.add('hidden');
+  
+  panel.classList.remove('hidden');
+  
+  // Focus input
+  setTimeout(() => input.focus(), 100);
+}
+
+function validateCode(code) {
+  // Must be exactly 4 characters
+  if (code.length !== 4) {
+    return { valid: false, message: 'Il codice deve essere di 4 caratteri' };
   }
   
-  // Reset counter after 2 seconds of no clicks
-  secretModeClickTimer = setTimeout(() => {
-    secretModeClickCount = 0;
-  }, 2000);
+  // Must be alphanumeric (letters and numbers only)
+  if (!/^[A-Z0-9]+$/i.test(code)) {
+    return { valid: false, message: 'Il codice deve contenere solo lettere e numeri' };
+  }
   
-  // Activate secret mode after 8 clicks
-  if (secretModeClickCount >= 8) {
-    secretModeClickCount = 0;
-    toggleSecretMode();
+  return { valid: true };
+}
+
+function submitCode() {
+  const input = document.getElementById('codeInput');
+  const error = document.getElementById('codeError');
+  const success = document.getElementById('codeSuccess');
+  const code = input.value.trim();
+  
+  // Validate
+  const validation = validateCode(code);
+  if (!validation.valid) {
+    error.textContent = validation.message;
+    error.classList.remove('hidden');
+    success.classList.add('hidden');
+    return;
+  }
+  
+  // Add code
+  const added = addActiveCode(code);
+  
+  error.classList.add('hidden');
+  
+  if (added) {
+    success.textContent = `✓ Codice "${code.toUpperCase()}" aggiunto con successo!`;
+    success.classList.remove('hidden');
+    
+    // Track in GA
+    try {
+      gtag('event', 'code_added', {
+        code_length: code.length
+      });
+    } catch (e) {}
+    
+    // Clear input and auto-close after 2 seconds
+    input.value = '';
+    setTimeout(() => {
+      document.getElementById('codePanel').classList.add('hidden');
+    }, 2000);
+  } else {
+    success.textContent = `ℹ️ Codice "${code.toUpperCase()}" già presente`;
+    success.classList.remove('hidden');
+    input.value = '';
   }
 }
 
 function toggleSecretMode() {
   secretModeActive = !secretModeActive;
   
-  // Store in sessionStorage (cleared on browser close)
-  sessionStorage.setItem('secretMode', secretModeActive ? 'true' : 'false');
-  
-  // Show indicator
-  const indicator = document.getElementById('secretModeIndicator');
-  indicator.classList.toggle('hidden', !secretModeActive);
-  
-  // Show popup notification
-  showSecretModePopup();
-  
   // Re-render with new filter
   applyFilterAndRender();
 }
 
-function showSecretModePopup() {
-  const popup = document.getElementById('secretModePopup');
-  const content = popup.querySelector('.secret-popup-content');
-  
-  if (secretModeActive) {
-    content.querySelector('h3').textContent = '🔓 Secret Mode Activated!';
-    content.querySelector('p').textContent = 'Hidden tracks are now visible';
-  } else {
-    content.querySelector('h3').textContent = '🔒 Secret Mode Deactivated';
-    content.querySelector('p').textContent = 'Hidden tracks are now hidden';
-  }
-  
-  popup.classList.remove('hidden');
-  
-  // Auto-hide after 3 seconds
-  setTimeout(() => {
-    popup.classList.add('hidden');
-  }, 3000);
-}
-
 function loadSecretMode() {
-  const stored = sessionStorage.getItem('secretMode');
-  if (stored === 'true') {
+  // Auto-enable secret mode if there are active codes
+  if (activeCodes.length > 0) {
     secretModeActive = true;
-    const indicator = document.getElementById('secretModeIndicator');
-    indicator.classList.remove('hidden');
   }
 }
 
@@ -780,8 +856,61 @@ audio.addEventListener("timeupdate", () => {
 showDraftsChk.addEventListener("click", (e) => {
   showDraftsChk.classList.toggle('active');
   applyFilterAndRender();
-  handleSecretModeClick(e);
 });
+
+// Secret code button
+const secretCodeBtn = document.getElementById('secretCodeBtn');
+const codePanel = document.getElementById('codePanel');
+const closeCodeBtn = document.getElementById('closeCodeBtn');
+const confirmCodeBtn = document.getElementById('confirmCodeBtn');
+const clearCodesBtn = document.getElementById('clearCodesBtn');
+const codeInput = document.getElementById('codeInput');
+
+if (secretCodeBtn && codePanel) {
+  secretCodeBtn.addEventListener('click', showCodePanel);
+  
+  // Close button
+  closeCodeBtn.addEventListener('click', () => {
+    codePanel.classList.add('hidden');
+  });
+  
+  // Click outside to close
+  codePanel.addEventListener('click', (e) => {
+    if (e.target === codePanel) {
+      codePanel.classList.add('hidden');
+    }
+  });
+  
+  // Confirm button
+  confirmCodeBtn.addEventListener('click', submitCode);
+  
+  // Enter key to submit
+  codeInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      submitCode();
+    }
+  });
+  
+  // Clear codes button
+  clearCodesBtn.addEventListener('click', () => {
+    if (confirm('Sei sicuro di voler cancellare tutti i codici attivi?')) {
+      clearActiveCodes();
+      
+      const success = document.getElementById('codeSuccess');
+      success.textContent = '✓ Tutti i codici sono stati cancellati';
+      success.classList.remove('hidden');
+      
+      setTimeout(() => {
+        codePanel.classList.add('hidden');
+      }, 2000);
+      
+      // Track in GA
+      try {
+        gtag('event', 'codes_cleared');
+      } catch (e) {}
+    }
+  });
+}
 
 // Favorites heart button toggle
 onlyFavsChk.addEventListener("click", () => {
@@ -1158,6 +1287,7 @@ if (playOverlayBtn) {
    [16] AVVIO
    ========================================================= */
 loadLikedSongs();
+loadActiveCodes();
 loadSecretMode();
 loadTracks();
 
