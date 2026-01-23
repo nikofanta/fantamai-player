@@ -263,7 +263,7 @@
     "cover": "magamaria.png",
     "lrc": "magamaria.lrc",
     "isDraft": false,
-    "isSecret": true
+    "isSecret": false
   },
   {
     "title": "Carol for Matteo",

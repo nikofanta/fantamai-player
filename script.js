@@ -1,11 +1,11 @@
 /* =========================================================
    [1] RIFERIMENTI DOM
    ========================================================= */
-const APP_VERSION = "5.3.15";
+const APP_VERSION = "5.3.16";
 
 // Configuration for tracks.json source
 const CONFIG = {
-  tracksSource: "remote", // "local" or "remote"
+  tracksSource: "local", // "local" or "remote"
   remoteAPI: "https://www.fantamai.com/API/api/tracks" // Used only when tracksSource is "remote"
 };
 
