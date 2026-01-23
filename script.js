@@ -155,13 +155,37 @@ function getAPIParameters() {
   };
 }
 
+/* =========================================================
+   [2.4] SEND EVENT TO API
+   ========================================================= */
+function sendEventToAPI(eventType, value) {
+  try {
+    const sessionId = getSessionId();
+    const url = `https://www.fantamai.com/API/api/events?sessionId=${sessionId}&eventType=${eventType}&value=${encodeURIComponent(value)}`;
+    fetch(url, { method: 'POST' }).catch(err => {
+      console.log('Event tracking failed:', err);
+    });
+  } catch (e) {
+    console.log('Event tracking error:', e);
+  }
+}
+
 function toggleLike(trackTitle) {
-  if (likedSongs.has(trackTitle)) {
+  const wasLiked = likedSongs.has(trackTitle);
+  
+  if (wasLiked) {
     likedSongs.delete(trackTitle);
   } else {
     likedSongs.add(trackTitle);
   }
   saveLikedSongs();
+  
+  // Find track and get audio filename without extension
+  const track = allTracks.find(t => t.title === trackTitle);
+  if (track && track.audio) {
+    const audioFilename = track.audio.replace(/\.mp3$/i, '');
+    sendEventToAPI(wasLiked ? 'FavOff' : 'FavOn', audioFilename);
+  }
   
   // Track in GA
   try {
