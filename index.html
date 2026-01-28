@@ -1,250 +1,119 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
-  <!-- [1] HEAD / META -->
-  <link rel="icon" href="./favicon.ico">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#e38b1f">
-  <title>Project "fantaMai"</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+  <title>Site Moved - FantaMai Player</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6JZE25R0LP"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-6JZE25R0LP');
-  </script>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .logo {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #fff;
+      animation: fadeIn 1s ease-out 0.2s both;
+    }
+
+    p {
+      font-size: 18px;
+      color: #ccc;
+      margin-bottom: 30px;
+      animation: fadeIn 1s ease-out 0.4s both;
+    }
+
+    .link {
+      display: inline-block;
+      background: rgba(227, 139, 31, 0.9);
+      color: #fff;
+      text-decoration: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(227, 139, 31, 0.3);
+      animation: fadeIn 1s ease-out 0.6s both;
+    }
+
+    .link:hover {
+      background: rgba(227, 139, 31, 1);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(227, 139, 31, 0.4);
+    }
+
+    .link:active {
+      transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .logo {
+        width: 150px;
+        height: 150px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      .link {
+        font-size: 16px;
+        padding: 12px 30px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-  <!-- [2] UPDATE NOTIFICATION BANNER -->
-  <div id="updateBanner" class="update-banner hidden">
-    <span>🎉 New version available!</span>
-    <button id="updateBtn" class="update-btn">Update Now</button>
-  </div>
-
-  <!-- [2.5] INSTALL PWA BANNER -->
-  <div id="installBanner" class="install-banner hidden">
-    <span>📱 Install fantaMai Player for a better experience!</span>
-    <div class="install-actions">
-      <button id="installBtn" class="install-btn">Install</button>
-      <button id="dismissInstallBtn" class="dismiss-btn">✕</button>
-    </div>
-  </div>
-
-  <!-- [3] SECRET MODE POPUP -->
-  <div id="secretModePopup" class="secret-popup hidden">
-    <div class="secret-popup-content">
-      <div class="secret-icon">🔓</div>
-      <h3>Secret Mode Activated!</h3>
-      <p>Hidden tracks are now visible</p>
-    </div>
-  </div>
-
-  <!-- [3.5] SECRET CODE PANEL -->
-  <div id="codePanel" class="secret-popup hidden">
-    <div class="stats-content code-panel-content">
-      <button id="closeCodeBtn" class="close-stats-btn">&times;</button>
-      <h3>🔒 Inserisci Codice Segreto</h3>
-      <p class="code-instruction">Inserisci un codice di 4 caratteri alfanumerici maiuscoli</p>
-      <div class="code-input-wrapper">
-        <input type="text" id="codeInput" class="code-input" maxlength="4" placeholder="AB12" autocomplete="off" autocapitalize="characters">
-        <div id="codeError" class="code-error hidden"></div>
-      </div>
-      <div class="code-actions">
-        <button id="confirmCodeBtn" class="confirm-code-btn">Conferma</button>
-        <button id="clearCodesBtn" class="clear-codes-btn">Cancella tutti i codici</button>
-      </div>
-      <div id="codeSuccess" class="code-success hidden"></div>
-    </div>
-  </div>
-
-  <!-- [4] CONTAINER PRINCIPALE -->
   <div class="container">
-
-    <!-- [4] BLOCCO CANZONE CORRENTE -->
-    <div id="currentTrackContainer">
-
-      <!-- [4.1] COVER + ONDE -->
-      <div class="cover-wrapper">
-        <div class="cover-inner">
-          <img id="currentCover" src="" alt="Cover">
-          
-          <!-- Onde radio animate -->
-          <div class="waves-overlay">
-            <svg class="waves" viewBox="0 0 1200 200" preserveAspectRatio="none">
-              <path d="M0 100 Q300 20 600 100 T1200 100" />
-            </svg>
-          </div>
-          
-          <!-- Play button overlay for blocked autoplay -->
-          <div id="playButtonOverlay" class="play-button-overlay hidden">
-            <button id="playOverlayBtn" class="play-overlay-btn" aria-label="Play song">
-              <svg width="80" height="80" viewBox="0 0 80 80">
-                <circle cx="40" cy="40" r="35" stroke="currentColor" stroke-width="3" fill="none"/>
-                <polygon points="32,25 32,55 55,40" fill="currentColor"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- [4.2] TITOLO -->
-      <div class="title-wrapper">
-        <h2 id="currentTitle" aria-live="polite"></h2>
-      </div>
-      
-      <!-- [4.3] MEDAL BUTTON (STATS) -->
-      <button id="medalBtn" class="medal-btn" aria-label="Mostra statistiche ascolto" title="Statistiche ascolto">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <!-- Medal star -->
-          <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
-        </svg>
-        <span id="medalBadge" class="medal-badge">0</span>
-      </button>
-      
-      <!-- [4.4] LYRICS TOGGLE BUTTON -->
-      <button id="lyricsToggleBtn" class="lyrics-toggle-btn" aria-label="Toggle lyrics display" title="Mostra/Nascondi testo">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <!-- Speech bubble -->
-          <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
-          <!-- Text lines -->
-          <line x1="7" y1="7" x2="17" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <line x1="7" y1="11" x2="17" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <line x1="7" y1="15" x2="13" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-
-      <!-- [4.3] LYRICS OVERLAY -->
-      <div class="lyrics-nav-container">
-        <div id="lyricsContainer" class="lyrics-container" role="region" aria-label="Synchronized lyrics">
-          <div id="prevLyric" class="lyric-line lyric-prev" aria-hidden="true"></div>
-          <div id="currentLyric" class="lyric-line lyric-current" aria-live="assertive">
-            Testo non disponibile
-          </div>
-          <div id="nextLyric" class="lyric-line lyric-next" aria-hidden="true"></div>
-        </div>
-      </div>
-
-      <!-- [4.4] STATUS OVERLAY -->
-      <div id="statusOverlay" class="status-overlay">
-        <div class="spinner" id="spinner"></div>
-        <span id="statusText">Pronto</span>
-      </div>
-      
-      <!-- [4.5] STATS POPUP -->
-      <div id="statsPopup" class="stats-popup hidden">
-        <div class="stats-content">
-          <button id="closeStatsBtn" class="close-stats-btn">&times;</button>
-          <h3>🏆 Statistiche Ascolto</h3>
-          <div class="badge-display">
-            <div class="badge-icon" id="badgeIcon">🎵</div>
-            <div class="badge-name" id="badgeName">LISTENER</div>
-          </div>
-          <p class="stats-plays">Hai ascoltato <strong id="statsCount">0</strong> canzoni!</p>
-          <p class="stats-progress" id="statsProgress">Ti mancano 50 canzoni per diventare SUPPORTER!</p>
-        </div>
-      </div>
-      
-      <!-- [4.6] INFO POPUP -->
-      <div id="infoPopup" class="stats-popup hidden">
-        <div class="stats-content info-content">
-          <button id="closeInfoBtn" class="close-stats-btn">&times;</button>
-          <h3>ℹ️ Benvenuto nel progetto "fantaMai"!</h3>
-          <div class="info-image">
-            <img src="./covers/nosong.png" alt="fantaMai Logo">
-          </div>
-          <div class="info-text">
-            <p>Se sei arrivato fin qui, è perché qualcuno stima i tuoi gusti musicali e ha creduto nelle tue capacità da talent scout. 🎧</p>
-            <p>Ora è il momento di metterti alla prova: ascolta le canzoni di questa playlist e aiutaci a selezionare le sei migliori, quelle che avranno la possibilità di entrare a far parte di un album pubblicato su Spotify.</p>
-            <p>Ricorda: non stiamo cercando la canzone del secolo. Vogliamo solo capire se uno di questi brani potrebbe riuscire a intrufolarsi tra le tue playlist personali 😜.</p>
-            <p>Se un brano ti piace, metti semplicemente un like [❤️] e ascoltalo liberamente.<br>
-Se invece non fa per te, puoi evitare il like e filtrarlo, così non ti verrà riproposto mentre ascolti i tuoi preferiti.</p>
-            <p>Condividi le canzoni che trovi interessanti con amici talentuosi e music-addicted come te!</p>
-            <p>Puoi abilitare o disabilitare i testi delle canzoni [💬] e attivare la modalità "Labs" [🧪], che ti permette di ascoltare anche brani scartati o versioni arrangiate in modo diverso rispetto a quelle in gara.</p>
-            <p>Ascolta il maggior numero possibile di canzoni per guadagnare punti fedeltà e passare da semplice Listener [🎵] a Ambassador [🏆]!</p>
-            <p><strong>Buon ascolto e grazie per il tuo prezioso contributo! 💛</strong></p>
-          </div>
-          <button id="closeInfoBtnBottom" class="close-info-btn-bottom">Chiudi</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- [6] PLAYLIST HEADER -->
-    <div class="playlist-header">
-      <h3>Brani <span id="trackCounter">(0)</span></h3>
-    </div>
-
-    <!-- [8] PLAYLIST -->
-    <ul id="trackList" role="list" aria-label="Available tracks"></ul>
+    <img src="covers/nosong.png" alt="FantaMai Player" class="logo">
+    <h1>This website has been moved</h1>
+    <p>Please visit our new location to continue listening</p>
+    <a href="https://fantamai.com/" class="link">Go to New Site</a>
   </div>
-
-  <!-- [9] NAVIGATION FOOTER -->
-  <div class="navigation-footer">
-    <div class="footer-controls">
-      <div class="footer-left">
-        <button id="prevBtn" class="footer-nav-btn" aria-label="Previous track">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M11 6L6 12l5 6V6z"/>
-            <path d="M18 6l-5 6 5 6V6z"/>
-          </svg>
-        </button>
-        <button id="nextBtn" class="footer-nav-btn" aria-label="Next track">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M13 6l5 6-5 6V6z"/>
-            <path d="M6 6l5 6-5 6V6z"/>
-          </svg>
-        </button>
-      </div>
-      <div class="footer-center">
-        <div class="version-info">
-          <small>v<span id="appVersion">5.3.17</span></small>
-        </div>
-      </div>
-      <div class="footer-right">
-        <button id="infoBtn" class="info-btn" aria-label="Project information" title="Informazioni sul progetto">
-          <svg width="24" height="24" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" stroke-width="2" fill="none"/>
-            <path d="M12 16v-4" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="12" cy="8" r="1" fill="currentColor"/>
-          </svg>
-        </button>
-        <button id="onlyFavsChk" class="favs-heart-btn" aria-label="Show only favorite tracks" title="Usa questo cuore per selezionare solo i tuoi preferiti!">
-          <svg width="24" height="24" viewBox="0 0 24 24">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-          </svg>
-        </button>
-        <button id="showDraftsChk" class="draft-cruet-btn" aria-label="Show draft tracks" title="Usa questa ampolla per mostrare/nascondere gli esperimenti!">
-          <svg width="24" height="24" viewBox="0 0 24 24">
-            <!-- Flask neck -->
-            <path d="M10 2h4v6l4 8c0.5 1 0.5 2 0 3s-1.5 2-3 2H9c-1.5 0-2.5-1-3-2s-0.5-2 0-3l4-8V2z" stroke-linejoin="round"/>
-            <!-- Flask base when filled -->
-            <path class="flask-fill" d="M10 8l4 8c0.5 1 0.5 2 0 3s-1.5 2-3 2H9c-1.5 0-2.5-1-3-2s-0.5-2 0-3l4-8z"/>
-          </svg>
-        </button>
-        <button id="secretCodeBtn" class="secret-code-btn" aria-label="Enter secret code" title="Inserisci un codice per sbloccare contenuti speciali!">
-          <svg width="24" height="24" viewBox="0 0 24 24">
-            <!-- Padlock body -->
-            <rect x="6" y="11" width="12" height="10" rx="2" stroke-width="2" fill="none"/>
-            <!-- Padlock shackle -->
-            <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke-width="2" fill="none"/>
-            <!-- Keyhole -->
-            <circle cx="12" cy="15" r="1.5" fill="currentColor"/>
-            <path d="M12 16.5v2" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </button>
-        <span id="secretModeIndicator" class="secret-indicator hidden">🔓</span>
-      </div>
-    </div>
-    <audio id="audioPlayer" controls controlslist="nodownload noplaybackrate" aria-label="Audio player"></audio>
-  </div>
-
-  <!-- [10] SCRIPT -->
-  <script src="script.js"></script>
 </body>
 </html>
-
